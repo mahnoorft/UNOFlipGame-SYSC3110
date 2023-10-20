@@ -39,20 +39,20 @@ public class  Player {
     }
 
     // play one of the player's cards
-    public boolean playCard(int index, Card topCard) {
+    public Card playCard(int index, Card topCard) {
         if (index >= 0 && index < hand.getCards().size()) {
             Card cardToPlay = hand.getCards().get(index);
             if (cardToPlay.checkValid(topCard)) {
                 // Print the card that is being played
                 System.out.println(name + " played " + cardToPlay);
                 hand.removeCard(index);
-                return true;
+                return cardToPlay;
             } else {
                 System.out.println("The selected card cannot be played.");
             }
         } else {
             System.out.println("Invalid index. Please choose a valid index to play.");
         }
-        return false;
+        return null;
     }
 }

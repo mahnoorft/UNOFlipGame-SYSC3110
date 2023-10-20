@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.Scanner;
 /** This class executes the UNO Game functions until a winner is announced*/
 
 public class UNOGame{
@@ -55,24 +56,64 @@ public class UNOGame{
         this.pile.add(topCard);
 
     }
-    private void takeTurn(){
+    private void takeTurn() {
+        boolean isDigit; //verify user input
+        Card isValid = null; //verify valid card input
+        int value = 0; //inital value
+
         Player player = players.get(currentTurn);
 
         //Initial display
-        System.out.println (player.getName() + "'s Turn: ");
-        System.out.println ("Current side: " + (currentSideLight ? "Light" : "Dark"));
+        System.out.println(player.getName() + "'s Turn: ");
+        System.out.println("Current side: " + (currentSideLight ? "Light" : "Dark"));
         System.out.println("Your cards: " + player.getHand());
         System.out.println("Top Card: " + topCard);
 
         System.out.println("Enter card index to play or 0 to draw a card: ");
-        String i = input.nextLine();;
+        String userInput = input.nextLine();
 
-        //1 - call play card with index and top card (removes card from hand, checks valid, prints state)
-        //2 - update top card based on the boolean return from play card (while loop to make sure input is valid)
-        //3 - announce winner if it was their last card, by calling winRound
-        //4 - check if card is special, if yes: execute special function
+        //repeat until a valid card has been inputted
+        while (isValid != null) {
 
+            //Verify User inputs a digit
+            try {
+                value = Integer.parseInt(userInput);
+            } catch (NumberFormatException e) {
+                // This is thrown when the String
+                // contains characters other than digits
+                System.out.println("Input isn't a numerical value");
+                System.out.println("Enter card index to play or 0 to draw a card: ");
+                isValid = null;
+                break;
+            }
+            isValid = player.playCard(value, topCard);
+            if (isValid != null) {
+                System.out.println("Enter card index to play or 0 to draw a card: ");
+            }
+            userInput = input.nextLine();
+        }
+
+        //update top card with the card last played
+        topCard = isValid;
+
+        //Announce winner if no cards remaining
+        if (player.getHand().isEmpty()) {
+            winRound();
+        }
+
+        //check if card's special, if it is executeSpecialFunction
+        if (topCard.isSpecial()) {
+            executeSpecialFunction(topCard);
+        } else {
+            System.out.println(player.getName() + "'s Turn Finished");
+        }
+
+        //call UNO if on last card
+        if (player.getHand().getCards().size() == 1){
+            System.out.println(player.getName() + " calls UNO");
+        }
     }
+
     private void skipTurn(){
         currentTurn += turnDirection;
         if(currentTurn <0){
