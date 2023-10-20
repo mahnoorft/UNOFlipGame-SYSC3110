@@ -57,16 +57,17 @@ public class UNOGame{
 
     }
     private void takeTurn() {
-        boolean isDigit; //verify user input
-        Card isValid = null; //verify valid card input
-        int value = 0; //inital value
+        //boolean isDigit; //verify user input
+        //Card isValid = null; //verify valid card input
+        //int value = 0; //inital value
+        int userInput = -1;
 
         Player player = players.get(currentTurn);
 
         //Initial display
         System.out.println(player.getName() + "'s Turn: ");
         System.out.println("Current side: " + (currentSideLight ? "Light" : "Dark"));
-        System.out.println("Your cards: " + player.getHand());
+        System.out.println("Your cards: " + "\n" + player.getHand());
         System.out.println("Top Card: " + topCard);
 
 
@@ -74,11 +75,17 @@ public class UNOGame{
         while(true){
             try{
                 System.out.println("Enter card index to play or 0 to draw a card: ");
-                int userInput = Integer.parseInt(input.nextLine());
+                userInput = Integer.parseInt(input.nextLine());
                 if(userInput>=0 && userInput <= player.getHand().getCards().size()){
-                    if(player.getHand().getCards().get(userInput).checkValid(topCard)){
-                        topCard = player.getHand().getCards().get(userInput);
+                    if(userInput == 0){
+                        player.drawCard(deck);
                         break;
+                    }else{
+                        Card c = player.playCard(userInput-1,topCard);
+                        if(c != null){
+                            topCard = c;
+                            break;
+                        }
                     }
                 }
                 System.out.println("Please enter a valid card or 0 to draw a card");
@@ -116,7 +123,7 @@ public class UNOGame{
         }
 
         //check if card's special, if it is executeSpecialFunction
-        if (topCard.isSpecial()) {
+        if (userInput != 0 && topCard.isSpecial()) {
             executeSpecialFunction(topCard);
         } else {
             System.out.println(player.getName() + "'s Turn Finished");
@@ -129,14 +136,12 @@ public class UNOGame{
     }
 
     private void skipTurn(){
-        currentTurn += turnDirection;
-        if(currentTurn <0){
-            currentTurn += players.size();
-        }else if(currentTurn > (players.size()-1)){
-            currentTurn -=players.size();
-        }
+        currentTurn = getNextPlayerIndex();
+        System.out.println("Skipped player "+players.get(currentTurn).getName());
     }
-    private void reverseTurn(){turnDirection *= -1;}
+    private void reverseTurn(){
+        turnDirection *= -1;
+        System.out.println("Reversed the direction of the turn to"+turnDirection);}
     private void chooseNewColor(){
         while(topCard.getColorLight()== Card.Color.WILD){
             System.out.print("Please enter your choice of color: ");
@@ -160,14 +165,10 @@ public class UNOGame{
         }
     }
     private void nextPlayerDrawCard(int numCards){
-        int target = currentTurn + turnDirection;
-        if(target <0){
-            target += players.size();
-        }else if(target > (players.size() - 1)){
-            target -= players.size();
-        }
+
+        System.out.println("Player " + players.get(getNextPlayerIndex()).getName()+" draw "+numCards+"cards");
         for(int i=0;i<numCards;i++){
-            players.get(target).drawCard(deck);
+            players.get(getNextPlayerIndex()).drawCard(deck);
         }
     }
 
@@ -193,7 +194,8 @@ public class UNOGame{
     private void executeSpecialFunction(Card card){
         switch (card.rankLight){
             case REVERSE:
-                this.reverseTurn();;
+                this.reverseTurn();
+
             case SKIP:
                 this.skipTurn();
             case WILD:
@@ -206,6 +208,12 @@ public class UNOGame{
                 this.nextPlayerDrawCard(2);
                 this.skipTurn();
         }
+    }
+    private int getNextPlayerIndex(){
+        int index = currentTurn += turnDirection;
+        if (index < 0){index += players.size();}
+        else if (currentTurn>=players.size()) {index -= players.size();}
+        return index;
     }
     public static void main(String[] args) {
         UNOGame unoGame = new UNOGame();

@@ -37,7 +37,7 @@ public class Hand{
     public String toString(){
         StringBuilder s = new StringBuilder();
         for(int i=0; i< cards.size(); i++){
-            s.append(i);
+            s.append(i+1);
             s.append(" "+ cards.get(i).toString() + " \n");
         }
         return s.toString();
