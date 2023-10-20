@@ -30,7 +30,8 @@ public class Card {
 
     public boolean checkValid(Card other){
         //if(unoGame.getFlip() == UNOGame.Flip.LIGHT){
-        return this.rankLight == other.rankLight || this.colorLight == other.colorLight || this.colorLight == Color.WILD;
+        return this.rankLight == other.rankLight || this.colorLight == other.colorLight
+                || this.colorLight == Color.WILD || other.colorLight == Color.WILD;
         //}
     }
     public Color getColorLight() {return colorLight;}

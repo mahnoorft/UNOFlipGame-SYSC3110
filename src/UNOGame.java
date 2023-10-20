@@ -146,7 +146,7 @@ public class UNOGame{
     }
     private void reverseTurn(){
         turnDirection *= -1;
-        System.out.println("Reversed the direction of the turn to"+turnDirection);}
+        System.out.println("Reversed the direction of the turn to "+turnDirection);}
     private void chooseNewColor(){
         while(topCard.getColorLight()== Card.Color.WILD){
             System.out.print("Please enter your choice of color: ");
@@ -162,7 +162,7 @@ public class UNOGame{
     }
     private void nextPlayerDrawCard(int numCards){
 
-        System.out.println("Player " + players.get(getNextPlayerIndex()).getName()+" draw "+numCards+"cards");
+        System.out.println("Player " + players.get(getNextPlayerIndex()).getName()+" draw "+numCards+" cards");
         for(int i=0;i<numCards;i++){
             players.get(getNextPlayerIndex()).drawCard(deck);
         }
@@ -172,7 +172,7 @@ public class UNOGame{
     private void winRound() {
         Player winner = players.get(currentTurn);
         calculateWinnerScore();
-        System.out.println("Winner: " + winner.getName() + "Scored: " + winner.getScore() + "points this round.");
+        System.out.println("Winner: " + winner.getName() + " Scored: " + winner.getScore() + " points this round.");
         gameActive = false;
     }
     // calculate the score of the player by adding up the cards points held by other players.
