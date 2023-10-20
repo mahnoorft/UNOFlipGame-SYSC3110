@@ -193,4 +193,8 @@ public class UNOGame{
                 this.skipTurn();
         }
     }
+    public static void main(String[] args) {
+        UNOGame unoGame = new UNOGame();
+        unoGame.play();
+    }
 }
