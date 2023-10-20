@@ -69,32 +69,46 @@ public class UNOGame{
         System.out.println("Your cards: " + player.getHand());
         System.out.println("Top Card: " + topCard);
 
-        System.out.println("Enter card index to play or 0 to draw a card: ");
-        String userInput = input.nextLine();
 
-        //repeat until a valid card has been inputted
-        while (isValid != null) {
 
-            //Verify User inputs a digit
-            try {
-                value = Integer.parseInt(userInput);
-            } catch (NumberFormatException e) {
-                // This is thrown when the String
-                // contains characters other than digits
-                System.out.println("Input isn't a numerical value");
+        while(true){
+            try{
                 System.out.println("Enter card index to play or 0 to draw a card: ");
-                isValid = null;
-                break;
+                int userInput = Integer.parseInt(input.nextLine());
+                if(userInput>=0 && userInput <= player.getHand().getCards().size()){
+                    if(player.getHand().getCards().get(userInput).checkValid(topCard)){
+                        topCard = player.getHand().getCards().get(userInput);
+                        break;
+                    }
+                }
+                System.out.println("Please enter a valid card or 0 to draw a card");
+            }catch(NumberFormatException e){
+                System.out.println("Please enter a valid number");
             }
-            isValid = player.playCard(value, topCard);
-            if (isValid != null) {
-                System.out.println("Enter card index to play or 0 to draw a card: ");
-            }
-            userInput = input.nextLine();
         }
+        //repeat until a valid card has been inputted
+//        while (isValid != null) {
+//
+//            //Verify User inputs a digit
+//            try {
+//                value = Integer.parseInt(userInput);
+//            } catch (NumberFormatException e) {
+//                // This is thrown when the String
+//                // contains characters other than digits
+//                System.out.println("Input isn't a numerical value");
+//                System.out.println("Enter card index to play or 0 to draw a card: ");
+//                isValid = null;
+//                break;
+//            }
+//            isValid = player.playCard(value, topCard);
+//            if (isValid != null) {
+//                System.out.println("Enter card index to play or 0 to draw a card: ");
+//            }
+//            userInput = input.nextLine();
+//        }
 
         //update top card with the card last played
-        topCard = isValid;
+        //topCard = isValid;
 
         //Announce winner if no cards remaining
         if (player.getHand().isEmpty()) {
