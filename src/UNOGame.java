@@ -210,9 +210,11 @@ public class UNOGame{
         }
     }
     private int getNextPlayerIndex(){
-        int index = currentTurn += turnDirection;
+        int index = currentTurn + turnDirection;
+        System.out.println(index+"-------------");
         if (index < 0){index += players.size();}
-        else if (currentTurn>=players.size()) {index -= players.size();}
+        else if (index>(players.size()-1)) {index -= players.size();}
+        System.out.println(index+"==============");
         return index;
     }
     public static void main(String[] args) {
