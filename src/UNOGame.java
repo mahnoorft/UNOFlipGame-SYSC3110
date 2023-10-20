@@ -10,6 +10,7 @@ public class UNOGame{
     private int turnDirection;
     private Card topCard;
     private boolean currentSideLight;
+    private boolean gameActive;
     private Scanner input;
 
     public UNOGame(){
@@ -25,7 +26,8 @@ public class UNOGame{
     }
     public void play(){
         initializeGame();
-        while(true){
+        gameActive = true;
+        while(gameActive){
             takeTurn();
             currentTurn++;
             if(currentTurn>=players.size()){
@@ -116,6 +118,9 @@ public class UNOGame{
 
         //update top card with the card last played
         //topCard = isValid;
+        if(userInput != 0 && topCard.getColorLight()== Card.Color.WILD){
+            this.chooseNewColor();
+        }
 
         //Announce winner if no cards remaining
         if (player.getHand().isEmpty()) {
@@ -146,21 +151,12 @@ public class UNOGame{
         while(topCard.getColorLight()== Card.Color.WILD){
             System.out.print("Please enter your choice of color: ");
             String i = input.nextLine().toUpperCase();
-            switch (i){
-                case "RED":
-                    topCard.setColorLight(Card.Color.RED);
-                    break;
-                case "YELLOW":
-                    topCard.setColorLight((Card.Color.YELLOW));
-                    break;
-                case "GREEN":
-                    topCard.setColorLight((Card.Color.GREEN));
-                    break;
-                case "BLUE":
-                    topCard.setColorLight((Card.Color.BLUE));
-                    break;
-                default:
-                    System.out.println("Please choose a valid color (red, yellow, green, blue)");
+            switch (i) {
+                case "RED" -> topCard.setColorLight(Card.Color.RED);
+                case "YELLOW" -> topCard.setColorLight((Card.Color.YELLOW));
+                case "GREEN" -> topCard.setColorLight((Card.Color.GREEN));
+                case "BLUE" -> topCard.setColorLight((Card.Color.BLUE));
+                default -> System.out.println("Please choose a valid color (red, yellow, green, blue)");
             }
         }
     }
@@ -177,6 +173,7 @@ public class UNOGame{
         Player winner = players.get(currentTurn);
         calculateWinnerScore();
         System.out.println("Winner: " + winner.getName() + "Scored: " + winner.getScore() + "points this round.");
+        gameActive = false;
     }
     // calculate the score of the player by adding up the cards points held by other players.
     private int calculateWinnerScore(){
@@ -195,26 +192,27 @@ public class UNOGame{
         switch (card.rankLight){
             case REVERSE:
                 this.reverseTurn();
-
+                break;
             case SKIP:
                 this.skipTurn();
+                break;
             case WILD:
-                this.chooseNewColor();
+                break;
             case DRAW1:
                 this.nextPlayerDrawCard(1);
                 this.skipTurn();
-            case WILD_DRAW2:
-                this.chooseNewColor();
+                break;
+            case DRAW2:
+
                 this.nextPlayerDrawCard(2);
                 this.skipTurn();
+                break;
         }
     }
     private int getNextPlayerIndex(){
         int index = currentTurn + turnDirection;
-        System.out.println(index+"-------------");
         if (index < 0){index += players.size();}
         else if (index>(players.size()-1)) {index -= players.size();}
-        System.out.println(index+"==============");
         return index;
     }
     public static void main(String[] args) {

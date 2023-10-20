@@ -1,5 +1,5 @@
 public class Card {
-    public enum Rank{ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,REVERSE,SKIP,DRAW1,WILD,WILD_DRAW2,FLIP}
+    public enum Rank{ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,REVERSE,SKIP,DRAW1,WILD,DRAW2,FLIP}
     public enum Color{RED,YELLOW,GREEN,BLUE,WILD}
     public Rank rankLight;
     public Color colorLight;
@@ -24,7 +24,7 @@ public class Card {
             case DRAW1 -> points = 10;
             case REVERSE,SKIP,FLIP -> points = 20;
             case WILD -> points = 40;
-            case WILD_DRAW2 -> points = 50;
+            case DRAW2 -> points = 50;
         }
     }
 
