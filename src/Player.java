@@ -1,9 +1,8 @@
 import java.util.*;
 
 /**
- * THis class represents a player in a Flip UNO Game
+ * THis class represents a player in an UNO Fip Game
  * Written by: Rama Alkhouli 101198025
- *
  */
 public class  Player {
 
@@ -22,7 +21,7 @@ public class  Player {
         Card drawnCard = deck.draw();
         hand.addCard(drawnCard);
     }
-
+    //update the player's score
     public void incrementScore(int addedScore) {
         this.score += addedScore;
     }
@@ -55,7 +54,7 @@ public class  Player {
         }
         return null;
     }
-
+    //remove all cards from the player's hand
     public void clearHand(){
         hand.removeAll();
     }

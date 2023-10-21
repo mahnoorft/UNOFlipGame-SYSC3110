@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.Scanner;
-/** This class executes the UNO Game functions until a winner is announced*/
+/** This class initializes a text-based interface for an UNO game and
+ * executes the UNO Game functions until a winner is announced*/
 
 public class UNOGame{
     private ArrayList<Player> players;
@@ -130,7 +131,7 @@ public class UNOGame{
         }
 
         //call UNO if on last card
-        if (player.getHand().getCards().size() == 1){
+        if (player.getHand().isUNO()){
             System.out.println(player.getName().toUpperCase() + " CALLS UNO");
         }
 
@@ -220,9 +221,5 @@ public class UNOGame{
         if (index < 0){index += players.size();}
         else if (index>(players.size()-1)) {index -= players.size();}
         return index;
-    }
-    public static void main(String[] args) {
-        UNOGame unoGame = new UNOGame();
-        unoGame.play();
     }
 }

@@ -2,25 +2,29 @@ import java.util.*;
 
 /** This class represents the cards in an UNO player's hands.
  * Written by: Areej Mahmoud 101218260
- * Date: 10/13/2023
  */
 
 public class Hand{
-    private List<Card> cards;
+
+    //list of cards in the hand
+    private ArrayList<Card> cards;
 
     public Hand() {
         this.cards = new ArrayList<Card>();
     }
+    //Adds a new card to the Hand
     public void addCard(Card card){
         cards.add(card);
     }
+    //remove a card with index cardIndex from the hand
     public void removeCard(int cardIndex){
         cards.remove(cardIndex);
     }
+    //remove all cards from the hand
     public void removeAll(){
         cards.clear();
     }
-
+    //calculate the sum of points for all cards currently held.
     public int calculateTotalPoints(){
         int points = 0;
         for(Card c: cards){
@@ -28,11 +32,15 @@ public class Hand{
         }
         return points;
     }
-
-    public List<Card> getCards() {
+    //returns an ArrayList of cards in the Hand
+    public ArrayList<Card> getCards() {
         return this.cards;
     }
-
+    //returns true if only one card is left in the hand.
+    public boolean isUNO(){
+        return cards.size() == 1;
+    }
+    //returns true if there are no cards in the hand.
     public boolean isEmpty(){
         return cards.isEmpty();
     }

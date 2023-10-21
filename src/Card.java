@@ -1,3 +1,7 @@
+/**
+ * This Class represents a playing card in the UNO Flip game deck
+ * Written by: Eric Cui
+ * */
 public class Card {
     public enum Rank{ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,REVERSE,SKIP,DRAW1,WILD,DRAW2,FLIP}
     public enum Color{RED,YELLOW,GREEN,BLUE,WILD}
@@ -10,6 +14,7 @@ public class Card {
         this.colorLight = colorLight;
         assignPointsLight();
     }
+    //Assigns the points associated with this card according to UNO Flip rules
     private void assignPointsLight(){
         switch (rankLight){
             case ONE -> points = 1;
@@ -27,7 +32,8 @@ public class Card {
             case DRAW2 -> points = 50;
         }
     }
-
+    //compares this card to another card and returns
+    // true if the card can be played according to UNO rules
     public boolean checkValid(Card other){
         //if(unoGame.getFlip() == UNOGame.Flip.LIGHT){
         return this.rankLight == other.rankLight || this.colorLight == other.colorLight
@@ -38,6 +44,8 @@ public class Card {
     public void setColorLight(Color colorLight) {this.colorLight = colorLight;}
     public Rank getRankLight() {return rankLight;}
     public int getPoints() {return points;}
+
+    //returns true if this card is a special UNO card
     public boolean isSpecial(){
         return rankLight.compareTo(Rank.NINE) > 0;
     }

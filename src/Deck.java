@@ -1,5 +1,9 @@
 import java.util.*;
 
+/**
+ * This Class represents the UNO Flip game deck, consisting of all playing cards.
+ * Written by: Mahnoor Fatima
+ */
 public class Deck {
     private List<Card> deck;
 
@@ -7,7 +11,7 @@ public class Deck {
         this.deck = new ArrayList<Card>();
         createDeck();
     }
-
+    //initialize the number of cards according to UNO rules and add them to the deck
     public void createDeck() {
         for (int colors = 0; colors < 4; colors++){
 
@@ -27,24 +31,24 @@ public class Deck {
                 deck.add(new Card(Card.Rank.values()[i], Card.Color.WILD));
             }
         }
-        System.out.println(deck);
         this.shuffle();
     }
-
+    // Shuffles the cards in the deck randomly.
     public void shuffle() {
         Collections.shuffle(deck);
     }
 
+    //refills the deck from the pile and shuffles the deck
     public void refill(List<Card> pile) {
         deck.addAll(pile);
         this.shuffle();
     }
 
+    //removes one card from the deck to be drawn
     public Card draw() {
-
         return deck.remove(1);
     }
-
+    //returns the size of the deck (used for testing)
     public int size() {
         return deck.size();
     }
