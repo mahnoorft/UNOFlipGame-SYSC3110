@@ -1,7 +1,7 @@
 import java.util.*;
 
 /** This class represents the cards in an UNO player's hands.
- * Written by: Areej Mahmoud 101218260
+ * @author Areej Mahmoud 101218260
  */
 
 public class Hand{

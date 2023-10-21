@@ -2,7 +2,7 @@ import java.util.*;
 
 /**
  * THis class represents a player in an UNO Fip Game
- * Written by: Rama Alkhouli 101198025
+ * @author Rama Alkhouli 101198025
  */
 public class  Player {
 
