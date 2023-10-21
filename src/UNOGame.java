@@ -73,10 +73,9 @@ public class UNOGame{
         System.out.println("Top Card: " + topCard);
 
 
-
+        System.out.println("Enter card index to play or 0 to draw a card: ");
         while(true){
             try{
-                System.out.println("Enter card index to play or 0 to draw a card: ");
                 userInput = Integer.parseInt(input.nextLine());
                 if(userInput>=0 && userInput <= player.getHand().getCards().size()){
                     if(userInput == 0){
@@ -136,7 +135,7 @@ public class UNOGame{
 
         //call UNO if on last card
         if (player.getHand().getCards().size() == 1){
-            System.out.println(player.getName() + " calls UNO");
+            System.out.println(player.getName().toUpperCase() + " CALLS UNO");
         }
     }
 
@@ -145,8 +144,14 @@ public class UNOGame{
         System.out.println("Skipped player "+players.get(currentTurn).getName());
     }
     private void reverseTurn(){
-        turnDirection *= -1;
-        System.out.println("Reversed the direction of the turn to "+turnDirection);}
+        if(players.size()==2){
+            skipTurn();
+        }
+        else {
+            turnDirection *= -1;
+            System.out.println("Reversed the direction of the turn to " + turnDirection);
+        }
+    }
     private void chooseNewColor(){
         while(topCard.getColorLight()== Card.Color.WILD){
             System.out.print("Please enter your choice of color: ");
