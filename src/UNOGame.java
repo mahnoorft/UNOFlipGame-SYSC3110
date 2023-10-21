@@ -30,7 +30,7 @@ public class UNOGame{
         initializeGame();
         gameActive = true;
         while(gameActive){
-            takeTurn(false);
+            takeTurn();
             currentTurn = getNextPlayerIndex();
         }
     }
@@ -68,7 +68,7 @@ public class UNOGame{
         this.pile.add(topCard);
 
     }
-    private void takeTurn(boolean drawed) {
+    private void takeTurn() {
         int userInput = -1;
 
         Player player = players.get(currentTurn);
@@ -79,21 +79,28 @@ public class UNOGame{
         System.out.println("Your cards: " + "\n" + player.getHand());
         System.out.println("Top Card: " + topCard);
 
-        if(drawed)
-            System.out.println("Enter card index to play or 0 to end your turn: ");
-        else
-            System.out.println("Enter card index to play or 0 to draw a card:");
+        System.out.println("Enter card index to play or 0 to draw a card:");
 
         while(true){
             try{
                 userInput = Integer.parseInt(input.nextLine());
                 if(userInput>=0 && userInput <= player.getHand().getCards().size()){
                     if(userInput == 0){
-                        if(!drawed){
-                            player.drawCard(deck);
-                            System.out.println(player.getName() + " drew a card");
-                            this.takeTurn(true);
-                            return;
+                        Card c = deck.draw();
+                        System.out.println("You drew a " + c.toString());
+                        if(c.checkValid(topCard)){
+                            System.out.println("enter 1 to play card, press other to end turn");
+                            if(input.nextLine().equals("1")){
+                                topCard = c;
+                                pile.add(c);
+                                userInput = -2;
+                            }else{
+                                player.addCard(c);
+                            }
+                        }else{
+                            System.out.println("Enter any to continue");
+                            player.addCard(c);
+                            input.nextLine();
                         }
                         break;
                     }else{
@@ -104,10 +111,7 @@ public class UNOGame{
                         }
                     }
                 }
-                if(drawed)
-                    System.out.println("Enter card index to play or 0 to end your turn: ");
-                else
-                    System.out.println("Enter card index to play or 0 to draw a card:");
+                System.out.println("Enter card index to play or 0 to draw a card:");
             }catch(NumberFormatException e){
                 System.out.println("Please enter a valid number");
             }
@@ -221,5 +225,10 @@ public class UNOGame{
         if (index < 0){index += players.size();}
         else if (index>(players.size()-1)) {index -= players.size();}
         return index;
+    }
+
+    public static void main(String[] args) {
+        UNOGame unoGame = new UNOGame();
+        unoGame.play();
     }
 }

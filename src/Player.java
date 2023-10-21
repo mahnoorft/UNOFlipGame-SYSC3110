@@ -21,6 +21,9 @@ public class  Player {
         Card drawnCard = deck.draw();
         hand.addCard(drawnCard);
     }
+    public void addCard(Card card){
+        hand.addCard(card);
+    }
     //update the player's score
     public void incrementScore(int addedScore) {
         this.score += addedScore;
