@@ -55,4 +55,8 @@ public class  Player {
         }
         return null;
     }
+
+    public void clearHand(){
+        hand.removeAll();
+    }
 }

@@ -17,6 +17,9 @@ public class Hand{
     public void removeCard(int cardIndex){
         cards.remove(cardIndex);
     }
+    public void removeAll(){
+        cards.clear();
+    }
 
     public int calculateTotalPoints(){
         int points = 0;
@@ -42,4 +45,5 @@ public class Hand{
         }
         return s.toString();
     }
+
 }

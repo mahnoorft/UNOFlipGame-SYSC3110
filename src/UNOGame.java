@@ -22,35 +22,44 @@ public class UNOGame{
         this.topCard = null;
         this.currentSideLight = true;
         this.input = new Scanner(System.in);
+        createPlayers();
 
     }
     public void play(){
         initializeGame();
         gameActive = true;
         while(gameActive){
-            takeTurn();
-            currentTurn++;
-            if(currentTurn>=players.size()){
-                currentTurn = 0;
-            }
+            takeTurn(false);
+            currentTurn = getNextPlayerIndex();
         }
+    }
 
+    private void createPlayers(){
+        System.out.println("Welcome to UNO!");
+        for(int i=1;i<5;i++){
+            System.out.print("Please enter the name of player "+i+" (leave blank to end creating players):");
+            Player player = new Player(input.nextLine());
+            if(player.getName().equals("")){
+                if(i<3){
+                    System.out.println("Please have at least 2 players");
+                    i--;
+                    continue;
+                }else{
+                    break;
+                }
+            }
+            players.add(player);
+        }
     }
     private void initializeGame(){
-        System.out.println("Welcome to UNO!");
-        //Get the number of players
-        System.out.print("Enter the number of players (2-4): ");
-        int numPlayers = input.nextInt();
-        input.nextLine();
-
+        deck = new Deck();
+        pile = new ArrayList<Card>();
         // initialize all player names and distribute 7 cards to each
-        for(int i = 1; i <= numPlayers; i++) {
-            System.out.print("Enter name of player " + i + ": ");
-            Player player = new Player(input.nextLine());
+        for(int i = 0; i < players.size(); i++) {
+            players.get(i).clearHand();
             for(int j=0; j<7; j++){
-                player.drawCard(this.deck);
+                players.get(i).drawCard(this.deck);
             }
-            this.players.add(player);
         }
         //draw first card from deck to start the game
         //Assume it is okay for starting card to be Wild
@@ -58,10 +67,7 @@ public class UNOGame{
         this.pile.add(topCard);
 
     }
-    private void takeTurn() {
-        //boolean isDigit; //verify user input
-        //Card isValid = null; //verify valid card input
-        //int value = 0; //inital value
+    private void takeTurn(boolean drawed) {
         int userInput = -1;
 
         Player player = players.get(currentTurn);
@@ -72,14 +78,22 @@ public class UNOGame{
         System.out.println("Your cards: " + "\n" + player.getHand());
         System.out.println("Top Card: " + topCard);
 
+        if(drawed)
+            System.out.println("Enter card index to play or 0 to end your turn: ");
+        else
+            System.out.println("Enter card index to play or 0 to draw a card:");
 
-        System.out.println("Enter card index to play or 0 to draw a card: ");
         while(true){
             try{
                 userInput = Integer.parseInt(input.nextLine());
                 if(userInput>=0 && userInput <= player.getHand().getCards().size()){
                     if(userInput == 0){
-                        player.drawCard(deck);
+                        if(!drawed){
+                            player.drawCard(deck);
+                            System.out.println(player.getName() + " drew a card");
+                            this.takeTurn(true);
+                            return;
+                        }
                         break;
                     }else{
                         Card c = player.playCard(userInput-1,topCard);
@@ -89,34 +103,16 @@ public class UNOGame{
                         }
                     }
                 }
-                System.out.println("Please enter a valid card or 0 to draw a card");
+                if(drawed)
+                    System.out.println("Enter card index to play or 0 to end your turn: ");
+                else
+                    System.out.println("Enter card index to play or 0 to draw a card:");
             }catch(NumberFormatException e){
                 System.out.println("Please enter a valid number");
             }
         }
-        //repeat until a valid card has been inputted
-//        while (isValid != null) {
-//
-//            //Verify User inputs a digit
-//            try {
-//                value = Integer.parseInt(userInput);
-//            } catch (NumberFormatException e) {
-//                // This is thrown when the String
-//                // contains characters other than digits
-//                System.out.println("Input isn't a numerical value");
-//                System.out.println("Enter card index to play or 0 to draw a card: ");
-//                isValid = null;
-//                break;
-//            }
-//            isValid = player.playCard(value, topCard);
-//            if (isValid != null) {
-//                System.out.println("Enter card index to play or 0 to draw a card: ");
-//            }
-//            userInput = input.nextLine();
-//        }
 
         //update top card with the card last played
-        //topCard = isValid;
         if(userInput != 0 && topCard.getColorLight()== Card.Color.WILD){
             this.chooseNewColor();
         }
@@ -137,6 +133,8 @@ public class UNOGame{
         if (player.getHand().getCards().size() == 1){
             System.out.println(player.getName().toUpperCase() + " CALLS UNO");
         }
+
+
     }
 
     private void skipTurn(){
@@ -178,7 +176,10 @@ public class UNOGame{
         Player winner = players.get(currentTurn);
         calculateWinnerScore();
         System.out.println("Winner: " + winner.getName() + " Scored: " + winner.getScore() + " points this round.");
-        gameActive = false;
+        if(winner.getScore()<500){
+            play();
+        }else
+            gameActive = false;
     }
     // calculate the score of the player by adding up the cards points held by other players.
     private int calculateWinnerScore(){
