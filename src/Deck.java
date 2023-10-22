@@ -7,12 +7,13 @@ import java.util.*;
 public class Deck {
     private List<Card> deck;
 
+    /**Constructor for Class Deck*/
     public Deck() {
         this.deck = new ArrayList<Card>();
         createDeck();
     }
 
-    //initialize the number of cards according to UNO rules and add them to the deck
+    /**initialize the number of cards according to UNO rules and add them to the deck*/
     public void createDeck() {
         for (int colors = 0; colors < 4; colors++){
 
@@ -34,29 +35,35 @@ public class Deck {
         }
         this.shuffle();
     }
-    // Shuffles the cards in the deck randomly.
+    /** @return ArrayList of all cards in the deck*/
+    public List<Card> getDeck(){
+        return this.deck;
+    }
+    /** Shuffles the cards in the deck randomly.*/
     public void shuffle() {
         Collections.shuffle(deck);
     }
 
-    //refills the deck from the pile and shuffles the deck
+    /** Refills the deck from the pile and shuffles the deck
+     *  @param pile the pile to refill the deck from*/
     public void refill(List<Card> pile) {
         deck.addAll(pile);
         this.shuffle();
     }
 
-    //removes one card from the deck to be drawn
+    /** removes one card from the deck to be drawn
+     * @return Card drawn from deck*/
     public Card draw() {
         if (!deck.isEmpty()){
             return deck.remove(0);
         }
         return null;
     }
-    //returns the size of the deck (used for testing)
+    /** @return the size of the deck*/
     public int size() {
         return deck.size();
     }
-
+    /** @return a String representation of Deck */
     public String toString(){
         StringBuilder sb = new StringBuilder();
         for (Card card : deck) {
