@@ -95,11 +95,11 @@ public class UNOGame{
                                 pile.add(c);
                                 userInput = -2;
                             }else{
-                                player.addCard(c);
+                                player.getHand().addCard(c);
                             }
                         }else{
                             System.out.println("Enter any to continue");
-                            player.addCard(c);
+                            player.getHand().addCard(c);
                             input.nextLine();
                         }
                         break;
