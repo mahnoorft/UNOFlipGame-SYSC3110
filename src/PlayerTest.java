@@ -31,7 +31,7 @@ class PlayerTest {
     @org.junit.jupiter.api.Test
     public void TestAddCard() {
         Card card = new Card(Card.Rank.ONE, Card.Color.YELLOW);
-        player.addCard(card);
+        player.getHand().addCard(card);
         // assert that the player's hand has one more card after adding
         assertEquals(1, player.getHand().getCards().size());
         // Ensure the added card is in the player's hand
@@ -72,7 +72,7 @@ class PlayerTest {
     public void TestPlayCard() {
         Card topCard = new Card(Card.Rank.SIX, Card.Color.YELLOW);
         Card cardToPlay = new Card(Card.Rank.THREE, Card.Color.YELLOW);
-        player.addCard(cardToPlay);
+        player.getHand().addCard(cardToPlay);
 
         int initialHandSize = player.getHand().getCards().size();
         Card playedCard = player.playCard(0, topCard);
@@ -91,9 +91,9 @@ class PlayerTest {
         Card card2 = new Card(Card.Rank.EIGHT, Card.Color.YELLOW);
         Card card3 = new Card(Card.Rank.REVERSE, Card.Color.WILD);
 
-        player.addCard(card1);
-        player.addCard(card2);
-        player.addCard(card3);
+        player.getHand().addCard(card1);
+        player.getHand().addCard(card2);
+        player.getHand().addCard(card3);
 
         player.clearHand();
         int finalHandSize = player.getHand().getCards().size();

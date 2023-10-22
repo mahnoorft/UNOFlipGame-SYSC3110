@@ -22,10 +22,7 @@ public class  Player {
         hand.addCard(drawnCard);
     }
 
-    // add a card to the player's hand
-    public void addCard(Card card) {
-        hand.addCard(card);
-    }
+
     //update the player's score
     public void incrementScore(int addedScore) {
         this.score += addedScore;
