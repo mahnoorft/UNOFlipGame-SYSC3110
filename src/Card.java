@@ -14,7 +14,11 @@ public class Card {
         this.colorLight = colorLight;
         assignPointsLight();
     }
-    //Assigns the points associated with this card according to UNO Flip rules
+
+    /**
+     * Assigns the points associated with this card according to UNO Flip rules
+     */
+
     private void assignPointsLight(){
         switch (rankLight){
             case ONE -> points = 1;
@@ -32,24 +36,54 @@ public class Card {
             case DRAW2 -> points = 50;
         }
     }
-    //compares this card to another card and returns
-    // true if the card can be played according to UNO rules
+
+    /**
+     *  compares this card to another card and returns
+     *  true if the card can be played according to UNO rules
+     * @return true if this card can be played according to UNO rules
+     */
     public boolean checkValid(Card other){
         //if(unoGame.getFlip() == UNOGame.Flip.LIGHT){
         return this.rankLight == other.rankLight || this.colorLight == other.colorLight
                 || this.colorLight == Color.WILD || other.colorLight == Color.WILD;
         //}
     }
+
+    /**
+     * get the light side color
+     * @return color of light side
+     */
     public Color getColorLight() {return colorLight;}
+
+    /**
+     * set the side color to the given color
+     */
     public void setColorLight(Color colorLight) {this.colorLight = colorLight;}
+
+    /**
+     * get the rank of this card
+     * @return  light rank
+     */
     public Rank getRankLight() {return rankLight;}
+
+    /**
+     * get the points associated with this card
+     * @return points
+     */
     public int getPoints() {return points;}
 
-    //returns true if this card is a special UNO card
+    /**
+     * check if card is a special UNO card
+     * @return true if this card is a special UNO card
+     */
     public boolean isSpecial(){
         return rankLight.compareTo(Rank.NINE) > 0;
     }
 
+    /**
+     * return a string representation of this card
+     * @return the string
+     */
     public String toString(){
         return "["+this.colorLight+" "+ this.rankLight+"]";
     }
