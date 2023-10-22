@@ -16,31 +16,51 @@ public class  Player {
         this.score = 0;
     }
 
-    // draw card from deck and add to hand
+    /**
+     * draw card from deck and add to hand
+     */
     public void drawCard(Deck deck) {
         Card drawnCard = deck.draw();
         hand.addCard(drawnCard);
     }
 
 
-    //update the player's score
+    /**
+     * update the player's score
+     */
+
     public void incrementScore(int addedScore) {
         this.score += addedScore;
     }
-    // update the player's score
+
+    /**
+     *  update the player's score
+     * @return the new score
+     */
     public int getScore() {
         return score;
     }
-    // get the name of the player
+
+    /**
+     * get the name of the player
+     * @return the player's name
+     */
     public String getName() {
         return name;
     }
-    // get the player's hand
+
+    /**
+     * get the player's hand
+     * @return the player's hand
+     */
     public Hand getHand() {
         return hand;
     }
 
-    // play one of the player's cards
+    /**
+     * play one of the player's cards
+     * @return the card that is being played
+     */
     public Card playCard(int index, Card topCard) {
         // check if card index is valid
         if (index >= 0 && index < hand.getCards().size()) {
@@ -58,7 +78,10 @@ public class  Player {
         }
         return null;
     }
-    //remove all cards from the player's hand
+
+    /**
+     *  remove all cards from the player's hand
+     */
     public void clearHand(){
         hand.removeAll();
     }
