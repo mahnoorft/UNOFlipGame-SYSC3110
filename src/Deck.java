@@ -11,6 +11,7 @@ public class Deck {
         this.deck = new ArrayList<Card>();
         createDeck();
     }
+
     //initialize the number of cards according to UNO rules and add them to the deck
     public void createDeck() {
         for (int colors = 0; colors < 4; colors++){
@@ -18,15 +19,15 @@ public class Deck {
             //adding one rank 0
             deck.add(new Card(Card.Rank.ZERO, Card.Color.values()[colors]));
 
-            //adding two of ranks 1-9 and 3 special cards
+            //adding two Cards of ranks 1-9 and 3 special cards
             for(int i =1; i<13; i++){
                 for (int j =0; j<2; j++){
                     deck.add(new Card(Card.Rank.values()[i], Card.Color.values()[colors]));
                 }
             }
         }
-        //adding four of Wild Cards
-        for(int i =12; i<15; i++){
+        //adding four Cards of Wild and WildDraw2
+        for(int i =13; i<15; i++){
             for (int j =0; j<4; j++){
                 deck.add(new Card(Card.Rank.values()[i], Card.Color.WILD));
             }
@@ -46,10 +47,21 @@ public class Deck {
 
     //removes one card from the deck to be drawn
     public Card draw() {
-        return deck.remove(1);
+        if (!deck.isEmpty()){
+            return deck.remove(0);
+        }
+        return null;
     }
     //returns the size of the deck (used for testing)
     public int size() {
         return deck.size();
+    }
+
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        for (Card card : deck) {
+            sb.append(card.toString()).append(", ");
+        }
+        return sb.toString();
     }
 }
