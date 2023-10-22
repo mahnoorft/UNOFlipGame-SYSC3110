@@ -9,22 +9,27 @@ public class Hand{
     //list of cards in the hand
     private ArrayList<Card> cards;
 
+    /**Constructor for Class Deck*/
     public Hand() {
         this.cards = new ArrayList<Card>();
     }
-    //Adds a new card to the Hand
+
+    /**Adds a new card to the Hand
+     * @param card the card to be added */
     public void addCard(Card card){
         cards.add(card);
     }
-    //remove a card with index cardIndex from the hand
+    /**remove a card with index cardIndex from the hand
+     * @param cardIndex index of the card to be removed*/
     public void removeCard(int cardIndex){
         cards.remove(cardIndex);
     }
-    //remove all cards from the hand
+    /** Remove all cards from the hand*/
     public void removeAll(){
         cards.clear();
     }
-    //calculate the sum of points for all cards currently held.
+    /** Calculate the sum of points for all cards currently held.
+     * @return sum of total points of the cards held */
     public int calculateTotalPoints(){
         int points = 0;
         for(Card c: cards){
@@ -32,19 +37,19 @@ public class Hand{
         }
         return points;
     }
-    //returns an ArrayList of cards in the Hand
+    /** @return an ArrayList of cards in the Hand */
     public ArrayList<Card> getCards() {
         return this.cards;
     }
-    //returns true if only one card is left in the hand.
+    /** @return true if only one card is left in the hand.*/
     public boolean isUNO(){
         return cards.size() == 1;
     }
-    //returns true if there are no cards in the hand.
+    /** @return true if there are no cards in the hand.*/
     public boolean isEmpty(){
         return cards.isEmpty();
     }
-
+    /** @return a String representation of Hand */
     public String toString(){
         StringBuilder s = new StringBuilder();
         for(int i=0; i< cards.size(); i++){

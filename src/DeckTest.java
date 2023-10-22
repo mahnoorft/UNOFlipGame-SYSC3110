@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This Class is to test Deck class for the UNO Flip game
+ * @author Mahnoor Fatima
+ */
 class DeckTest {
 
     Deck deck;
@@ -31,38 +34,15 @@ class DeckTest {
     }
 
     @Test
-    void createDeck() {
-        //1 - size is as expected
-
-        //for loop for all colours, for loop for ranks
-
+    void testCreateDeck() {
+        //checks if deck is initialized with the the number of cards expected
+        assertEquals(108, deck.size());
+        //for loop for all colors, for loop for ranks
 
     }
 
     @Test
-    void shuffle() {
-        //create pile
-        List<Card> pile = new ArrayList<>();
-        pile.add(new Card(Card.Rank.ONE, Card.Color.RED));
-        pile.add(new Card(Card.Rank.TWO, Card.Color.BLUE));
-        pile.add(new Card(Card.Rank.THREE, Card.Color.RED));
-        pile.add(new Card(Card.Rank.REVERSE, Card.Color.GREEN));
-        pile.add(new Card(Card.Rank.SKIP, Card.Color.RED));
-        pile.add(new Card(Card.Rank.FIVE, Card.Color.BLUE));
-        pile.add(new Card(Card.Rank.SIX, Card.Color.WILD));
-        pile.add(new Card(Card.Rank.SKIP, Card.Color.BLUE));
-
-        System.out.println(pile);
-
-        //create empty deck
-        Deck deck3 = new Deck();
-        for (int i = 0; i < 108; i++){
-            deck3.draw();
-        }
-    }
-
-    @Test
-    void refill() {
+    void testRefill() {
         //Create a pile of cards
         List<Card> pile = new ArrayList<>();
         pile.add(new Card(Card.Rank.ONE, Card.Color.RED));
@@ -79,7 +59,7 @@ class DeckTest {
     }
 
     @Test
-    void draw() {
+    void testDraw() {
         //1 - After one card is drawn, deck size should decrement by one
         Card drawnCard = deck.draw();
         assertNotNull(drawnCard);
@@ -90,7 +70,7 @@ class DeckTest {
     }
 
     @Test
-    void size() {
+    void testSize() {
         //1 - checks if deck at the start is the number of cards expected
         assertEquals(108, deck.size());
 
