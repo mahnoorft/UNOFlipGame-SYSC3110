@@ -72,7 +72,7 @@ class PlayerTest {
     public void TestPlayCard() {
         Card topCard = new Card(Card.Rank.SIX, Card.Color.YELLOW);
         Card cardToPlay = new Card(Card.Rank.THREE, Card.Color.YELLOW);
-        player.addCard(cardToPlay);
+        player.getHand().addCard(cardToPlay);
 
         int initialHandSize = player.getHand().getCards().size();
         Card playedCard = player.playCard(0, topCard);
@@ -91,9 +91,9 @@ class PlayerTest {
         Card card2 = new Card(Card.Rank.EIGHT, Card.Color.YELLOW);
         Card card3 = new Card(Card.Rank.REVERSE, Card.Color.WILD);
 
-        player.addCard(card1);
-        player.addCard(card2);
-        player.addCard(card3);
+        player.getHand().addCard(card1);
+        player.getHand().addCard(card2);
+        player.getHand().addCard(card3);
 
         player.clearHand();
         int finalHandSize = player.getHand().getCards().size();
