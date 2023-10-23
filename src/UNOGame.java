@@ -40,18 +40,28 @@ public class UNOGame{
     /** Get input from user to initialize player names and add players to the players ArrayList*/
     private void createPlayers(){
         System.out.println("Welcome to UNO!");
-        for(int i=1;i<5;i++){
-            System.out.print("Please enter the name of player "+i+" (leave blank to end creating players):");
-            Player player = new Player(input.nextLine());
-            if(player.getName().equals("")){
-                if(i<3){
-                    System.out.println("Please have at least 2 players");
-                    i--;
-                    continue;
-                }else{
-                    break;
-                }
+
+        int numPlayers;
+        boolean isNumPlayerValid = false;
+
+        do {
+            System.out.println("Enter number of players (2-4): ");
+            String userInputPlayers = input.nextLine();
+
+            numPlayers = Integer.parseInt(userInputPlayers);
+
+            if (numPlayers < 2 || numPlayers>4){
+                System.out.println("Please enter a valid number of players (2-4)");
             }
+            else {
+                isNumPlayerValid = true;
+            }
+
+        } while (!isNumPlayerValid);
+
+        for(int i=1;i<=numPlayers;i++){
+            System.out.print("Please enter the name of player "+i+" :");
+            Player player = new Player(input.nextLine());
             players.add(player);
         }
     }
