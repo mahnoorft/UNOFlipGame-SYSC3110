@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
+/**This Class is to test Card class for the UNO Flip game
+ * @author Eric Cui 101237617*/
 public class CardTest {
 
     Card card1,card2,card3,card4,card5;
@@ -7,8 +9,6 @@ public class CardTest {
     /**
      * Sets up the test structure. Called before every test case method.
      */
-
-
     @org.junit.jupiter.api.Test
     //Test that the points are assigned correctly to cards
     public void testAssignPoint() {
