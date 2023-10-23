@@ -242,9 +242,4 @@ public class UNOGame{
         else if (index>(players.size()-1)) {index -= players.size();}
         return index;
     }
-
-    public static void main(String[] args) {
-        UNOGame unoGame = new UNOGame();
-        unoGame.play();
-    }
 }
