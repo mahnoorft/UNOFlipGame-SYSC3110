@@ -1,6 +1,6 @@
 /**
  * This Class represents a playing card in the UNO Flip game deck
- * @author Eric Cui
+ * @author Eric Cui 101237617
  * */
 public class Card {
     public enum Rank{ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,REVERSE,SKIP,DRAW1,WILD,DRAW2,FLIP}
