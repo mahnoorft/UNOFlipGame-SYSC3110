@@ -88,4 +88,28 @@ public class Card {
         return "["+this.colorLight+" "+ this.rankLight+"]";
     }
 
+    /**
+     * checks if obj equals this card
+     * @param obj the object being compared
+     * @return true if obj equals this card
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true; // If the objects are the same reference, they are equal.
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false; // If the other object is null or not of the same class, they are not equal.
+        }
+
+        Card otherCard = (Card) obj; // Cast the object to a Card.
+
+        // Compare the individual attributes to check for equality.
+        if (this.getColorLight() == otherCard.getColorLight() && this.getRankLight() == otherCard.getRankLight()){
+            return true;
+        }
+        return false;
+    }
+
+
 }

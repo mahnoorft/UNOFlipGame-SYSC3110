@@ -2,7 +2,7 @@ import java.util.*;
 
 /**
  * This Class represents the UNO Flip game deck, consisting of all playing cards.
- * @author Mahnoor Fatima
+ * @author Mahnoor Fatima 101192353
  */
 public class Deck {
     private List<Card> deck;
@@ -39,6 +39,7 @@ public class Deck {
     public List<Card> getDeck(){
         return this.deck;
     }
+
     /** Shuffles the cards in the deck randomly.*/
     public void shuffle() {
         Collections.shuffle(deck);

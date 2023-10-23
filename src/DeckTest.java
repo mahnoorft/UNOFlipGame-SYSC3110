@@ -28,17 +28,24 @@ class DeckTest {
             deck2.draw();
         }
     }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void testCreateDeck() {
-        //checks if deck is initialized with the the number of cards expected
+        //checks if deck is initialized with the number of cards expected
         assertEquals(108, deck.size());
-        //for loop for all colors, for loop for ranks
 
+        //for loop for all colors excluding WILD, for loop for ranks (1-9, and SKIP, REVERSE, DRAW1)
+        for (int colors = 0; colors < 4; colors++){
+            for(int ranks = 0; ranks < 13; ranks++){
+                Card cardToCheck = new Card(Card.Rank.values()[ranks], Card.Color.values()[colors]);
+                assertTrue(deck.getDeck().contains(cardToCheck));
+            }
+        }
+
+        //check that the WILD colour exists, and its two ranks WILD, DRAW2
+        for(int ranks = 13; ranks < 15; ranks++){
+            Card cardToCheck = new Card(Card.Rank.values()[ranks], Card.Color.WILD);
+            assertTrue(deck.getDeck().contains(cardToCheck));
+        }
     }
 
     @Test
@@ -77,6 +84,5 @@ class DeckTest {
         //2 - after one card is draw deck size should decrement by one
         deck.draw();
         assertEquals(107, deck.size());
-
     }
 }
