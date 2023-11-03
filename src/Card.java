@@ -88,6 +88,10 @@ public class Card {
         return "["+this.colorLight+" "+ this.rankLight+"]";
     }
 
+    public String toString2(){
+        return this.colorLight+"_"+ this.rankLight;
+    }
+
     /**
      * checks if obj equals this card
      * @param obj the object being compared

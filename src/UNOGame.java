@@ -252,4 +252,9 @@ public class UNOGame{
         else if (index>(players.size()-1)) {index -= players.size();}
         return index;
     }
+
+    // Method to retrieve the current player's hand
+    public Hand getCurrentPlayerHand() {
+        return players.get(currentTurn).getHand();
+    }
 }
