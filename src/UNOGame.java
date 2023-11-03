@@ -14,6 +14,7 @@ public class UNOGame{
     private boolean gameActive;
     private Scanner input;
 
+    /** Constructor for class UNOGame*/
     public UNOGame(){
         this.players = new ArrayList<Player>();
         this.deck = new Deck();
@@ -26,6 +27,8 @@ public class UNOGame{
         createPlayers();
 
     }
+
+    /** Initializes the game and keeps the game running until a winner is announced*/
     public void play(){
         initializeGame();
         gameActive = true;
@@ -34,24 +37,35 @@ public class UNOGame{
             currentTurn = getNextPlayerIndex();
         }
     }
-
+    /** Get input from user to initialize player names and add players to the players ArrayList*/
     private void createPlayers(){
         System.out.println("Welcome to UNO!");
-        for(int i=1;i<5;i++){
-            System.out.print("Please enter the name of player "+i+" (leave blank to end creating players):");
-            Player player = new Player(input.nextLine());
-            if(player.getName().equals("")){
-                if(i<3){
-                    System.out.println("Please have at least 2 players");
-                    i--;
-                    continue;
-                }else{
-                    break;
-                }
+
+        int numPlayers;
+        boolean isNumPlayerValid = false;
+
+        do {
+            System.out.println("Enter number of players (2-4): ");
+            String userInputPlayers = input.nextLine();
+
+            numPlayers = Integer.parseInt(userInputPlayers);
+
+            if (numPlayers < 2 || numPlayers>4){
+                System.out.println("Please enter a valid number of players (2-4)");
             }
+            else {
+                isNumPlayerValid = true;
+            }
+
+        } while (!isNumPlayerValid);
+
+        for(int i=1;i<=numPlayers;i++){
+            System.out.print("Please enter the name of player "+i+" :");
+            Player player = new Player(input.nextLine());
             players.add(player);
         }
     }
+    /** Distribute playing cards and draw the first card from deck*/
     private void initializeGame(){
         deck = new Deck();
         pile = new ArrayList<Card>();
@@ -68,6 +82,8 @@ public class UNOGame{
         this.pile.add(topCard);
 
     }
+
+    /** Perform all functionalities for taking a turn in UNO*/
     private void takeTurn() {
         int userInput = -1;
 
@@ -142,10 +158,12 @@ public class UNOGame{
 
     }
 
+    /** Skip the turn of the next player*/
     private void skipTurn(){
         currentTurn = getNextPlayerIndex();
         System.out.println("Skipped player "+players.get(currentTurn).getName());
     }
+    /** Reverse the turn direction*/
     private void reverseTurn(){
         if(players.size()==2){
             skipTurn();
@@ -155,6 +173,7 @@ public class UNOGame{
             System.out.println("Reversed the direction of the turn to " + turnDirection);
         }
     }
+    /** Get input on new color for WILD cards*/
     private void chooseNewColor(){
         while(topCard.getColorLight()== Card.Color.WILD){
             System.out.print("Please enter your choice of color: ");
@@ -168,6 +187,8 @@ public class UNOGame{
             }
         }
     }
+    /** Draws the number of cards specified in numCards for the next Player
+     * @param numCards number of cards to draw  */
     private void nextPlayerDrawCard(int numCards){
 
         System.out.println("Player " + players.get(getNextPlayerIndex()).getName()+" draw "+numCards+" cards");
@@ -176,7 +197,7 @@ public class UNOGame{
         }
     }
 
-    // declare round winner when a player plays all the cards in hand
+    /** Declare round winner when a player plays all the cards in hand*/
     private void winRound() {
         Player winner = players.get(currentTurn);
         calculateWinnerScore();
@@ -186,7 +207,8 @@ public class UNOGame{
         }else
             gameActive = false;
     }
-    // calculate the score of the player by adding up the cards points held by other players.
+    /** Return the score of the player by adding up the cards points held by other players.
+     * @return score of winner for this round*/
     private int calculateWinnerScore(){
         int score = 0;
         for (int i=0; i<players.size(); i++) {
@@ -199,6 +221,8 @@ public class UNOGame{
         players.get(currentTurn).incrementScore(score);
         return score;
     }
+    /** Execute the spaecial card function based on the rank
+     * @param card the special card played*/
     private void executeSpecialFunction(Card card){
         switch (card.rankLight){
             case REVERSE:
@@ -220,15 +244,12 @@ public class UNOGame{
                 break;
         }
     }
+    /** Return the index of the next player
+     * @return index of the next player*/
     private int getNextPlayerIndex(){
         int index = currentTurn + turnDirection;
         if (index < 0){index += players.size();}
         else if (index>(players.size()-1)) {index -= players.size();}
         return index;
-    }
-
-    public static void main(String[] args) {
-        UNOGame unoGame = new UNOGame();
-        unoGame.play();
     }
 }

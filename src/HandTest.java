@@ -3,7 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This is the JUnit test class for Hand.
- * @author Areej Mahmoud
+ * @author Areej Mahmoud 101218260
  */
 
 public class HandTest {

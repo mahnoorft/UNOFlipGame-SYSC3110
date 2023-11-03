@@ -28,15 +28,6 @@ class PlayerTest {
         assertEquals(handSizeBefore + 1, handSizeAfter);
     }
 
-    @org.junit.jupiter.api.Test
-    public void TestAddCard() {
-        Card card = new Card(Card.Rank.ONE, Card.Color.YELLOW);
-        player.getHand().addCard(card);
-        // assert that the player's hand has one more card after adding
-        assertEquals(1, player.getHand().getCards().size());
-        // Ensure the added card is in the player's hand
-        assertTrue(player.getHand().getCards().contains(card));
-    }
 
     @org.junit.jupiter.api.Test
     public void TestIncrementScore() {
