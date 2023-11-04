@@ -12,7 +12,7 @@ public class UNOGameFrame extends JFrame{
 
     public UNOGameFrame()  {
         super("UNO Flip Game!");
-        this.game = game;
+        this.game = game; //NEED TO ADD UNOGame game as parameter to the constructor
         //initialize menu and menu item
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
@@ -60,58 +60,6 @@ public class UNOGameFrame extends JFrame{
         this.setVisible(true);
 
     }
-    public ArrayList<String> createPlayersView() {
-        //display player selection dialogue and get number of players
-        Object[] possibilities = {2, 3, 4};
-        int numPlayers = (int) JOptionPane.showInputDialog(
-                this,
-                "Welcome to UNO!\n"
-                        + "Choose the number of players:",
-                "Select Players",
-                JOptionPane.PLAIN_MESSAGE, null,
-                possibilities,
-                2);
 
-        //create panel with JTextFields to set player names based on numPlayers
-        JPanel namePanel = new JPanel();
-        namePanel.setLayout(new GridLayout(numPlayers, 0));
-        ArrayList<JTextField> fieldList = new ArrayList<>();
-        for (int i = 1; i <= numPlayers; i++) {
-            namePanel.add(new JLabel("Player " + i + " name:"));
-            JTextField f = new JTextField(10);
-            namePanel.add(f);
-            fieldList.add(f);
-        }
-
-        boolean validInput = false;
-        ArrayList<String> nameList = null;
-        while (!validInput) {
-            //display input dialogue to set player names
-            int result = JOptionPane.showConfirmDialog(this, namePanel,
-                    "Create Players", JOptionPane.OK_CANCEL_OPTION);
-
-            //check that all names are valid and store names in ArrayList
-            validInput = true;
-            nameList = new ArrayList<>();
-            if (result == JOptionPane.OK_OPTION) {
-                for (JTextField f : fieldList) {
-                    String input = f.getText();
-                    //if any field is empty, show error message and break
-                    if (input.isBlank() || input.isEmpty()) {
-                        JOptionPane.showMessageDialog(this, "Please enter a name for all players!",
-                                "Invalid Input", JOptionPane.ERROR_MESSAGE);
-                        validInput = false;
-                        break;
-                    } else {
-                        nameList.add(input);
-                    }
-                }
-            }
-        }
-        return nameList;
-    }
-    public static void main(String[] args) {
-        UNOGameFrame f = new UNOGameFrame();
-        f.createPlayersView();
-    }
+    public static void main(String[] args) {new UNOGameFrame();}
 }
