@@ -10,6 +10,8 @@ public class CreatePlayersView {
 
     //list of player names inputted by user
     private ArrayList<String> nameList;
+
+    /** Constructor for class CreatePlayersView*/
     public CreatePlayersView() {
         //display player selection dialogue and get number of players
         Object[] possibilities = {2, 3, 4};
@@ -57,6 +59,10 @@ public class CreatePlayersView {
                 }
             }
         }
+    }
+    //returns list of names that user has inputted
+    public ArrayList<String> getNameList(){
+        return this.nameList;
     }
     public static void main(String[] args) {new CreatePlayersView();}
 }

@@ -12,7 +12,7 @@ public class UNOGame{
     private Card topCard;
     private boolean currentSideLight;
     private boolean gameActive;
-    private Scanner input;
+    private Scanner input; //not used with GUI anymore
 
     /** Constructor for class UNOGame*/
     public UNOGame(){
@@ -33,35 +33,18 @@ public class UNOGame{
         initializeGame();
         gameActive = true;
         while(gameActive){
-            takeTurn();
+            //takeTurn();
             currentTurn = getNextPlayerIndex();
         }
     }
-    /** Get input from user to initialize player names and add players to the players ArrayList*/
+    /** Initialize player names and add players to the players ArrayList*/
     private void createPlayers(){
-        System.out.println("Welcome to UNO!");
+        //CHANGE TO WORK CORRECTLY FOR MVC
+        CreatePlayersView view = new CreatePlayersView();
 
-        int numPlayers;
-        boolean isNumPlayerValid = false;
-
-        do {
-            System.out.println("Enter number of players (2-4): ");
-            String userInputPlayers = input.nextLine();
-
-            numPlayers = Integer.parseInt(userInputPlayers);
-
-            if (numPlayers < 2 || numPlayers>4){
-                System.out.println("Please enter a valid number of players (2-4)");
-            }
-            else {
-                isNumPlayerValid = true;
-            }
-
-        } while (!isNumPlayerValid);
-
-        for(int i=1;i<=numPlayers;i++){
-            System.out.print("Please enter the name of player "+i+" :");
-            Player player = new Player(input.nextLine());
+        //create a players with the given names in playerNames
+        for(String name: view.getNameList()){
+            Player player = new Player(name);
             players.add(player);
         }
     }
