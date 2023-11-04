@@ -11,6 +11,7 @@ public class UNOGameController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
 
     }
 }
