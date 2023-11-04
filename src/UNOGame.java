@@ -33,7 +33,7 @@ public class UNOGame{
         initializeGame();
         gameActive = true;
         while(gameActive){
-            //takeTurn();
+            takeTurn();
             currentTurn = getNextPlayerIndex();
         }
     }
