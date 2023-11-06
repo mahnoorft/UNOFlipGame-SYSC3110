@@ -30,35 +30,33 @@ public class UNOGameFrame extends JFrame {
         mainPanel = new JPanel(new BorderLayout());
         this.add(mainPanel);
         playerCardsPanel = new JPanel(new FlowLayout());
+        //playerCardsPanel = new JPanel(new GridLayout(1, 0));
         JList<Player> playerList = new JList<>();
         topCard = new JPanel();
         topCard.add(new JTextField("top card"));
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
+        JScrollPane scrollPane = new JScrollPane(playerCardsPanel);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+
         //add components to main Panel
-        mainPanel.add(playerCardsPanel, BorderLayout.SOUTH);
+        mainPanel.add(scrollPane, BorderLayout.SOUTH);
         mainPanel.add(topCard, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.EAST);
         mainPanel.add(playerList, BorderLayout.WEST);
         JTextField playerNameField = new JTextField("Player name");
         mainPanel.add(playerNameField, BorderLayout.NORTH);
 
-        System.out.println("Start");
-        displayPlayerHand();
-        System.out.println("end");
 
+        displayPlayerHand();
 
         //initialize and add buttons to buttonPanel
         drawCardButton = new JButton("Draw Card");
         endTurnButton = new JButton("End Turn");
         buttonPanel.add(drawCardButton);
         buttonPanel.add(endTurnButton);
-
-       String imagePath = IMAGES_FOLDER_PATH + "BLUE_TWO.png";
-        ImageIcon cardImage = new ImageIcon(imagePath);
-        JLabel cardLabel = new JLabel(cardImage);
-        playerCardsPanel.add(cardLabel);
 
 
         //add ActionListeners and initialize controller
@@ -81,7 +79,8 @@ public class UNOGameFrame extends JFrame {
         List<String> cardNames = game.getCurrentPlayerCardNames();
 
         for (String cardName : cardNames) {
-            String imagePath = IMAGES_FOLDER_PATH + cardName; // Assuming cards are named with their respective COLOR_RANK.png
+            // Assuming cards are named with their respective COLOR_RANK.png
+            String imagePath = IMAGES_FOLDER_PATH + cardName;
             ImageIcon icon = new ImageIcon(imagePath);
             JLabel label = new JLabel(icon);
             playerCardsPanel.add(label);
