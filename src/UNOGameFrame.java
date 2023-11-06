@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UNOGameFrame extends JFrame {
     UNOGame game;
@@ -11,12 +12,12 @@ public class UNOGameFrame extends JFrame {
     JMenu gameMenu;
     ArrayList<ImageIcon> iconImages;
     Card card;
+    private static final String IMAGES_FOLDER_PATH = "src/images/"; // Path to the images folder
 
-    public UNOGameFrame() {
+    public UNOGameFrame( UNOGame game) {
         super("UNO Flip Game!");
         this.game = game;
 
-        Hand currentPlayerHand = game.getCurrentPlayerHand();
         //initialize menu and menu item
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
@@ -43,26 +44,22 @@ public class UNOGameFrame extends JFrame {
         JTextField playerNameField = new JTextField("Player name");
         mainPanel.add(playerNameField, BorderLayout.NORTH);
 
+        System.out.println("Start");
+        displayPlayerHand();
+        System.out.println("end");
+
+
         //initialize and add buttons to buttonPanel
         drawCardButton = new JButton("Draw Card");
         endTurnButton = new JButton("End Turn");
         buttonPanel.add(drawCardButton);
         buttonPanel.add(endTurnButton);
 
+       String imagePath = IMAGES_FOLDER_PATH + "BLUE_TWO.png";
+        ImageIcon cardImage = new ImageIcon(imagePath);
+        JLabel cardLabel = new JLabel(cardImage);
+        playerCardsPanel.add(cardLabel);
 
-        //display current player cards
-        iconImages = new ArrayList<>();
-
-        for (Card card : currentPlayerHand.getCards()){
-            String name = card.toString2();
-            ImageIcon icon = new ImageIcon("images/" + name + ".png");
-            iconImages.add(icon);
-        }
-
-        for (ImageIcon icon : iconImages) {
-            JLabel label = new JLabel(icon);
-            playerCardsPanel.add(label);
-        }
 
         //add ActionListeners and initialize controller
         controller = new UNOGameController(game, this);
@@ -75,10 +72,30 @@ public class UNOGameFrame extends JFrame {
         this.setSize(800, 800);
         this.setVisible(true);
 
+
     }
 
+    private void displayPlayerHand() {
+        playerCardsPanel.removeAll();
+        game.initializeGame();
+        List<String> cardNames = game.getCurrentPlayerCardNames();
+
+        for (String cardName : cardNames) {
+            String imagePath = IMAGES_FOLDER_PATH + cardName; // Assuming cards are named with their respective COLOR_RANK.png
+            ImageIcon icon = new ImageIcon(imagePath);
+            JLabel label = new JLabel(icon);
+            playerCardsPanel.add(label);
+        }
+
+        // Revalidate and repaint the playerCardsPanel to reflect the changes
+        playerCardsPanel.revalidate();
+        playerCardsPanel.repaint();
+    }
+
+
     public static void main(String[] args) {
-        UNOGameFrame unoGameFrame = new UNOGameFrame();
-        unoGameFrame.setVisible(true);
+        UNOGame game = new UNOGame();
+        new UNOGameFrame(game);
+
     }
 }

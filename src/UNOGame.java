@@ -30,7 +30,9 @@ public class UNOGame{
 
     /** Initializes the game and keeps the game running until a winner is announced*/
     public void play(){
+        System.out.println("Initializing game");
         initializeGame();
+        System.out.println("Initializing done");
         gameActive = true;
         while(gameActive){
             takeTurn();
@@ -66,7 +68,7 @@ public class UNOGame{
         }
     }
     /** Distribute playing cards and draw the first card from deck*/
-    private void initializeGame(){
+    public void initializeGame(){
         deck = new Deck();
         pile = new ArrayList<Card>();
         // initialize all player names and distribute 7 cards to each
@@ -254,7 +256,22 @@ public class UNOGame{
     }
 
     // Method to retrieve the current player's hand
-    public Hand getCurrentPlayerHand() {
-        return players.get(currentTurn).getHand();
+//    public Hand getCurrentPlayerHand() {
+//        return players.get(currentTurn).getHand();
+//    }
+
+    /** Get the current player's cards in the format COLOR_RANK
+     * @return List of strings containing the cards in the format COLOR_RANK */
+    public List<String> getCurrentPlayerCardNames() {
+        List<String> cardNames = new ArrayList<>();
+        Hand currentPlayerHand = players.get(currentTurn).getHand();
+        List<Card> cards = currentPlayerHand.getCards();
+
+        for (Card card : cards) {
+            String cardName = card.getColorLight().name() + "_" + card.getRankLight().name() +".png";
+            cardNames.add(cardName);
+        }
+
+        return cardNames;
     }
 }
