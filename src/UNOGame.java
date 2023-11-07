@@ -9,7 +9,7 @@ public class UNOGame{
     private ArrayList<Card> pile;
     private int currentTurn;
     private int turnDirection;
-    private Card topCard;
+    public Card topCard;
     private boolean currentSideLight;
     private boolean gameActive;
     private Scanner input; //not used with GUI anymore
