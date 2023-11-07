@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class UNOGameFrame extends JFrame{
     UNOGame game;
     UNOGameController controller;
-    JPanel playerCardsPanel, topCard, buttonPanel;
+    JPanel mainPanel, playerCardsPanel, topCard, buttonPanel;
     JButton drawCardButton, nextTurnButton;
     JMenuBar menuBar;
     JMenu gameMenu;
@@ -22,6 +22,9 @@ public class UNOGameFrame extends JFrame{
         gameMenu.add(newGame);
 
         //set up the content pane
+        mainPanel = new JPanel(new BorderLayout());
+        this.add(mainPanel);
+
         this.setLayout(new BorderLayout());
         playerCardsPanel = new JPanel(new FlowLayout());
         playerCardsPanel.add(new JTextField("Player cards"));
@@ -32,12 +35,12 @@ public class UNOGameFrame extends JFrame{
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
         //add components to main Panel
-        add(playerCardsPanel,BorderLayout.SOUTH);
-        add(topCard,BorderLayout.CENTER);
-        add(buttonPanel,BorderLayout.EAST);
-        add(playerList,BorderLayout.WEST);
+        mainPanel.add(playerCardsPanel,BorderLayout.SOUTH);
+        mainPanel.add(topCard,BorderLayout.CENTER);
+        mainPanel.add(buttonPanel,BorderLayout.EAST);
+        mainPanel.add(playerList,BorderLayout.WEST);
         JTextField playerNameField = new JTextField("Player name");
-        add(playerNameField,BorderLayout.NORTH);
+        mainPanel.add(playerNameField,BorderLayout.NORTH);
 
         //initialize and add buttons to buttonPanel
         drawCardButton = new JButton("Draw Card");
