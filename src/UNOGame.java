@@ -210,7 +210,7 @@ public class UNOGame{
     }
     /** Execute the spaecial card function based on the rank
      * @param card the special card played*/
-    private void executeSpecialFunction(Card card){
+    public void executeSpecialFunction(Card card){
         switch (card.rankLight){
             case REVERSE:
                 this.reverseTurn();
@@ -260,6 +260,11 @@ public class UNOGame{
         return cardNames;
     }
 
+    /**
+     *
+     * @param index the index of the card that is being played in the current player's hand
+     * @return the card that is being played
+     */
     public Card actionPlayCard(int index){
         if(canPlayCard == 0){
             System.out.println("Player attempt to play card at illegal turns"); return null;}
@@ -284,9 +289,10 @@ public class UNOGame{
         return false;
     }
     public void actionEndTurn(){
-
+        currentTurn = getNextPlayerIndex();
+        canPlayCard = 2;
     }
-    private void actionChooseColor(Card.Color color){
+    public void actionChooseColor(Card.Color color){
         topCard.setColorLight(color);
     }
 
