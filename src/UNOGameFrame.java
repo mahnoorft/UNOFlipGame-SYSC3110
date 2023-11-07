@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class UNOGameFrame extends JFrame {
+public class UNOGameFrame extends JFrame implements UNOGameHandler {
     UNOGame game;
     UNOGameController controller;
     JPanel mainPanel, playerCardsPanel, topCardPanel, buttonPanel, winRoundPanel;
@@ -181,6 +181,26 @@ public class UNOGameFrame extends JFrame {
                     System.out.println("Invalid Input");
             }
         }
+
+    }
+
+    @Override
+    public void handleDrawCard(UNOGameEvent e) {
+
+    }
+
+    @Override
+    public void handlePlayCard(UNOGameEvent e) {
+
+    }
+
+    @Override
+    public void handleWinRound(UNOGameEvent e) {
+
+    }
+
+    @Override
+    public void handleNextTurn(UNOGameEvent e) {
 
     }
 }
