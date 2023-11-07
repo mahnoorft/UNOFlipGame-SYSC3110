@@ -2,12 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class UNOGameFrame extends JFrame {
     UNOGame game;
     UNOGameController controller;
-    JPanel mainPanel, playerCardsPanel, topCardPanel, buttonPanel;
-    JButton drawCardButton, endTurnButton;
+    JPanel mainPanel, playerCardsPanel, topCardPanel, buttonPanel, winRoundPanel;
+    JButton drawCardButton, endTurnButton, newRoundButton;
+    JLabel winRoundMessage,winRoundMessagePoints;
     JMenuBar menuBar;
     JMenu gameMenu;
     ArrayList<ImageIcon> iconImages;
@@ -66,6 +68,25 @@ public class UNOGameFrame extends JFrame {
         endTurnButton.addActionListener(controller);
         newGame.addActionListener(controller);
 
+        winRoundPanel = new JPanel(null);
+        winRoundMessage = new JLabel("Error",SwingConstants.CENTER);
+        winRoundMessage.setBounds(0,100,800,200);
+        winRoundMessage.setFont(new Font("Serif", Font.PLAIN, 36));
+        winRoundMessage.setHorizontalAlignment(SwingConstants.CENTER);
+        winRoundMessagePoints = new JLabel("Error",SwingConstants.CENTER);
+        winRoundMessagePoints.setBounds(0,200,800,200);
+        winRoundMessagePoints.setFont(new Font("Serif", Font.PLAIN, 36));
+        winRoundMessagePoints.setHorizontalAlignment(SwingConstants.CENTER);
+
+        winRoundPanel.add(winRoundMessage);
+        winRoundPanel.add(winRoundMessagePoints);
+        newRoundButton = new JButton("New Round");
+        newRoundButton.setBounds(300,500,200,80);
+        newRoundButton.setFont(new Font("Monospaced Bold", Font.PLAIN, 24));
+
+        winRoundPanel.add(newRoundButton);
+        winRoundPanel.setVisible(false);
+
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 800);
@@ -104,10 +125,52 @@ public class UNOGameFrame extends JFrame {
         topCardPanel.revalidate();
         topCardPanel.repaint();
     }
+    public void winRoundScreen(String winner,int totalPoints,int points){
+        mainPanel.setVisible(false);
+        winRoundPanel.setVisible(true);
+        winRoundMessage.setText( winner + " wins the round" );
+        winRoundMessagePoints.setText( "Points: " + totalPoints + " (+" + points+" points this round)");
+        newRoundButton.setText("New Round");
+        this.add(winRoundPanel);
+
+    }
+
+    public void winGameScreen(String winner,int totalPoints){
+        mainPanel.setVisible(false);
+        winRoundPanel.setVisible(true);
+        winRoundMessage.setText( winner + " wins the game!" );
+        winRoundMessagePoints.setText( "Points: " + totalPoints);
+        newRoundButton.setText("Finish");
+        this.add(winRoundPanel);
+    }
+
+    public void restartRoundScreen(){
+        mainPanel.setVisible(true);
+
+        winRoundPanel.setVisible(false);
+    }
 
     public static void main(String[] args) {
         UNOGame game = new UNOGame();
-        new UNOGameFrame(game);
+        UNOGameFrame unoGameFrame = new UNOGameFrame(game);
+        Scanner input = new Scanner(System.in);
+        while(true){
+            String x = input.nextLine();
+            switch (x){
+
+                case "winRound":
+                    unoGameFrame.winRoundScreen("test player",200,4);
+                    break;
+                case "game":
+                    unoGameFrame.restartRoundScreen();
+                    break;
+                case "winGame":
+                    unoGameFrame.winGameScreen("test player",569);
+                    break;
+                default:
+                    System.out.println("Invalid Input");
+            }
+        }
 
     }
 }
