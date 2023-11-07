@@ -13,6 +13,8 @@ public class UNOGame{
     private boolean currentSideLight;
     private boolean gameActive;
     private Scanner input; //not used with GUI anymore
+    private int canPlayCard;
+
 
     /** Constructor for class UNOGame*/
     public UNOGame(){
@@ -257,4 +259,35 @@ public class UNOGame{
 
         return cardNames;
     }
+
+    public Card actionPlayCard(int index){
+        if(canPlayCard == 0){
+            System.out.println("Player attempt to play card at illegal turns"); return null;}
+        Player player = players.get(currentTurn);
+        if(canPlayCard == 1 && index != player.getHand().getCards().size()-1){
+            System.out.println("Player attempt to play other cards when a card is drawn");return null;
+        }
+        if(!player.getHand().getCards().get(index).checkValid(topCard)){
+            System.out.println("Player attempt to play an illegal card");return null;
+        }
+        Card c = player.playCard(index,topCard);
+        canPlayCard = 0;
+        return c;
+    }
+
+    public boolean actionDrawCard(){
+        Card c = players.get(currentTurn).drawCard(deck);
+        if(c.checkValid(topCard)){
+            canPlayCard = 1;
+            return true;
+        }
+        return false;
+    }
+    public void actionEndTurn(){
+
+    }
+    private void actionChooseColor(Card.Color color){
+        topCard.setColorLight(color);
+    }
+
 }

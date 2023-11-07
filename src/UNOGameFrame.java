@@ -125,6 +125,12 @@ public class UNOGameFrame extends JFrame {
         topCardPanel.revalidate();
         topCardPanel.repaint();
     }
+
+    /** Display the win round screen when a player wins the round
+     * @param winner The name of the winner player.
+     * @param totalPoints The total points the winner have.
+     * @param points The amount of points the winner gained this round.
+     * */
     public void winRoundScreen(String winner,int totalPoints,int points){
         mainPanel.setVisible(false);
         winRoundPanel.setVisible(true);
@@ -135,6 +141,10 @@ public class UNOGameFrame extends JFrame {
 
     }
 
+    /** Display the win game screen when a player wins the game
+     * @param winner The name of the winner.
+     * @param totalPoints The total points the winner have.
+     * */
     public void winGameScreen(String winner,int totalPoints){
         mainPanel.setVisible(false);
         winRoundPanel.setVisible(true);
