@@ -64,5 +64,4 @@ public class CreatePlayersView {
     public ArrayList<String> getNameList(){
         return this.nameList;
     }
-    public static void main(String[] args) {new CreatePlayersView();}
 }
