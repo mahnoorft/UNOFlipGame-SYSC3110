@@ -87,6 +87,9 @@ public class UNOGameFrame extends JFrame {
         winRoundPanel.add(newRoundButton);
         winRoundPanel.setVisible(false);
 
+        //Edit the visuals of buttons
+        //create action commands for when button is clicked
+
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 800);

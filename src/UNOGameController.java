@@ -17,6 +17,8 @@ public class UNOGameController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
+        //action commands for when the button is pressed
+        //if buttons are clicked, call model class with action buttons
 
     }
 }
