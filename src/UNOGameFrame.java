@@ -13,12 +13,15 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     JMenuBar menuBar;
     JMenu gameMenu;
     ArrayList<ImageIcon> iconImages;
+    ArrayList<JButton> cardButtonList;
     Card card;
     private static final String IMAGES_FOLDER_PATH = "src/images/"; // Path to the images folder
 
     public UNOGameFrame( UNOGame game) {
         super("UNO Flip Game!");
         this.game = game;
+        this.cardButtonList = new ArrayList<>();
+        controller = new UNOGameController(game, this);
 
         //initialize menu and menu item
         menuBar = new JMenuBar();
@@ -66,9 +69,11 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
 
         //add ActionListeners and initialize controller
-        controller = new UNOGameController(game, this);
+
         drawCardButton.addActionListener(controller);
+        drawCardButton.setActionCommand("draw");
         endTurnButton.addActionListener(controller);
+        endTurnButton.setActionCommand("end");
         newGame.addActionListener(controller);
 
         winRoundPanel = new JPanel(null);
@@ -106,12 +111,15 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         List<String> cardNames = game.getCurrentPlayerCardNames();
 
-        for (String cardName : cardNames) {
+        for (int i = 0; i< cardNames.size(); i++) {
             // Assuming cards are named with their respective COLOR_RANK.png
-            String imagePath = IMAGES_FOLDER_PATH + cardName;
+            String imagePath = IMAGES_FOLDER_PATH + cardNames.get(i);
             ImageIcon icon = new ImageIcon(imagePath);
-            JLabel label = new JLabel(icon);
-            playerCardsPanel.add(label);
+            JButton button = new JButton(icon);
+            button.addActionListener(controller);
+            button.setActionCommand(""+i);
+            cardButtonList.add(button);
+            playerCardsPanel.add(button);
         }
 
         // Revalidate and repaint the playerCardsPanel to reflect the changes
@@ -197,7 +205,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     @Override
     public void handlePlayCard(UNOGameEvent e) {
-
+        displayPlayerHand();
+        displayTopCard();
+        System.out.println("test2");
     }
 
     @Override

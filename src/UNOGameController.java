@@ -15,7 +15,18 @@ public class UNOGameController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("test");
         String command = e.getActionCommand();
+        if (command=="draw"){
+
+        }
+        else if(command == "end"){
+
+        }
+        else{
+            int index = Integer.parseInt(command);
+            System.out.println(model.actionPlayCard(index));
+        }
 
         //action commands for when the button is pressed
         //if buttons are clicked, call model class with action buttons
