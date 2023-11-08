@@ -30,7 +30,7 @@ public class UNOGame{
         this.input = new Scanner(System.in);
         this.view = new ArrayList<UNOGameHandler>();
         createPlayers();
-
+        canPlayCard = 2;
     }
 
     /** Initializes the game and keeps the game running until a winner is announced*/
@@ -269,6 +269,7 @@ public class UNOGame{
      * @return the card that is being played
      */
     public Card actionPlayCard(int index){
+        boolean wildPlayed = false;
         if(canPlayCard == 0){
             System.out.println("Player attempt to play card at illegal turns"); return null;}
         Player player = players.get(currentTurn);
@@ -281,7 +282,7 @@ public class UNOGame{
         Card c = player.playCard(index,topCard);
         canPlayCard = 0;
         for (UNOGameHandler view: view){
-            view.handlePlayCard(new UNOGameEvent(this));
+            view.handlePlayCard(new UNOGameEvent(this, wildPlayed));
         }
         return c;
     }

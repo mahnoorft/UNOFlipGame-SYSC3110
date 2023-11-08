@@ -15,6 +15,7 @@ public class UNOGameController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("test");
         String command = e.getActionCommand();
         if (command=="draw"){
 

@@ -9,7 +9,7 @@ public class UNOGameEvent extends EventObject {
      * Constructs a prototypical Event.
      * @param model the object on which the Event initially occurred
      */
-    public UNOGameEvent(UNOGame model) {
+    public UNOGameEvent(UNOGame model, boolean wildPlayed) {
         super(model);
     }
 }

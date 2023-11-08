@@ -13,12 +13,15 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     JMenuBar menuBar;
     JMenu gameMenu;
     ArrayList<ImageIcon> iconImages;
+    ArrayList<JButton> cardButtonList;
     Card card;
     private static final String IMAGES_FOLDER_PATH = "src/images/"; // Path to the images folder
 
     public UNOGameFrame( UNOGame game) {
         super("UNO Flip Game!");
         this.game = game;
+        this.cardButtonList = new ArrayList<>();
+        controller = new UNOGameController(game, this);
 
         //initialize menu and menu item
         menuBar = new JMenuBar();
@@ -63,7 +66,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
 
         //add ActionListeners and initialize controller
-        controller = new UNOGameController(game, this);
+
         drawCardButton.addActionListener(controller);
         drawCardButton.setActionCommand("draw");
         endTurnButton.addActionListener(controller);
@@ -109,6 +112,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             JButton button = new JButton(icon);
             button.addActionListener(controller);
             button.setActionCommand(""+i);
+            cardButtonList.add(button);
             playerCardsPanel.add(button);
         }
 
@@ -195,7 +199,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     @Override
     public void handlePlayCard(UNOGameEvent e) {
-
+        displayPlayerHand();
+        displayTopCard();
+        System.out.println("test2");
     }
 
     @Override
