@@ -57,9 +57,12 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         //initialize and add buttons to buttonPanel
         drawCardButton = new JButton("Draw Card");
+        drawCardButton.setMargin(new Insets(15, 20, 15, 10));
         endTurnButton = new JButton("End Turn");
+        endTurnButton.setMargin(new Insets(15,20,15, 20));
         buttonPanel.add(drawCardButton);
         buttonPanel.add(endTurnButton);
+
 
 
         //add ActionListeners and initialize controller

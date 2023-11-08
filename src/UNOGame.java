@@ -284,6 +284,7 @@ public class UNOGame{
         Card c = players.get(currentTurn).drawCard(deck);
         if(c.checkValid(topCard)){
             canPlayCard = 1;
+
             return true;
         }
         return false;
