@@ -15,6 +15,8 @@ public class UNOGame{
     private Scanner input; //not used with GUI anymore
     private int canPlayCard;
 
+    List<UNOGameHandler> view;
+
 
     /** Constructor for class UNOGame*/
     public UNOGame(){
@@ -26,6 +28,7 @@ public class UNOGame{
         this.topCard = null;
         this.currentSideLight = true;
         this.input = new Scanner(System.in);
+        this.view = new ArrayList<UNOGameHandler>();
         createPlayers();
 
     }
@@ -277,6 +280,9 @@ public class UNOGame{
         }
         Card c = player.playCard(index,topCard);
         canPlayCard = 0;
+        for (UNOGameHandler view: view){
+            view.handlePlayCard(new UNOGameEvent(this));
+        }
         return c;
     }
 

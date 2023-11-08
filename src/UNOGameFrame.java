@@ -65,7 +65,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         //add ActionListeners and initialize controller
         controller = new UNOGameController(game, this);
         drawCardButton.addActionListener(controller);
+        drawCardButton.setActionCommand("draw");
         endTurnButton.addActionListener(controller);
+        endTurnButton.setActionCommand("end");
         newGame.addActionListener(controller);
 
         winRoundPanel = new JPanel(null);
@@ -100,12 +102,14 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         List<String> cardNames = game.getCurrentPlayerCardNames();
 
-        for (String cardName : cardNames) {
+        for (int i = 0; i< cardNames.size(); i++) {
             // Assuming cards are named with their respective COLOR_RANK.png
-            String imagePath = IMAGES_FOLDER_PATH + cardName;
+            String imagePath = IMAGES_FOLDER_PATH + cardNames.get(i);
             ImageIcon icon = new ImageIcon(imagePath);
-            JLabel label = new JLabel(icon);
-            playerCardsPanel.add(label);
+            JButton button = new JButton(icon);
+            button.addActionListener(controller);
+            button.setActionCommand(""+i);
+            playerCardsPanel.add(button);
         }
 
         // Revalidate and repaint the playerCardsPanel to reflect the changes

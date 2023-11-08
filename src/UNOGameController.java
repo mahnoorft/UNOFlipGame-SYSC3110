@@ -16,6 +16,16 @@ public class UNOGameController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
+        if (command=="draw"){
+
+        }
+        else if(command == "end"){
+
+        }
+        else{
+            int index = Integer.parseInt(command);
+            System.out.println(model.actionPlayCard(index));
+        }
 
 
     }
