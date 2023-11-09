@@ -5,6 +5,8 @@ import java.util.EventObject;
 
 public class UNOGameEvent extends EventObject {
 
+    Card card;
+    Boolean canPlay;
     /**
      * Constructs a prototypical Event.
      * @param model the object on which the Event initially occurred
@@ -13,7 +15,15 @@ public class UNOGameEvent extends EventObject {
         super(model);
     }
 
-    public UNOGameEvent(UNOGame model, Card card) {
+    public UNOGameEvent(UNOGame model, Card card, Boolean bool) {
         super(model);
+        this.card = card;
+        this.canPlay = bool;
     }
+
+    public Card getCard(){ return card;}
+
+    public Boolean canPlay(){ return canPlay;}
+
+
 }

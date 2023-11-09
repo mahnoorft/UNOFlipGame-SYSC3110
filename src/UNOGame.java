@@ -296,14 +296,25 @@ public class UNOGame{
         return c;
     }
 
+    public void updatePlayerHand(Card card){
+        players.get(currentTurn).getHand().addCard(card);
+    }
+
+    public void updateTopCard(Card card){
+        topCard = card;
+    }
+
     public boolean actionDrawCard(){
-        Card c = players.get(currentTurn).drawCard(deck);
+        Card c = deck.draw();
         if(c.checkValid(topCard)){
             canPlayCard = 1;
             for (UNOGameHandler view: view){
-                view.handleDrawCard(new UNOGameEvent(this, c));
+                view.handleDrawCard(new UNOGameEvent(this, c, true));
             }
             return true;
+        }
+        for (UNOGameHandler view: view){
+            view.handleDrawCard(new UNOGameEvent(this, c, false));
         }
         return false;
     }
