@@ -229,6 +229,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             if (input == JOptionPane.YES_OPTION) {
                 System.out.println("Player Played the card");
                 game.updateTopCard(card);
+                if (card.getColorLight() == Card.Color.WILD){
+                    wildDialog();
+                }
                 displayTopCard();
 
             } else {
@@ -241,6 +244,55 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             game.updatePlayerHand(card);
             displayPlayerHand();
         }
+    }
+
+    public void wildDialog(){
+        // Create panel
+        JPanel panel = new JPanel();
+
+        //Create Radio Buttons
+        JRadioButton radioButton1 = new JRadioButton("BLUE");
+        JRadioButton radioButton2 = new JRadioButton("GREEN");
+        JRadioButton radioButton3 = new JRadioButton("RED");
+        JRadioButton radioButton4 = new JRadioButton("YELLOW");
+
+        radioButton1.setBackground(Color.CYAN);
+        radioButton2.setBackground(Color.GREEN);
+        radioButton3.setBackground(Color.red);
+        radioButton4.setBackground(Color.yellow);
+
+        //Creating Button Group
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(radioButton1);
+        buttonGroup.add(radioButton2);
+        buttonGroup.add(radioButton3);
+        buttonGroup.add(radioButton4);
+
+        //add buttons to panel
+        panel.add(radioButton1);
+        panel.add(radioButton2);
+        panel.add(radioButton3);
+        panel.add(radioButton4);
+
+        // Show the option pane with the panel containing radio buttons
+        int result = JOptionPane.showConfirmDialog(null, panel, "Select an Option", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        // Check the user's choice
+        if (result == JOptionPane.OK_OPTION) {
+            // Handle the selected option
+            if (radioButton1.isSelected()) {
+                System.out.println("BLUE selected");
+            } else if (radioButton2.isSelected()) {
+                System.out.println("GREEN selected");
+            } else if (radioButton3.isSelected()) {
+                System.out.println("RED selected");
+            } else {
+                System.out.println("YELLOW option selected");
+            }
+        } else {
+            System.out.println("Dialog canceled");
+        }
+
     }
 
     @Override
@@ -259,6 +311,11 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     public void handlePlayCard(UNOGameEvent e) {
         displayPlayerHand();
         displayTopCard();
+
+        if (e.isWild()){
+            wildDialog();
+        }
+
         endTurnButton.setEnabled(true);
         System.out.println("test2");
     }
