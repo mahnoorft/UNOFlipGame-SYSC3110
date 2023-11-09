@@ -249,12 +249,17 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         Boolean canPlay = e.canPlay();
         displayPlayerHand();
         drawCardDialog(card, canPlay);
+
+        //Cannot draw more cards
+        drawCardButton.setEnabled(false);
+        endTurnButton.setEnabled(true);
     }
 
     @Override
     public void handlePlayCard(UNOGameEvent e) {
         displayPlayerHand();
         displayTopCard();
+        endTurnButton.setEnabled(true);
         System.out.println("test2");
     }
 
@@ -265,6 +270,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     @Override
     public void handleNextTurn(UNOGameEvent e) {
-
+        displayPlayerHand();
+        drawCardButton.setEnabled(true);
+        endTurnButton.setEnabled(false);
     }
 }
