@@ -33,6 +33,10 @@ public class UNOGame{
         canPlayCard = 2;
     }
 
+    public void addUnoGameView(UNOGameHandler view){
+        this.view.add(view);
+    }
+
     /** Initializes the game and keeps the game running until a winner is announced*/
     public void play(){
         System.out.println("Initializing game");
@@ -280,7 +284,6 @@ public class UNOGame{
             System.out.println("Player attempt to play an illegal card");return null;
         }
         Card c = player.playCard(index,topCard);
-
         //update top card
         if (c!= null){
             topCard = c;
