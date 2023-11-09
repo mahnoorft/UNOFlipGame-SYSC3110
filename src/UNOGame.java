@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.*;
 import java.util.Scanner;
 /** This class initializes a text-based interface for an UNO game and
@@ -275,13 +276,19 @@ public class UNOGame{
     public Card actionPlayCard(int index){
         boolean wildPlayed = false;
         if(canPlayCard == 0){
-            System.out.println("Player attempt to play card at illegal turns"); return null;}
+            JOptionPane.showMessageDialog(null, "Player attempt to play card at illegal turns");
+            //System.out.println("Player attempt to play card at illegal turns");
+            return null;}
         Player player = players.get(currentTurn);
         if(canPlayCard == 1 && index != player.getHand().getCards().size()-1){
-            System.out.println("Player attempt to play other cards when a card is drawn");return null;
+            JOptionPane.showMessageDialog(null, "Player attempt to play other cards when a card is drawn");
+            //System.out.println("Player attempt to play other cards when a card is drawn");
+            return null;
         }
         if(!player.getHand().getCards().get(index).checkValid(topCard)){
-            System.out.println("Player attempt to play an illegal card");return null;
+            JOptionPane.showMessageDialog(null, "Player attempt to play an illegal card");
+            //System.out.println("Player attempt to play an illegal card");
+            return null;
         }
         Card c = player.playCard(index,topCard);
         //update top card
@@ -321,6 +328,11 @@ public class UNOGame{
     public void actionEndTurn(){
         currentTurn = getNextPlayerIndex();
         canPlayCard = 2;
+
+        for (UNOGameHandler view: view){
+            view.handleNextTurn(new UNOGameEvent(this, currentTurn));
+        }
+
     }
     public void actionChooseColor(Card.Color color){
         topCard.setColorLight(color);

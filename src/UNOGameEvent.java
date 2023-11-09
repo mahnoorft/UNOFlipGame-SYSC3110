@@ -21,6 +21,10 @@ public class UNOGameEvent extends EventObject {
         this.canPlay = bool;
     }
 
+    public UNOGameEvent(UNOGame model, Integer turn) {
+        super(model);
+    }
+
     public Card getCard(){ return card;}
 
     public Boolean canPlay(){ return canPlay;}
