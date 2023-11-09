@@ -38,6 +38,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         //playerCardsPanel = new JPanel(new GridLayout(1, 0));
         JList<Player> playerList = new JList<>();
         topCardPanel = new JPanel();
+        topCardPanel.setBorder(BorderFactory.createEmptyBorder(10, 210, 120, 20)); // Add padding
+
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
@@ -50,8 +52,12 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         mainPanel.add(topCardPanel, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.EAST);
         mainPanel.add(playerList, BorderLayout.WEST);
-        JTextField playerNameField = new JTextField("Player name");
-        mainPanel.add(playerNameField, BorderLayout.NORTH);
+
+        //Player Name Field
+        JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel playerNameField = new JLabel("Player name");
+        centerPanel.add(playerNameField);
+        mainPanel.add(centerPanel, BorderLayout.NORTH);
 
         game.initializeGame();
         displayPlayerHand();
@@ -59,17 +65,29 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
 
         //initialize and add buttons to buttonPanel
-        drawCardButton = new JButton("Draw Card");
-        drawCardButton.setMargin(new Insets(15, 20, 15, 10));
+        String imagePath = IMAGES_FOLDER_PATH + "card_back.png";
+        ImageIcon icon = new ImageIcon(imagePath);
+        JPanel drawPanel = new JPanel();
+        drawPanel.setLayout(new BoxLayout(drawPanel, BoxLayout.Y_AXIS));
+        drawCardButton = new JButton(icon);
+        drawCardButton.setMargin(new Insets(0, 0, 0, 0));
+        JLabel draw = new JLabel("Draw Card");
+        drawPanel.add(drawCardButton);
+        drawPanel.add(draw);
+        drawPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 120, 20)); // Add padding
+
+        //End Turn Button
+        JPanel endPanel = new JPanel();
         endTurnButton = new JButton("End Turn");
-        endTurnButton.setMargin(new Insets(15,20,15, 20));
-        buttonPanel.add(drawCardButton);
-        buttonPanel.add(endTurnButton);
+        endTurnButton.setEnabled(false);
+        endPanel.add(endTurnButton);
+        endPanel.setBorder(BorderFactory.createEmptyBorder(0, 70, 10, 0)); // Add padding
 
-
+        //adding button panels to main panel
+        buttonPanel.add(drawPanel);
+        buttonPanel.add(endPanel);
 
         //add ActionListeners and initialize controller
-
         drawCardButton.addActionListener(controller);
         drawCardButton.setActionCommand("draw");
         endTurnButton.addActionListener(controller);
@@ -100,7 +118,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 800);
+        this.setSize(800, 600);
         this.setVisible(true);
 
 
@@ -200,6 +218,12 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     @Override
     public void handleDrawCard(UNOGameEvent e) {
+        //displayPlayerHand()
+        //boolean if it can be played or not
+        //pop-up asks for the decision to play card or not, if no continue (buttons are now disabled)
+        //if yes they can play the card, model.pla
+        //model.
+
 
     }
 

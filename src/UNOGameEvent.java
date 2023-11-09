@@ -12,4 +12,8 @@ public class UNOGameEvent extends EventObject {
     public UNOGameEvent(UNOGame model, boolean wildPlayed) {
         super(model);
     }
+
+    public UNOGameEvent(UNOGame model, Card card) {
+        super(model);
+    }
 }

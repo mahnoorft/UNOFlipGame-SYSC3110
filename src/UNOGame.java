@@ -280,6 +280,12 @@ public class UNOGame{
             System.out.println("Player attempt to play an illegal card");return null;
         }
         Card c = player.playCard(index,topCard);
+
+        //update top card
+        if (c!= null){
+            topCard = c;
+        }
+
         canPlayCard = 0;
         for (UNOGameHandler view: view){
             view.handlePlayCard(new UNOGameEvent(this, wildPlayed));
@@ -291,7 +297,9 @@ public class UNOGame{
         Card c = players.get(currentTurn).drawCard(deck);
         if(c.checkValid(topCard)){
             canPlayCard = 1;
-
+            for (UNOGameHandler view: view){
+                view.handleDrawCard(new UNOGameEvent(this, c));
+            }
             return true;
         }
         return false;

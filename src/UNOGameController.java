@@ -17,10 +17,12 @@ public class UNOGameController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         System.out.println("test");
         String command = e.getActionCommand();
-        if (command=="draw"){
+        if (command.equals("draw")){
+            model.actionDrawCard();
 
         }
-        else if(command == "end"){
+        else if(command.equals("end")){
+            model.actionEndTurn();
 
         }
         else{
