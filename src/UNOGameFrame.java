@@ -22,6 +22,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         this.game = game;
         this.cardButtonList = new ArrayList<>();
         controller = new UNOGameController(game, this);
+        game.addUnoGameView(this);
 
         //initialize menu and menu item
         menuBar = new JMenuBar();
@@ -215,10 +216,15 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         }
 
     }
+    private void drawCardDialog() {
+        System.out.println("test3");
+
+    }
 
     @Override
     public void handleDrawCard(UNOGameEvent e) {
-        //displayPlayerHand()
+        displayPlayerHand();
+        drawCardDialog();
         //boolean if it can be played or not
         //pop-up asks for the decision to play card or not, if no continue (buttons are now disabled)
         //if yes they can play the card, model.pla
