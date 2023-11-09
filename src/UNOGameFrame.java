@@ -147,6 +147,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     }
 
     private void displayTopCard() {
+        topCardPanel.removeAll();
 
         Card topCard = game.topCard;
         String imagePath = IMAGES_FOLDER_PATH + topCard.getColorLight().name() + "_"+ topCard.getRankLight().name() + ".png";
@@ -216,21 +217,38 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         }
 
     }
-    private void drawCardDialog() {
-        System.out.println("test3");
+    private void drawCardDialog(Card card, Boolean canPlay) {
+        System.out.println(card.toString2());
+        ImageIcon icon = new ImageIcon(IMAGES_FOLDER_PATH + card.toString2() + ".png");
+        JLabel cardLabel = new JLabel(icon);
 
+        if (canPlay) {
+            int input = JOptionPane.showConfirmDialog(null, cardLabel, "Do you want to play " + card.toString2() + " card?", JOptionPane.YES_NO_OPTION);
+            System.out.println(input);
+
+            if (input == JOptionPane.YES_OPTION) {
+                System.out.println("Player Played the card");
+                game.updateTopCard(card);
+                displayTopCard();
+
+            } else {
+                System.out.println("Player did not play");
+                game.updatePlayerHand(card);
+                displayPlayerHand();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, cardLabel, "You drew a" + card.toString2(), JOptionPane.INFORMATION_MESSAGE);
+            game.updatePlayerHand(card);
+            displayPlayerHand();
+        }
     }
 
     @Override
     public void handleDrawCard(UNOGameEvent e) {
+        Card card = e.getCard();
+        Boolean canPlay = e.canPlay();
         displayPlayerHand();
-        drawCardDialog();
-        //boolean if it can be played or not
-        //pop-up asks for the decision to play card or not, if no continue (buttons are now disabled)
-        //if yes they can play the card, model.pla
-        //model.
-
-
+        drawCardDialog(card, canPlay);
     }
 
     @Override
