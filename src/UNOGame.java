@@ -291,9 +291,14 @@ public class UNOGame{
             return null;
         }
         Card c = player.playCard(index,topCard);
+
         //update top card
         if (c!= null){
             topCard = c;
+        }
+
+        if (c.getColorLight().equals(Card.Color.WILD)){
+            wildPlayed = true;
         }
 
         canPlayCard = 0;
