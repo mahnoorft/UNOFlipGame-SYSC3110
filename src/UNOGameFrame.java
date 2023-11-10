@@ -9,7 +9,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     UNOGameController controller;
     JPanel mainPanel, playerCardsPanel, topCardPanel, buttonPanel, winRoundPanel;
     JButton drawCardButton, endTurnButton, newRoundButton;
-    JLabel winRoundMessage,winRoundMessagePoints;
+    JLabel winRoundMessage,winRoundMessagePoints, playerNameField;
     JMenuBar menuBar;
     JMenu gameMenu;
     ArrayList<ImageIcon> iconImages;
@@ -56,7 +56,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         //Player Name Field
         JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel playerNameField = new JLabel("Player name");
+        playerNameField = new JLabel();
         centerPanel.add(playerNameField);
         mainPanel.add(centerPanel, BorderLayout.NORTH);
 
@@ -127,6 +127,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     private void displayPlayerHand() {
         playerCardsPanel.removeAll();
+        playerNameField.setText(game.getCurrentPlayer() + "'s Turn");
 
         List<String> cardNames = game.getCurrentPlayerCardNames();
 
@@ -240,7 +241,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
                 displayPlayerHand();
             }
         }else{
-            JOptionPane.showMessageDialog(null, cardLabel, "You drew a" + card.toString2(), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, cardLabel, "You drew a " + card.toString2(), JOptionPane.INFORMATION_MESSAGE);
             game.updatePlayerHand(card);
             displayPlayerHand();
         }
@@ -256,6 +257,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         JRadioButton radioButton3 = new JRadioButton("RED");
         JRadioButton radioButton4 = new JRadioButton("YELLOW");
 
+        //add colours to indicate colour
         radioButton1.setBackground(Color.CYAN);
         radioButton2.setBackground(Color.GREEN);
         radioButton3.setBackground(Color.red);
@@ -281,13 +283,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         if (result == JOptionPane.OK_OPTION) {
             // Handle the selected option
             if (radioButton1.isSelected()) {
-                System.out.println("BLUE selected");
+                game.actionChooseColor(Card.Color.BLUE);
             } else if (radioButton2.isSelected()) {
-                System.out.println("GREEN selected");
+                game.actionChooseColor(Card.Color.GREEN);
             } else if (radioButton3.isSelected()) {
-                System.out.println("RED selected");
+                game.actionChooseColor(Card.Color.RED);
             } else {
-                System.out.println("YELLOW option selected");
+                game.actionChooseColor(Card.Color.YELLOW);
             }
         } else {
             System.out.println("Dialog canceled");
@@ -312,12 +314,28 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         displayPlayerHand();
         displayTopCard();
 
-        if (e.isWild()){
+        //handle WILD, SKIP, REVERSE, +1, +2
+        if (e.getCard().getRankLight() == Card.Rank.WILD){
             wildDialog();
         }
-
+        else if ((e.getCard().getColorLight() == Card.Color.WILD) & (e.getCard().getRankLight()==Card.Rank.DRAW2)){
+            wildDialog();
+            game.executeSpecialFunction(e.getCard());
+        }
+        else if(e.getCard().getRankLight() == Card.Rank.DRAW2){
+            game.executeSpecialFunction(e.getCard());
+        }
+        else if (e.getCard().getRankLight() == Card.Rank.DRAW1) {
+            game.executeSpecialFunction(e.getCard());
+        }
+        else if(e.getCard().getRankLight() == Card.Rank.SKIP){
+            game.executeSpecialFunction(e.getCard());
+        }
+        else if(e.getCard().getRankLight() == Card.Rank.REVERSE){
+            game.executeSpecialFunction(e.getCard());
+        }
+        drawCardButton.setEnabled(false);
         endTurnButton.setEnabled(true);
-        System.out.println("test2");
     }
 
     @Override
