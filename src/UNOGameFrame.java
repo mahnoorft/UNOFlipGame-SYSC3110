@@ -230,10 +230,12 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             if (input == JOptionPane.YES_OPTION) {
                 System.out.println("Player Played the card");
                 game.updateTopCard(card);
+                displayTopCard();
                 if (card.getColorLight() == Card.Color.WILD){
                     wildDialog();
+
                 }
-                displayTopCard();
+
 
             } else {
                 System.out.println("Player did not play");
