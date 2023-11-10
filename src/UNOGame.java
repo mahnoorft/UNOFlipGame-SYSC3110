@@ -233,7 +233,6 @@ public class UNOGame{
                 this.skipTurn();
                 break;
             case DRAW2:
-
                 this.nextPlayerDrawCard(2);
                 this.skipTurn();
                 break;
@@ -266,6 +265,18 @@ public class UNOGame{
         }
 
         return cardNames;
+    }
+
+    public void updatePlayerHand(Card card){
+        players.get(currentTurn).getHand().addCard(card);
+    }
+
+    public void updateTopCard(Card card){
+        topCard = card;
+    }
+
+    public String getCurrentPlayer(){
+        return players.get(currentTurn).getName();
     }
 
     /**
@@ -302,18 +313,13 @@ public class UNOGame{
         }
 
         canPlayCard = 0;
+        //for (UNOGameHandler view: view){
+        //    view.handlePlayCard(new UNOGameEvent(this, wildPlayed));
+        //}
         for (UNOGameHandler view: view){
-            view.handlePlayCard(new UNOGameEvent(this, wildPlayed));
+            view.handlePlayCard(new UNOGameEvent(this, c, false));
         }
         return c;
-    }
-
-    public void updatePlayerHand(Card card){
-        players.get(currentTurn).getHand().addCard(card);
-    }
-
-    public void updateTopCard(Card card){
-        topCard = card;
     }
 
     public boolean actionDrawCard(){
