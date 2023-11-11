@@ -141,6 +141,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             cardButtonList.add(button);
             playerCardsPanel.add(button);
         }
+        System.out.println(cardNames.size());
 
         // Revalidate and repaint the playerCardsPanel to reflect the changes
         playerCardsPanel.revalidate();
@@ -218,7 +219,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         }
 
     }
-    private void drawCardDialog(Card card, Boolean canPlay) {
+    private void drawCardDialog(Card card, Boolean canPlay, UNOGameEvent e) {
         System.out.println(card.toString2());
         ImageIcon icon = new ImageIcon(IMAGES_FOLDER_PATH + card.toString2() + ".png");
         JLabel cardLabel = new JLabel(icon);
@@ -231,11 +232,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
                 System.out.println("Player Played the card");
                 game.updateTopCard(card);
                 displayTopCard();
-                if (card.getColorLight() == Card.Color.WILD){
-                    wildDialog();
-
-                }
-
+                handlePlayCard(e);
 
             } else {
                 System.out.println("Player did not play");
@@ -304,7 +301,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         Card card = e.getCard();
         Boolean canPlay = e.canPlay();
         displayPlayerHand();
-        drawCardDialog(card, canPlay);
+        drawCardDialog(card, canPlay, e);
 
         //Cannot draw more cards
         drawCardButton.setEnabled(false);
