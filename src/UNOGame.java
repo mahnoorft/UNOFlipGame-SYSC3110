@@ -182,9 +182,13 @@ public class UNOGame{
             }
         }
     }
-    /** Draws the number of cards specified in numCards for the next Player
-     * @param numCards number of cards to draw  */
-    private void nextPlayerDrawCard(int numCards){
+    /**
+     * Draws the number of cards specified in numCards for the next Player
+     *
+     * @param numCards    number of cards to draw
+     * @param playerIndex
+     */
+    private void playerDrawCard(int numCards, int playerIndex){
 
         System.out.println("Player " + players.get(getNextPlayerIndex()).getName()+" draw "+numCards+" cards");
         for(int i=0;i<numCards;i++){
@@ -229,11 +233,11 @@ public class UNOGame{
             case WILD:
                 break;
             case DRAW1:
-                this.nextPlayerDrawCard(1);
+                this.playerDrawCard(1, currentTurn);
                 this.skipTurn();
                 break;
             case DRAW2:
-                this.nextPlayerDrawCard(2);
+                this.playerDrawCard(2, currentTurn);
                 this.skipTurn();
                 break;
         }
@@ -247,10 +251,10 @@ public class UNOGame{
         return index;
     }
 
-    // Method to retrieve the current player's hand
-//    public Hand getCurrentPlayerHand() {
-//        return players.get(currentTurn).getHand();
-//    }
+    public void applyCallPenalty(){
+        int index = currentTurn - 1;
+        playerDrawCard(2, index);
+    }
 
     /** Get the current player's cards in the format COLOR_RANK
      * @return List of strings containing the cards in the format COLOR_RANK */
@@ -275,7 +279,7 @@ public class UNOGame{
         topCard = card;
     }
 
-    public String getCurrentPlayer(){
+    public String getCurrentPlayerName(){
         return players.get(currentTurn).getName();
     }
 

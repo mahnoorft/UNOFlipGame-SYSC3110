@@ -16,6 +16,9 @@ public class UNOGameController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("test");
+
+        //action commands for when the button is pressed
+        //if buttons are clicked, call model class with action buttons
         String command = e.getActionCommand();
         if (command.equals("draw")){
             model.actionDrawCard();
@@ -25,13 +28,13 @@ public class UNOGameController implements ActionListener {
             model.actionEndTurn();
 
         }
+        else if(command.equals("call")){
+            view.handleCallUNO(new UNOGameEvent(model));
+        }
         else{
             int index = Integer.parseInt(command);
             System.out.println(model.actionPlayCard(index));
         }
-
-        //action commands for when the button is pressed
-        //if buttons are clicked, call model class with action buttons
 
     }
 }

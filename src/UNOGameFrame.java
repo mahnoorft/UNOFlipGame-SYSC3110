@@ -7,9 +7,10 @@ import java.util.Scanner;
 public class UNOGameFrame extends JFrame implements UNOGameHandler {
     UNOGame game;
     UNOGameController controller;
-    JPanel mainPanel, playerCardsPanel, topCardPanel, buttonPanel, winRoundPanel;
-    JButton drawCardButton, endTurnButton, newRoundButton;
+    JPanel mainPanel, playerCardsPanel, topCardPanel, buttonPanel, leftPanel, winRoundPanel;
+    JButton drawCardButton, endTurnButton, newRoundButton, callUNOButton;
     JLabel winRoundMessage,winRoundMessagePoints, playerNameField;
+    JTextArea statusBar;
     JMenuBar menuBar;
     JMenu gameMenu;
     ArrayList<ImageIcon> iconImages;
@@ -36,23 +37,16 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         mainPanel = new JPanel(new BorderLayout());
         this.add(mainPanel);
         playerCardsPanel = new JPanel(new FlowLayout());
-        //playerCardsPanel = new JPanel(new GridLayout(1, 0));
-        JList<Player> playerList = new JList<>();
         topCardPanel = new JPanel();
         topCardPanel.setBorder(BorderFactory.createEmptyBorder(10, 210, 120, 20)); // Add padding
 
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 
         JScrollPane scrollPane = new JScrollPane(playerCardsPanel);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-
-        //add components to main Panel
-        mainPanel.add(scrollPane, BorderLayout.SOUTH);
-        mainPanel.add(topCardPanel, BorderLayout.CENTER);
-        mainPanel.add(buttonPanel, BorderLayout.EAST);
-        mainPanel.add(playerList, BorderLayout.WEST);
 
         //Player Name Field
         JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -84,15 +78,43 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         endPanel.add(endTurnButton);
         endPanel.setBorder(BorderFactory.createEmptyBorder(0, 70, 10, 0)); // Add padding
 
-        //adding button panels to main panel
+        //Call UNO Button
+        JPanel callPanel = new JPanel();
+        callUNOButton = new JButton("Call UNO");
+        callUNOButton.setEnabled(false);
+        callUNOButton.setBackground(Color.RED);
+        callPanel.add(callUNOButton);
+        callPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 10, 0)); // Add padding
+
+        //create status panel and add status bar
+        statusBar = new JTextArea("Welcome to UNO!sfdkmekffmsmfjkvflkmmmmmmmk'");
+        //statusBar.setSize(150,150);
+        statusBar.setLineWrap(true);
+        JScrollPane statusPanel = new JScrollPane(statusBar);
+        //statusPanel.setSize(150,150);
+        statusPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        statusPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 180, 0)); // Add padding
+
+        //adding to button panel
         buttonPanel.add(drawPanel);
         buttonPanel.add(endPanel);
+        //adding to leftPanel
+        leftPanel.add(statusPanel);
+        leftPanel.add(callPanel);
+
+        //add components to main Panel
+        mainPanel.add(scrollPane, BorderLayout.SOUTH);
+        mainPanel.add(topCardPanel, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.EAST);
+        mainPanel.add(leftPanel, BorderLayout.WEST);
 
         //add ActionListeners and initialize controller
         drawCardButton.addActionListener(controller);
         drawCardButton.setActionCommand("draw");
         endTurnButton.addActionListener(controller);
         endTurnButton.setActionCommand("end");
+        callUNOButton.addActionListener(controller);
+        callUNOButton.setActionCommand("call");
         newGame.addActionListener(controller);
 
         winRoundPanel = new JPanel(null);
@@ -127,7 +149,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     private void displayPlayerHand() {
         playerCardsPanel.removeAll();
-        playerNameField.setText(game.getCurrentPlayer() + "'s Turn");
+        playerNameField.setText(game.getCurrentPlayerName() + "'s Turn");
 
         List<String> cardNames = game.getCurrentPlayerCardNames();
 
@@ -219,6 +241,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         }
 
     }
+
     private void drawCardDialog(Card card, Boolean canPlay, UNOGameEvent e) {
         System.out.println(card.toString2());
         ImageIcon icon = new ImageIcon(IMAGES_FOLDER_PATH + card.toString2() + ".png");
@@ -333,19 +356,28 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         else if(e.getCard().getRankLight() == Card.Rank.REVERSE){
             game.executeSpecialFunction(e.getCard());
         }
+        if(game.getCurrentPlayerCardNames().size()==1){
+            callUNOButton.setEnabled(true);
+        }
         drawCardButton.setEnabled(false);
         endTurnButton.setEnabled(true);
     }
 
     @Override
-    public void handleWinRound(UNOGameEvent e) {
-
-    }
-
-    @Override
     public void handleNextTurn(UNOGameEvent e) {
+        if(callUNOButton.isEnabled()){
+            game.applyCallPenalty();
+            JOptionPane.showMessageDialog(this, "You didn't call UNO! Penalty: drew 2 cards");
+        }
         displayPlayerHand();
         drawCardButton.setEnabled(true);
         endTurnButton.setEnabled(false);
+        callUNOButton.setEnabled(false);
+    }
+
+    @Override
+    public void handleCallUNO(UNOGameEvent e) {
+        JOptionPane.showMessageDialog(this, "Player "+game.getCurrentPlayerName()+" called UNO!");
+        callUNOButton.setEnabled(false);
     }
 }
