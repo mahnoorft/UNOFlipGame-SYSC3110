@@ -327,22 +327,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         if (e.getCard().getColorLight() == Card.Color.WILD){
             wildDialog();
         }
-        else if ((e.getCard().getColorLight() == Card.Color.WILD) & (e.getCard().getRankLight()==Card.Rank.DRAW2)){
-            wildDialog();
-            game.executeSpecialFunction(e.getCard());
-        }
-        else if(e.getCard().getRankLight() == Card.Rank.DRAW2){
-            game.executeSpecialFunction(e.getCard());
-        }
-        else if (e.getCard().getRankLight() == Card.Rank.DRAW1) {
-            game.executeSpecialFunction(e.getCard());
-        }
-        else if(e.getCard().getRankLight() == Card.Rank.SKIP){
-            game.executeSpecialFunction(e.getCard());
-        }
-        else if(e.getCard().getRankLight() == Card.Rank.REVERSE){
-            game.executeSpecialFunction(e.getCard());
-        }
+
         if(game.getCurrentPlayerCardNames().size()==0){
             int roundScore = game.calculateWinnerScore();
             int totalScore = game.getCurrentPlayer().getScore();
