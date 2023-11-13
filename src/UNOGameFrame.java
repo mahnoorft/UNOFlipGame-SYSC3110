@@ -218,30 +218,6 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         winRoundPanel.setVisible(false);
     }
 
-    public static void main(String[] args) {
-        UNOGame game = new UNOGame();
-        UNOGameFrame unoGameFrame = new UNOGameFrame(game);
-        Scanner input = new Scanner(System.in);
-        while(true){
-            String x = input.nextLine();
-            switch (x){
-
-                case "winRound":
-                    unoGameFrame.winRoundScreen("test player",200,4);
-                    break;
-                case "game":
-                    unoGameFrame.restartRoundScreen();
-                    break;
-                case "winGame":
-                    unoGameFrame.winGameScreen("test player",569);
-                    break;
-                default:
-                    System.out.println("Invalid Input");
-            }
-        }
-
-    }
-
     private void drawCardDialog(Card card, Boolean canPlay, UNOGameEvent e) {
         System.out.println(card.toString2());
         ImageIcon icon = new ImageIcon(IMAGES_FOLDER_PATH + card.toString2() + ".png");
