@@ -72,8 +72,13 @@ public class UNOGame{
             }
         }
         //draw first card from deck to start the game
-        //Assume it is okay for starting card to be Wild
+
+        //Switch top card if it's wild
         topCard = deck.draw();
+        while (topCard.getColorLight() == Card.Color.WILD){
+            pile.add(topCard);
+            topCard = deck.draw();
+        }
         this.pile.add(topCard);
 
     }
@@ -186,9 +191,8 @@ public class UNOGame{
      * Draws the number of cards specified in numCards for the next Player
      *
      * @param numCards    number of cards to draw
-     * @param playerIndex
      */
-    private void playerDrawCard(int numCards, int playerIndex){
+    private void playerDrawCard(int numCards){
 
         System.out.println("Player " + players.get(getNextPlayerIndex()).getName()+" draw "+numCards+" cards");
         for(int i=0;i<numCards;i++){
@@ -208,7 +212,7 @@ public class UNOGame{
     }
     /** Return the score of the player by adding up the cards points held by other players.
      * @return score of winner for this round*/
-    private int calculateWinnerScore(){
+    public int calculateWinnerScore(){
         int score = 0;
         for (int i=0; i<players.size(); i++) {
             // checks whether the otherPlayer is not the same as the player for whom the score is being calculated
@@ -233,11 +237,11 @@ public class UNOGame{
             case WILD:
                 break;
             case DRAW1:
-                this.playerDrawCard(1, currentTurn);
+                this.playerDrawCard(1);
                 this.skipTurn();
                 break;
             case DRAW2:
-                this.playerDrawCard(2, currentTurn);
+                this.playerDrawCard(2);
                 this.skipTurn();
                 break;
         }
@@ -253,7 +257,11 @@ public class UNOGame{
 
     public void applyCallPenalty(){
         int index = currentTurn - 1;
-        playerDrawCard(2, index);
+
+        System.out.println("Player " + players.get(index).getName()+" draw "+2+" cards");
+        for(int i=0;i<2;i++){
+            players.get(index).drawCard(deck);
+        }
     }
 
     /** Get the current player's cards in the format COLOR_RANK
@@ -281,6 +289,9 @@ public class UNOGame{
 
     public String getCurrentPlayerName(){
         return players.get(currentTurn).getName();
+    }
+    public Player getCurrentPlayer(){
+        return players.get(currentTurn);
     }
 
     /**

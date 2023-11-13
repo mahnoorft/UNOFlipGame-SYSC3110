@@ -299,7 +299,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         panel.add(radioButton4);
 
         // Show the option pane with the panel containing radio buttons
-        int result = JOptionPane.showConfirmDialog(null, panel, "Select an Option", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(null, panel, "Select an Option", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         // Check the user's choice
         if (result == JOptionPane.OK_OPTION) {
@@ -336,8 +336,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         displayPlayerHand();
         displayTopCard();
 
+        //callUNO
+        if(game.getCurrentPlayerCardNames().size()==1){
+            callUNOButton.setEnabled(true);
+        }
+
         //handle WILD, SKIP, REVERSE, +1, +2
-        if (e.getCard().getRankLight() == Card.Rank.WILD){
+        if (e.getCard().getColorLight() == Card.Color.WILD){
             wildDialog();
         }
         else if ((e.getCard().getColorLight() == Card.Color.WILD) & (e.getCard().getRankLight()==Card.Rank.DRAW2)){
@@ -356,19 +361,25 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         else if(e.getCard().getRankLight() == Card.Rank.REVERSE){
             game.executeSpecialFunction(e.getCard());
         }
-        if(game.getCurrentPlayerCardNames().size()==1){
-            callUNOButton.setEnabled(true);
+        if(game.getCurrentPlayerCardNames().size()==0){
+            int roundScore = game.calculateWinnerScore();
+            int totalScore = game.getCurrentPlayer().getScore();
+            winRoundScreen(game.getCurrentPlayerName(), totalScore, roundScore);
         }
+
+
         drawCardButton.setEnabled(false);
         endTurnButton.setEnabled(true);
     }
 
     @Override
     public void handleNextTurn(UNOGameEvent e) {
+
         if(callUNOButton.isEnabled()){
             game.applyCallPenalty();
             JOptionPane.showMessageDialog(this, "You didn't call UNO! Penalty: drew 2 cards");
         }
+
         displayPlayerHand();
         drawCardButton.setEnabled(true);
         endTurnButton.setEnabled(false);
