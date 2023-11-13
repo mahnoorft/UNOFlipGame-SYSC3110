@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+/** This class represents the view for UNO game and is responsible for
+ * displaying the GUI and updating the game view as the user interacts with the GUI
+ * */
 
 public class UNOGameFrame extends JFrame implements UNOGameHandler {
     UNOGame game;

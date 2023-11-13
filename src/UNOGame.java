@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.util.*;
 
-/** This class initializes a text-based interface for an UNO game and
- * executes the UNO Game functions until a winner is announced*/
+/** This class represents the model for UNO game and is responsible for
+ * executes the UNO Game functions and updating the game logic*/
 
 public class UNOGame{
     private ArrayList<Player> players;
@@ -156,15 +156,6 @@ public class UNOGame{
         return index;
     }
 
-    public void applyCallPenalty(){
-        int index = currentTurn - 1;
-
-        System.out.println("Player " + players.get(index).getName()+" draw "+2+" cards");
-        for(int i=0;i<2;i++){
-            players.get(index).drawCard(deck);
-        }
-    }
-
     /** Get the current player's cards in the format COLOR_RANK
      * @return List of strings containing the cards in the format COLOR_RANK */
     public List<String> getCurrentPlayerCardNames() {
@@ -196,24 +187,24 @@ public class UNOGame{
     }
 
     /**
-     *
+     * Plays card at index
      * @param index the index of the card that is being played in the current player's hand
      * @return the card that is being played
      */
     public Card actionPlayCard(int index){
         if(canPlayCard == 0){
-            JOptionPane.showMessageDialog(null, "Player attempt to play card at illegal turns");
-            //System.out.println("Player attempt to play card at illegal turns");
+            JOptionPane.showMessageDialog(null, "You have already played a card in this turn",
+                    "Error!", JOptionPane.ERROR_MESSAGE);
             return null;}
         Player player = players.get(currentTurn);
         if(canPlayCard == 1 && index != player.getHand().getCards().size()-1){
-            JOptionPane.showMessageDialog(null, "Player attempt to play other cards when a card is drawn");
-            //System.out.println("Player attempt to play other cards when a card is drawn");
+            JOptionPane.showMessageDialog(null, "Attempting to play other cards when a card is drawn",
+                    "Error!", JOptionPane.ERROR_MESSAGE);
             return null;
         }
         if(!player.getHand().getCards().get(index).checkValid(topCard)){
-            JOptionPane.showMessageDialog(null, "Player attempt to play an illegal card");
-            //System.out.println("Player attempt to play an illegal card");
+            JOptionPane.showMessageDialog(null, "Attempting to play an illegal card",
+                    "Error!", JOptionPane.ERROR_MESSAGE);
             return null;
         }
         Card c = player.playCard(index,topCard);
@@ -253,6 +244,20 @@ public class UNOGame{
         }
 
     }
+
+    /** Apply the penalty for the player who did not call UNO*/
+    public void applyCallPenalty(){
+        int index = currentTurn - 1;
+
+        System.out.println("Player " + players.get(index).getName()+" draw "+2+" cards");
+        for(int i=0;i<2;i++){
+            players.get(index).drawCard(deck);
+        }
+    }
+
+    /** Update top card to the new chosen color
+     * @param color the chosen color
+     * */
     public void chooseNewColor(Card.Color color){
         topCard.setColorLight(color);
     }

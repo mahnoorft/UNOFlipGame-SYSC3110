@@ -1,6 +1,9 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+/** This class represents the controller for UNO game and is responsible for
+ * processing the GUI input through ActionListeners and perforing
+ * model and view calls
+ * */
 
 public class UNOGameController implements ActionListener {
     UNOGame model;
@@ -9,13 +12,10 @@ public class UNOGameController implements ActionListener {
         this.model = model;
         this.view = view;
 
-        // Add action listeners to UI components in the view
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("test");
 
         //action commands for when the button is pressed
         //if buttons are clicked, call model class with action buttons
@@ -33,7 +33,7 @@ public class UNOGameController implements ActionListener {
         }
         else{
             int index = Integer.parseInt(command);
-            System.out.println(model.actionPlayCard(index));
+            model.actionPlayCard(index);
         }
 
     }
