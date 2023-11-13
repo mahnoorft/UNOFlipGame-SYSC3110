@@ -2,9 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-/** This class represents the view for UNO game and is responsible for
- * displaying the GUI and updating the game view as the user interacts with the GUI
- * */
+import java.util.Scanner;
 
 public class UNOGameFrame extends JFrame implements UNOGameHandler {
     UNOGame game;
@@ -22,9 +20,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     public UNOGameFrame( UNOGame game) {
         super("UNO Flip Game!");
         this.game = game;
-        game.addUnoGameView(this);
         this.cardButtonList = new ArrayList<>();
         controller = new UNOGameController(game, this);
+        game.addUnoGameView(this);
 
         //initialize menu and menu item
         menuBar = new JMenuBar();
@@ -273,15 +271,18 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         if (result == JOptionPane.OK_OPTION) {
             // Handle the selected option
             if (radioButton1.isSelected()) {
-                game.chooseNewColor(Card.Color.BLUE);
+                game.actionChooseColor(Card.Color.BLUE);
             } else if (radioButton2.isSelected()) {
-                game.chooseNewColor(Card.Color.GREEN);
+                game.actionChooseColor(Card.Color.GREEN);
             } else if (radioButton3.isSelected()) {
-                game.chooseNewColor(Card.Color.RED);
+                game.actionChooseColor(Card.Color.RED);
             } else {
-                game.chooseNewColor(Card.Color.YELLOW);
+                game.actionChooseColor(Card.Color.YELLOW);
             }
+        } else {
+            System.out.println("Dialog canceled");
         }
+
     }
 
     @Override
@@ -301,8 +302,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         displayPlayerHand();
         displayTopCard();
 
-        //enable call UNO button if hand is UNO
-        if(game.getCurrentPlayer().getHand().isUNO()){
+        //callUNO
+        if(game.getCurrentPlayerCardNames().size()==1){
             callUNOButton.setEnabled(true);
         }
 
@@ -310,23 +311,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         if (e.getCard().getColorLight() == Card.Color.WILD){
             wildDialog();
         }
-        else if ((e.getCard().getColorLight() == Card.Color.WILD) & (e.getCard().getRankLight()==Card.Rank.DRAW2)){
-            wildDialog();
-            game.executeSpecialFunction(e.getCard());
-        }
-        else if(e.getCard().getRankLight() == Card.Rank.DRAW2){
-            game.executeSpecialFunction(e.getCard());
-        }
-        else if (e.getCard().getRankLight() == Card.Rank.DRAW1) {
-            game.executeSpecialFunction(e.getCard());
-        }
-        else if(e.getCard().getRankLight() == Card.Rank.SKIP){
-            game.executeSpecialFunction(e.getCard());
-        }
-        else if(e.getCard().getRankLight() == Card.Rank.REVERSE){
-            game.executeSpecialFunction(e.getCard());
-        }
-        if(game.getCurrentPlayer().getHand().isEmpty()){
+
+        if(game.getCurrentPlayerCardNames().size()==0){
             int roundScore = game.calculateWinnerScore();
             int totalScore = game.getCurrentPlayer().getScore();
             winRoundScreen(game.getCurrentPlayerName(), totalScore, roundScore);
