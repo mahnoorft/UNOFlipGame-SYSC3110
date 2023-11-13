@@ -12,7 +12,6 @@ public class UNOGame{
     private int turnDirection;
     public Card topCard;
     private boolean currentSideLight;
-    private boolean gameActive;
     private int canPlayCard;
 
     List<UNOGameHandler> view;
