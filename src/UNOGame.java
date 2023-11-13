@@ -354,7 +354,7 @@ public class UNOGame{
         canPlayCard = 2;
 
         for (UNOGameHandler view: view){
-            view.handleNextTurn(new UNOGameEvent(this, currentTurn));
+            view.handleNextTurn(new UNOGameEvent(this));
         }
 
     }
