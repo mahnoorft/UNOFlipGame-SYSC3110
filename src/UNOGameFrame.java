@@ -81,11 +81,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         JPanel callPanel = new JPanel();
         callUNOButton = new JButton("Call UNO");
         callUNOButton.setEnabled(false);
-        callUNOButton.setBackground(Color.RED);
-        callUNOButton.setBounds(20,280,100,27);
+        UNOButtonColour();
+        callUNOButton.setBounds(20,270,100,40);
         mainPanel.add(callUNOButton);
-
-
 
         //adding to button panel
         buttonPanel.add(drawPanel);
@@ -119,9 +117,12 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         winRoundPanel.add(winRoundMessage);
         winRoundPanel.add(winRoundMessagePoints);
+        winRoundPanel.setSize(800, 600);
         newRoundButton = new JButton("New Round");
-        newRoundButton.setBounds(300,500,200,80);
+        newRoundButton.setBounds(300,400,200,80);
         newRoundButton.setFont(new Font("Monospaced Bold", Font.PLAIN, 24));
+        newRoundButton.addActionListener(controller);
+        newRoundButton.setActionCommand("new");
 
         winRoundPanel.add(newRoundButton);
         winRoundPanel.setVisible(false);
@@ -135,6 +136,15 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         this.setVisible(true);
 
 
+    }
+
+    private void UNOButtonColour(){
+        if (callUNOButton.isEnabled()){
+            callUNOButton.setBackground(Color.RED);
+        }
+        else {
+            callUNOButton.setBackground(null);
+        }
     }
 
     private void displayPlayerHand() {
@@ -180,6 +190,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      * @param points The amount of points the winner gained this round.
      * */
     public void winRoundScreen(String winner,int totalPoints,int points){
+        if (totalPoints >= 500){
+            winGameScreen(winner, totalPoints);
+        }
         mainPanel.setVisible(false);
         winRoundPanel.setVisible(true);
         winRoundMessage.setText( winner + " wins the round" );
@@ -204,8 +217,10 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     public void restartRoundScreen(){
         mainPanel.setVisible(true);
-
         winRoundPanel.setVisible(false);
+        game.updatePlayerPermission();
+        displayPlayerHand();
+        displayTopCard();
     }
 
     private void drawCardDialog(Card card, Boolean canPlay, UNOGameEvent e) {
@@ -305,6 +320,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         //callUNO
         if(game.getCurrentPlayerCardNames().size()==1){
             callUNOButton.setEnabled(true);
+            UNOButtonColour();
         }
 
         //handle WILD, SKIP, REVERSE, +1, +2
@@ -350,11 +366,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         drawCardButton.setEnabled(true);
         endTurnButton.setEnabled(false);
         callUNOButton.setEnabled(false);
+        UNOButtonColour();
     }
 
     @Override
     public void handleCallUNO(UNOGameEvent e) {
         JOptionPane.showMessageDialog(this, "Player "+game.getCurrentPlayerName()+" called UNO!");
         callUNOButton.setEnabled(false);
+        UNOButtonColour();
     }
 }

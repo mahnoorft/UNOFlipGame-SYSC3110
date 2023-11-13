@@ -287,6 +287,10 @@ public class UNOGame{
         topCard = card;
     }
 
+    public void updatePlayerPermission(){
+        canPlayCard = 2;
+    }
+
     public String getCurrentPlayerName(){
         return players.get(currentTurn).getName();
     }
