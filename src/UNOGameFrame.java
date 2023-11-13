@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class UNOGameFrame extends JFrame implements UNOGameHandler {
     UNOGame game;
@@ -271,13 +270,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         if (result == JOptionPane.OK_OPTION) {
             // Handle the selected option
             if (radioButton1.isSelected()) {
-                game.actionChooseColor(Card.Color.BLUE);
+                game.chooseNewColor(Card.Color.BLUE);
             } else if (radioButton2.isSelected()) {
-                game.actionChooseColor(Card.Color.GREEN);
+                game.chooseNewColor(Card.Color.GREEN);
             } else if (radioButton3.isSelected()) {
-                game.actionChooseColor(Card.Color.RED);
+                game.chooseNewColor(Card.Color.RED);
             } else {
-                game.actionChooseColor(Card.Color.YELLOW);
+                game.chooseNewColor(Card.Color.YELLOW);
             }
         } else {
             System.out.println("Dialog canceled");
