@@ -8,7 +8,6 @@ public class UNOGameEvent extends EventObject {
     Card card;
     Boolean canPlay;
 
-    Boolean isWild;
     /**
      * Constructs a prototypical Event.
      * @param model the object on which the Event initially occurred
@@ -21,10 +20,6 @@ public class UNOGameEvent extends EventObject {
         super(model);
         this.card = card;
         this.canPlay = bool;
-    }
-
-    public UNOGameEvent(UNOGame model, Integer turn) {
-        super(model);
     }
 
     public Card getCard(){ return card;}
