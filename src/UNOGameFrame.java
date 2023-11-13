@@ -212,7 +212,6 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         winRoundPanel.setVisible(true);
         winRoundMessage.setText( winner + " wins the game!" );
         winRoundMessagePoints.setText( "Points: " + totalPoints);
-        newRoundButton.setText("Finish");
         this.add(winRoundPanel);
     }
 
