@@ -10,7 +10,6 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     JPanel mainPanel, playerCardsPanel, topCardPanel, buttonPanel, leftPanel, winRoundPanel;
     JButton drawCardButton, endTurnButton, newRoundButton, callUNOButton;
     JLabel winRoundMessage,winRoundMessagePoints, playerNameField;
-    JTextArea statusBar;
     JMenuBar menuBar;
     JMenu gameMenu;
     ArrayList<ImageIcon> iconImages;
@@ -83,24 +82,15 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         callUNOButton = new JButton("Call UNO");
         callUNOButton.setEnabled(false);
         callUNOButton.setBackground(Color.RED);
-        callPanel.add(callUNOButton);
-        callPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 10, 0)); // Add padding
+        callUNOButton.setBounds(20,280,100,27);
+        mainPanel.add(callUNOButton);
 
-        //create status panel and add status bar
-        statusBar = new JTextArea("Welcome to UNO!sfdkmekffmsmfjkvflkmmmmmmmk'");
-        //statusBar.setSize(150,150);
-        statusBar.setLineWrap(true);
-        JScrollPane statusPanel = new JScrollPane(statusBar);
-        //statusPanel.setSize(150,150);
-        statusPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-        statusPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 180, 0)); // Add padding
+
 
         //adding to button panel
         buttonPanel.add(drawPanel);
         buttonPanel.add(endPanel);
         //adding to leftPanel
-        leftPanel.add(statusPanel);
-        leftPanel.add(callPanel);
 
         //add components to main Panel
         mainPanel.add(scrollPane, BorderLayout.SOUTH);
@@ -166,8 +156,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         System.out.println(cardNames.size());
 
         // Revalidate and repaint the playerCardsPanel to reflect the changes
-        playerCardsPanel.revalidate();
-        playerCardsPanel.repaint();
+        mainPanel.revalidate();
+        mainPanel.repaint();
     }
 
     private void displayTopCard() {
