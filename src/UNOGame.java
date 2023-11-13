@@ -13,7 +13,7 @@ public class UNOGame{
     public Card topCard;
     private boolean currentSideLight;
     private int canPlayCard;
-
+    private boolean turnSkipped;
     List<UNOGameHandler> view;
 
 
@@ -29,6 +29,7 @@ public class UNOGame{
         this.view = new ArrayList<UNOGameHandler>();
         createPlayers();
         canPlayCard = 2;
+        turnSkipped = false;
     }
 
     public void addUnoGameView(UNOGameHandler view){
@@ -75,7 +76,7 @@ public class UNOGame{
 
     /** Skip the turn of the next player*/
     private void skipTurn(){
-        currentTurn = getNextPlayerIndex();
+        turnSkipped = true;
         System.out.println("Skipped player "+players.get(currentTurn).getName());
     }
     /** Reverse the turn direction*/
@@ -224,6 +225,7 @@ public class UNOGame{
         for (UNOGameHandler view: view){
             view.handlePlayCard(new UNOGameEvent(this, c, false));
         }
+
         return c;
     }
 
@@ -239,11 +241,19 @@ public class UNOGame{
         for (UNOGameHandler view: view){
             view.handleDrawCard(new UNOGameEvent(this, c, false));
         }
+
         return false;
     }
     public void actionEndTurn(){
         currentTurn = getNextPlayerIndex();
+        if(turnSkipped){
+            turnSkipped = false;
+            currentTurn = getNextPlayerIndex();
+        }
+
         canPlayCard = 2;
+
+
 
         for (UNOGameHandler view: view){
             view.handleNextTurn(new UNOGameEvent(this));
