@@ -188,6 +188,9 @@ public class UNOGame{
     public Player getCurrentPlayer(){
         return players.get(currentTurn);
     }
+    public void updateTurn(){
+        canPlayCard = 2;
+    }
 
     /**
      * Plays card at index
