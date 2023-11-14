@@ -16,14 +16,32 @@ public class UNOGameEvent extends EventObject {
     public UNOGameEvent(UNOGame model){
         super(model);
     }
+
+    /**
+     * Constructs a new UNOGameEvent with references to the UNOGame model, a Card, and a boolean.
+     *
+     * @param model   The UNOGame model representing the game logic.
+     * @param card    The Card associated with the event.
+     * @param bool    A boolean indicating whether the player can play the card.
+     */
     public UNOGameEvent(UNOGame model, Card card, Boolean bool) {
         super(model);
         this.card = card;
         this.canPlay = bool;
     }
 
+    /**
+     * Gets the Card associated with this UNOGameEvent.
+     *
+     * @return The Card associated with the event.
+     */
     public Card getCard(){ return card;}
 
+    /**
+     * A flag to Check if the player can play the card
+     *
+     * @return True if the player can play the card, false otherwise.
+     */
     public Boolean canPlay(){ return canPlay;}
 
 
