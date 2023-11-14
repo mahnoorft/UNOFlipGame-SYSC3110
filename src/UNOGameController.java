@@ -33,6 +33,10 @@ public class UNOGameController implements ActionListener {
             System.out.println("NEW ROUND");
             model.initializeGame();
             view.restartRoundScreen();
+        } else if (command.equals("newGame")) {
+            view.dispose();
+            UNOGame game = new UNOGame();
+            UNOGameFrame unoGameFrame = new UNOGameFrame(game);
         } else{
             int index = Integer.parseInt(command);
             model.actionPlayCard(index);

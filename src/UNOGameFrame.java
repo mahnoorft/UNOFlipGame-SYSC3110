@@ -30,6 +30,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         gameMenu = new JMenu("Game");
         menuBar.add(gameMenu);
         JMenuItem newGame = new JMenuItem("New Game");
+        newGame.setActionCommand("newGame");
         gameMenu.add(newGame);
 
         //set up the content pane
