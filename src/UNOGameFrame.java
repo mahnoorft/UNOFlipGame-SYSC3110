@@ -328,13 +328,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         if (e.getCard().getColorLight() == Card.Color.WILD){
             wildDialog();
         }
+        game.executeSpecialFunction(e.getCard());
 
         if(game.getCurrentPlayerCardNames().size()==0){
             int roundScore = game.calculateWinnerScore();
             int totalScore = game.getCurrentPlayer().getScore();
             winRoundScreen(game.getCurrentPlayerName(), totalScore, roundScore);
         }
-
 
         drawCardButton.setEnabled(false);
         endTurnButton.setEnabled(true);
