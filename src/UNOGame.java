@@ -67,12 +67,6 @@ public class UNOGame{
         this.pile.add(topCard);
 
     }
-//        //check if card's special, if it is executeSpecialFunction
-//        if (userInput != 0 && topCard.isSpecial()) {
-//            executeSpecialFunction(topCard);
-//        } else {
-//            System.out.println(player.getName() + "'s Turn Finished");
-//        }
 
     /** Skip the turn of the next player*/
     private void skipTurn(){
@@ -102,15 +96,7 @@ public class UNOGame{
         }
     }
 
-    /** Declare round winner when a player plays all the cards in hand*/
-    private void winRound() {
-        Player winner = players.get(currentTurn);
-        calculateWinnerScore();
-        System.out.println("Winner: " + winner.getName() + " Scored: " + winner.getScore() + " points this round.");
-        if(winner.getScore()>=500) {
-            //win game function
-        }
-    }
+
     /** Return the score of the player by adding up the cards points held by other players.
      * @return score of winner for this round*/
     public int calculateWinnerScore(){
@@ -177,10 +163,6 @@ public class UNOGame{
 
     public void updateTopCard(Card card){
         topCard = card;
-    }
-
-    public void updatePlayerPermission(){
-        canPlayCard = 2;
     }
 
     public String getCurrentPlayerName(){
