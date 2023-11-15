@@ -81,8 +81,8 @@ public class UNOGameFrame extends JFrame {
 
         for (String cardName : cardNames) {
             // Assuming cards are named with their respective COLOR_RANK.png
-            String imagePath = IMAGES_FOLDER_PATH + cardName;
-            ImageIcon icon = new ImageIcon(imagePath);
+            //String imagePath = IMAGES_FOLDER_PATH + cardName;
+            ImageIcon icon = new ImageIcon(cardName);
             JLabel label = new JLabel(icon);
             playerCardsPanel.add(label);
         }
@@ -95,7 +95,7 @@ public class UNOGameFrame extends JFrame {
     private void displayTopCard() {
 
         Card topCard = game.topCard;
-        String imagePath = IMAGES_FOLDER_PATH + topCard.getColorLight().name() + "_"+ topCard.getRankLight().name() + ".png";
+        String imagePath = topCard.getColorLight().name() + "_"+ topCard.getRankLight().name() + ".png";
         ImageIcon icon2 = new ImageIcon(imagePath);
         JLabel label2 = new JLabel(icon2);
         topCardPanel.add(label2);
