@@ -13,7 +13,7 @@ public class UNOGame{
     public Card topCard;
     private boolean currentSideLight;
     private int canPlayCard;
-    private boolean turnSkipped;
+    private int turnSkipped;
     List<UNOGameHandler> view;
 
 
@@ -29,7 +29,7 @@ public class UNOGame{
         this.view = new ArrayList<UNOGameHandler>();
         createPlayers();
         canPlayCard = 2;
-        turnSkipped = false;
+        turnSkipped = 0;
     }
 
     public void addUnoGameView(UNOGameHandler view){
@@ -70,7 +70,7 @@ public class UNOGame{
 
     /** Skip the turn of the next player*/
     private void skipTurn(){
-        turnSkipped = true;
+        turnSkipped = 1;
         System.out.println("Skipped player "+players.get(currentTurn).getName());
     }
     /** Reverse the turn direction*/
@@ -121,6 +121,9 @@ public class UNOGame{
             case SKIP:
                 this.skipTurn();
                 return "skip";
+            case SKIP_All:
+                turnSkipped = -1;
+                return "Skipped all";
             case WILD:
                 return "wild";
             case DRAW1:
@@ -131,6 +134,10 @@ public class UNOGame{
                 this.nextPlayerDrawCard(2);
                 this.skipTurn();
                 return "WILD draw 2";
+
+            case FLIP:
+                currentSideLight = !currentSideLight;
+                return "FLIP";
         }
         return null;
     }
@@ -194,12 +201,12 @@ public class UNOGame{
                     "Error!", JOptionPane.ERROR_MESSAGE);
             return null;
         }
-        if(!player.getHand().getCards().get(index).checkValid(topCard)){
+        if(!player.getHand().getCards().get(index).checkValid(topCard,currentSideLight)){
             JOptionPane.showMessageDialog(null, "Attempting to play an illegal card",
                     "Error!", JOptionPane.ERROR_MESSAGE);
             return null;
         }
-        Card c = player.playCard(index,topCard);
+        Card c = player.playCard(index,topCard,currentSideLight);
 
         //update top card
         if (c!= null){
@@ -216,7 +223,7 @@ public class UNOGame{
 
     public boolean actionDrawCard(){
         Card c = deck.draw();
-        if(c.checkValid(topCard)){
+        if(c.checkValid(topCard,currentSideLight)){
             canPlayCard = 1;
             for (UNOGameHandler view: view){
                 view.handleDrawCard(new UNOGameEvent(this, c, true));
@@ -230,11 +237,14 @@ public class UNOGame{
         return false;
     }
     public void actionEndTurn(){
-        currentTurn = getNextPlayerIndex();
-        if(turnSkipped){
-            turnSkipped = false;
+        if(turnSkipped !=-1){
             currentTurn = getNextPlayerIndex();
+            if(turnSkipped == 1){
+                currentTurn = getNextPlayerIndex();
+            }
         }
+        turnSkipped = 0;
+
 
         canPlayCard = 2;
 

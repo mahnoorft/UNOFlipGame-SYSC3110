@@ -21,17 +21,25 @@ public class Deck {
             deck.add(new Card(Card.Rank.ZERO, Card.Color.values()[colors],Card.Rank.ZERO, Card.Color.values()[colors+4]));
 
             //adding two Cards of ranks 1-9 and 3 special cards
-            for(int i =1; i<13; i++){
+            for(int i =1; i<10; i++){
                 for (int j =0; j<2; j++){
                     deck.add(new Card(Card.Rank.values()[i], Card.Color.values()[colors],Card.Rank.values()[i], Card.Color.values()[colors+4]));
                 }
+            }
+            for (int j =0; j<2; j++){
+                deck.add(new Card(Card.Rank.REVERSE, Card.Color.values()[colors],Card.Rank.REVERSE, Card.Color.values()[colors+4]));
+                deck.add(new Card(Card.Rank.SKIP, Card.Color.values()[colors],Card.Rank.SKIP_All, Card.Color.values()[colors+4]));
+                deck.add(new Card(Card.Rank.DRAW1, Card.Color.values()[colors],Card.Rank.DRAW5, Card.Color.values()[colors+4]));
             }
         }
         //adding four Cards of Wild and WildDraw2
         for(int i =13; i<15; i++){
             for (int j =0; j<4; j++){
-                deck.add(new Card(Card.Rank.values()[i], Card.Color.WILD,Card.Rank.ZERO, Card.Color.WILD));
+                deck.add(new Card(Card.Rank.values()[i], Card.Color.WILD,Card.Rank.WILD, Card.Color.WILD));
             }
+        }
+        for(int i=0;i<10;i++){
+            deck.add(new Card(Card.Rank.FLIP, Card.Color.WILD,Card.Rank.FLIP, Card.Color.WILD));
         }
         this.shuffle();
     }

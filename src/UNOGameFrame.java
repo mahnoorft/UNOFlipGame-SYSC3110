@@ -173,9 +173,19 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         for (int i = 0; i< cardNames.size(); i++) {
             // Assuming cards are named with their respective COLOR_RANK.png
             // get the path to the images
-            String imagePath = IMAGES_FOLDER_PATH + cardNames.get(i);
-            ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
-            JButton button = new JButton(icon);
+            /**
+             * ----------------------------------------------------------------Eric--------------------------------------
+             */
+            String imagePath;
+            ImageIcon icon;
+            JButton button;
+            if(game.isCurrentSideLight() && game.getCurrentPlayer().getHand().getCards().get(i).getRank(true)!= Card.Rank.FLIP) {
+                 imagePath = IMAGES_FOLDER_PATH + cardNames.get(i);
+                 icon = new ImageIcon(getClass().getResource(imagePath));
+                 button = new JButton(icon);
+            }else{
+                button = new JButton(game.getCurrentPlayer().getHand().getCards().get(i).toStringSingle(game.isCurrentSideLight()));
+            }
             button.addActionListener(controller);
             button.setActionCommand(""+i);
             cardButtonList.add(button);
@@ -193,16 +203,18 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      */
     private void displayTopCard() {
         topCardPanel.removeAll();
-
+        /**
+         * -----------------------------------------------------------Eric-------------------------------------------------
+         */
         Card topCard = game.topCard;
         // get the path to the image
         JLabel label2;
-        if(game.isCurrentSideLight()){
+        if(game.isCurrentSideLight() && topCard.getRank(true)!= Card.Rank.FLIP){
             String imagePath = IMAGES_FOLDER_PATH + topCard.getColor(true).name() + "_"+ topCard.getRank(true).name() + ".png";
             ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath));
             label2 = new JLabel(icon2);
         }else{
-            label2 = new JLabel(game.topCard.toString2());
+            label2 = new JLabel(game.topCard.toStringSingle(game.isCurrentSideLight()));
         }
         topCardPanel.add(label2);
 

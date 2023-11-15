@@ -16,6 +16,8 @@ public class  Player {
         this.hand = new Hand();
         this.score = 0;
         bot = name.contains("bot");
+        if(bot)
+        System.out.println("added a bot");
     }
 
     /**
@@ -64,11 +66,11 @@ public class  Player {
      * play one of the player's cards
      * @return the card that is being played
      */
-    public Card playCard(int index, Card topCard) {
+    public Card playCard(int index, Card topCard, boolean isSideLight) {
         // check if card index is valid
         if (index >= 0 && index < hand.getCards().size()) {
             Card cardToPlay = hand.getCards().get(index);
-            if (cardToPlay.checkValid(topCard)) {
+            if (cardToPlay.checkValid(topCard,isSideLight)) {
                 // Print the card that is being played
                 System.out.println(name + " played " + cardToPlay);
                 hand.removeCard(index);
@@ -91,6 +93,15 @@ public class  Player {
 
     public boolean isBot(){
         return bot;
+    }
+    public int checkBestMove(Card topCard,boolean isSideLight){
+        ArrayList<Card> availablePlay = new ArrayList<>();
+        for(int i=0;i<hand.getCards().size();i++){
+            if(hand.getCards().get(i).checkValid(topCard,isSideLight)){
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

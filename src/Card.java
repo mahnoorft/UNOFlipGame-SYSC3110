@@ -40,7 +40,6 @@ public class Card {
             case REVERSE,SKIP,FLIP -> points = 20;
             case WILD -> points = 40;
             case DRAW2 -> points = 50;
-
             default -> throw new IllegalArgumentException("CUSTOM EXCEPTION: light card have dark rank");
         }
         switch (rankDark){
@@ -58,20 +57,23 @@ public class Card {
             case REVERSE,SKIP_All,FLIP -> points = 20;
             case WILD -> points = 40;
             case DRAW_COLOR -> points = 50;
-            //default -> throw new IllegalArgumentException("CUSTOM EXCEPTION: dark card have light rank");
+            default -> throw new IllegalArgumentException("CUSTOM EXCEPTION: dark card have light rank");
         }
     }
 
     /**
      *  compares this card to another card and returns
-     *  true if the card can be played according to UNO rules
-     * @return true if this card can be played according to UNO rules
+     *
+     *  @return true if this card can be played according to UNO rules
      */
-    public boolean checkValid(Card other){
-        //if(unoGame.getFlip() == UNOGame.Flip.LIGHT){
+    public boolean checkValid(Card other,boolean isSideLight){
+        if(isSideLight){
         return this.rankLight == other.rankLight || this.colorLight == other.colorLight
                 || this.colorLight == Color.WILD || other.colorLight == Color.WILD;
-        //}
+        }else{
+            return this.rankDark == other.rankDark || this.colorDark == other.colorDark
+                    || this.colorDark == Color.WILD || other.colorDark == Color.WILD;
+        }
     }
 
     /**
@@ -130,7 +132,10 @@ public class Card {
     public String toString2(){
         return this.colorLight+"_"+ this.rankLight;
     }
-    public String toStringDark(){
+    public String toStringSingle(boolean isSideLight){
+        if(isSideLight){
+            return this.colorLight+"_"+ this.rankLight;
+        }
         return this.colorDark+"_"+ this.rankDark;
     }
 
