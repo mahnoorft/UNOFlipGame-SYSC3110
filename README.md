@@ -50,6 +50,9 @@ Milestone 4:
 - Reply Capability: Players will now have the ability to replay the game, allowing them to restart and enjoy multiple rounds.
 - Save/Load Features: We will implement a save and load system
 
+## Author
+- Mahnoor Fatima 101192353
+
 ## Contributors
 Group 5:
 - Areej Mahmoud 101218260
