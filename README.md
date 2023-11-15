@@ -1,5 +1,5 @@
 # UNOFlipGame-SYSC3110
-The UNO Flip Game project is an exciting digital version of the classic UNO card game with a twist. In this implementation, we've incorporated the unique UNO Flip rules (only light side for Milestone 1), adding a whole new level of fun and strategy to the game. Players can enjoy this engaging and competitive experience on their computers.
+The UNO Flip Game project is an exciting digital version of the classic UNO card game with a twist. In this implementation, we've incorporated the unique UNO Flip rules (only light side for Milestone 2), adding a whole new level of fun and strategy to the game. Players can enjoy this engaging and competitive experience on their computers.
 
 
 ## Installation:
@@ -15,14 +15,16 @@ JUnit 5.8.1
 ## Usage
 To run the UNOFlipGame, open the project repository and navigate to Main.java class. Click run, and enjoy!
 
+Once, the Main.java is run the user will be prompted to enter the number of players for the UNO game. Each person will be able to see the hand of cards, a draw card button, and an end turn button. 
+
 ## Features
 
 ### 1. UNO Flip Rules
-- Embrace the exciting world of UNO Flip, where cards have two faces with distinct effects (for Milestone1 only Light is present).
+- Embrace the exciting world of UNO Flip, where cards have two faces with distinct effects (for Milestone 2 only Light is present).
 - Use Flip cards to change the game dynamics, keeping players on their toes.
 
 ### 2. Interactive Multiplayer
-- Challenge friends or compete with players.
+- Interactive GUI with buttons. Challenge friends or compete with players.
 
 ### 3. Traditional UNO Rules
 - Enjoy classic UNO gameplay, including wild, draw cards, reverse, and skip actions.

@@ -13,7 +13,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     UNOGameController controller;
     JPanel mainPanel, playerCardsPanel, topCardPanel, buttonPanel,  winRoundPanel;
     JButton drawCardButton, endTurnButton, newRoundButton, callUNOButton;
-    JLabel winRoundMessage,winRoundMessagePoints, playerNameField;
+    JLabel winRoundMessage,winRoundMessagePoints, playerNameField, statusBar;
     JMenuBar menuBar;
     JMenu gameMenu;
     ArrayList<JButton> cardButtonList;
@@ -60,6 +60,12 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         game.initializeGame();
         displayPlayerHand();
         displayTopCard();
+
+        //set status bar
+        statusBar = new JLabel("Welcome to UNO...");
+        statusBar.setBounds(20, 100, 200, 30);
+        statusBar.setFont(new Font(Font.DIALOG,Font.BOLD, 11));
+        mainPanel.add(statusBar);
 
         //created image icons for current player's displayed cards and then added buttons to them
         String imagePath = IMAGES_FOLDER_PATH + "card_back.png";
@@ -231,7 +237,6 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         winRoundPanel.setVisible(true);
         winRoundMessage.setText( winner + " wins the game!" );
         winRoundMessagePoints.setText( "Points: " + totalPoints);
-        newRoundButton.setText("Finish");
         this.add(winRoundPanel);
     }
 
@@ -244,6 +249,12 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         game.updateTurn();
         displayPlayerHand();
         displayTopCard();
+    }
+
+    public void updateStatusBar(String function) {
+        if (function != null){
+            statusBar.setText(game.getCurrentPlayerName() + " played " + function);
+        }
     }
 
     /**
@@ -321,12 +332,16 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             // Handle the selected option
             if (radioButton1.isSelected()) {
                 game.chooseNewColor(Card.Color.BLUE);
+                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is BLUE");
             } else if (radioButton2.isSelected()) {
                 game.chooseNewColor(Card.Color.GREEN);
+                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is GREEN");
             } else if (radioButton3.isSelected()) {
                 game.chooseNewColor(Card.Color.RED);
+                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is RED");
             } else {
                 game.chooseNewColor(Card.Color.YELLOW);
+                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is YELLOW");
             }
         } else {
             System.out.println("Dialog canceled");
@@ -345,6 +360,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         Boolean canPlay = e.canPlay();
         displayPlayerHand();
         drawCardDialog(card, canPlay, e);
+        statusBar.setText(game.getCurrentPlayerName() + " drew a card");
 
         //Cannot draw more cards
         drawCardButton.setEnabled(false);
@@ -367,11 +383,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             UNOButtonColour();
         }
 
+        String specialCard = game.executeSpecialFunction(e.getCard());
+        updateStatusBar(specialCard);
         //handle WILD, SKIP, REVERSE, +1, +2 cards
         if (e.getCard().getColorLight() == Card.Color.WILD){
             wildDialog();
         }
-        game.executeSpecialFunction(e.getCard());
+
 
         // Check for a round winner and display the round results if the current player has no more cards
         if(game.getCurrentPlayerCardNames().size()==0){
@@ -403,6 +421,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         // Reset UNO call button's state and color
         callUNOButton.setEnabled(false);
         UNOButtonColour();
+        statusBar.setText("");
+
     }
     /**
      * Handles the UNO call action in the UNO game.
@@ -412,6 +432,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     public void handleCallUNO(UNOGameEvent e) {
         // Display a message indicating that the current player has called UNO
         JOptionPane.showMessageDialog(this, "Player "+game.getCurrentPlayerName()+" called UNO!");
+        statusBar.setText(game.getCurrentPlayerName() + " called UNO");
         // Disable the UNO call button and update its color
         callUNOButton.setEnabled(false);
         UNOButtonColour();

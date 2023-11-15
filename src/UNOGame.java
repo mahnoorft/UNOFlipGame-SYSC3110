@@ -113,25 +113,26 @@ public class UNOGame{
     }
     /** Execute the spaecial card function based on the rank
      * @param card the special card played*/
-    public void executeSpecialFunction(Card card){
+    public String executeSpecialFunction(Card card){
         switch (card.rankLight){
             case REVERSE:
                 this.reverseTurn();
-                break;
+                return "reverse";
             case SKIP:
                 this.skipTurn();
-                break;
+                return "skip";
             case WILD:
-                break;
+                return "wild";
             case DRAW1:
                 this.nextPlayerDrawCard(1);
                 this.skipTurn();
-                break;
+                return "draw 1";
             case DRAW2:
                 this.nextPlayerDrawCard(2);
                 this.skipTurn();
-                break;
+                return "WILD draw 2";
         }
+        return null;
     }
     /** Return the index of the next player
      * @return index of the next player*/
