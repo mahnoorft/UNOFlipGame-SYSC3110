@@ -19,9 +19,10 @@ public class  Player {
     /**
      * draw card from deck and add to hand
      */
-    public void drawCard(Deck deck) {
+    public Card drawCard(Deck deck) {
         Card drawnCard = deck.draw();
         hand.addCard(drawnCard);
+        return drawnCard;
     }
 
 
@@ -86,5 +87,4 @@ public class  Player {
         hand.removeAll();
     }
 
-    // implement toString()
 }
