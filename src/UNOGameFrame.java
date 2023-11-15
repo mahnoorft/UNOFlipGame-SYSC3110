@@ -18,7 +18,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     JMenu gameMenu;
     ArrayList<JButton> cardButtonList;
 
-    private static final String IMAGES_FOLDER_PATH = "src/images/"; // Path to the images folder
+    private static final String IMAGES_FOLDER_PATH = "images/"; // Path to the images folder
 
     public UNOGameFrame( UNOGame game) {
         super("UNO Flip Game!");
@@ -70,7 +70,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         //created image icons for current player's displayed cards and then added buttons to them
         String imagePath = IMAGES_FOLDER_PATH + "card_back.png";
         // Create an ImageIcon using the specified image path
-        ImageIcon icon = new ImageIcon(imagePath);
+        ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
         JPanel drawPanel = new JPanel();
         drawPanel.setLayout(new BoxLayout(drawPanel, BoxLayout.Y_AXIS));
         drawCardButton = new JButton(icon);
@@ -174,7 +174,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             // Assuming cards are named with their respective COLOR_RANK.png
             // get the path to the images
             String imagePath = IMAGES_FOLDER_PATH + cardNames.get(i);
-            ImageIcon icon = new ImageIcon(imagePath);
+            ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
             JButton button = new JButton(icon);
             button.addActionListener(controller);
             button.setActionCommand(""+i);
@@ -197,7 +197,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         Card topCard = game.topCard;
         // get the path to the image
         String imagePath = IMAGES_FOLDER_PATH + topCard.getColorLight().name() + "_"+ topCard.getRankLight().name() + ".png";
-        ImageIcon icon2 = new ImageIcon(imagePath);
+        ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath));
         JLabel label2 = new JLabel(icon2);
         topCardPanel.add(label2);
 
@@ -266,7 +266,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      */
     private void drawCardDialog(Card card, Boolean canPlay, UNOGameEvent e) {
         System.out.println(card.toString2());
-        ImageIcon icon = new ImageIcon(IMAGES_FOLDER_PATH + card.toString2() + ".png");
+        ImageIcon icon = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + card.toString2() + ".png"));
         JLabel cardLabel = new JLabel(icon);
 
         if (canPlay) {
