@@ -196,10 +196,17 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         Card topCard = game.topCard;
         // get the path to the image
-        String imagePath = IMAGES_FOLDER_PATH + topCard.getColorLight().name() + "_"+ topCard.getRankLight().name() + ".png";
-        ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath));
-        JLabel label2 = new JLabel(icon2);
+        JLabel label2;
+        if(game.isCurrentSideLight()){
+            String imagePath = IMAGES_FOLDER_PATH + topCard.getColor(true).name() + "_"+ topCard.getRank(true).name() + ".png";
+            ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath));
+            label2 = new JLabel(icon2);
+        }else{
+            label2 = new JLabel(game.topCard.toString2());
+        }
         topCardPanel.add(label2);
+
+
 
         // Revalidate and repaint the playerCardsPanel to reflect the changes
         topCardPanel.revalidate();
@@ -386,7 +393,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         String specialCard = game.executeSpecialFunction(e.getCard());
         updateStatusBar(specialCard);
         //handle WILD, SKIP, REVERSE, +1, +2 cards
-        if (e.getCard().getColorLight() == Card.Color.WILD){
+        if (e.getCard().getColor(game.isCurrentSideLight()) == Card.Color.WILD){
             wildDialog();
         }
 

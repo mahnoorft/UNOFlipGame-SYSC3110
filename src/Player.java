@@ -9,11 +9,13 @@ public class  Player {
     private String name;
     private Hand hand;
     private int score;
+    private boolean bot;
 
     public Player(String name) {
         this.name = name;
         this.hand = new Hand();
         this.score = 0;
+        bot = name.contains("bot");
     }
 
     /**
@@ -85,6 +87,10 @@ public class  Player {
      */
     public void clearHand(){
         hand.removeAll();
+    }
+
+    public boolean isBot(){
+        return bot;
     }
 
 }

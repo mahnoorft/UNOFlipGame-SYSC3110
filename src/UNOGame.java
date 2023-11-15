@@ -60,7 +60,7 @@ public class UNOGame{
         //draw first card from deck to start the game
         //Switch top card if it's wild
         topCard = deck.draw();
-        while (topCard.getColorLight() == Card.Color.WILD){
+        while (topCard.getColor(currentSideLight) == Card.Color.WILD){
             pile.add(topCard);
             topCard = deck.draw();
         }
@@ -151,12 +151,14 @@ public class UNOGame{
         List<Card> cards = currentPlayerHand.getCards();
 
         for (Card card : cards) {
-            String cardName = card.getColorLight().name() + "_" + card.getRankLight().name() +".png";
+            String cardName = card.getColor(currentSideLight).name() + "_" + card.getRank(currentSideLight).name() +".png";
             cardNames.add(cardName);
         }
-
         return cardNames;
     }
+
+    public boolean isCurrentSideLight() {return currentSideLight;}
+
 
     public void updatePlayerHand(Card card){
         players.get(currentTurn).getHand().addCard(card);
