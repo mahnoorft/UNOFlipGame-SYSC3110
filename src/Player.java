@@ -104,4 +104,14 @@ public class  Player {
         return -1;
     }
 
+    public boolean getBestPlay(Card topCard, boolean isSideLight){
+        for(int i=0;i<hand.getCards().size();i++){
+            if(hand.getCards().get(i).checkValid(topCard,isSideLight)){
+                playCard(i,topCard,isSideLight);
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

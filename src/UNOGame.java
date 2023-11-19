@@ -206,7 +206,7 @@ public class UNOGame{
                     "Error!", JOptionPane.ERROR_MESSAGE);
             return null;
         }
-        Card c = player.playCard(index,topCard,currentSideLight);
+        Card c = player.playCard(index,topCard,currentSideLight );
 
         //update top card
         if (c!= null){
@@ -249,7 +249,6 @@ public class UNOGame{
         canPlayCard = 2;
 
 
-
         for (UNOGameHandler view: view){
             view.handleNextTurn(new UNOGameEvent(this));
         }
@@ -271,6 +270,12 @@ public class UNOGame{
      * */
     public void chooseNewColor(Card.Color color){
         topCard.setColorLight(color);
+    }
+    public void aiPlayCard(){
+        canPlayCard = 0;
+        if(getCurrentPlayer().getBestPlay(topCard,currentSideLight)){
+
+        }
     }
 
 }
