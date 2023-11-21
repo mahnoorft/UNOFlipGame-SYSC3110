@@ -9,15 +9,13 @@ public class  Player {
     private String name;
     private Hand hand;
     private int score;
-    private boolean bot;
+    private boolean isBot;
 
-    public Player(String name) {
+    public Player(String name, boolean isBot) {
         this.name = name;
         this.hand = new Hand();
         this.score = 0;
-        bot = name.contains("bot");
-        if(bot)
-        System.out.println("added a bot");
+        this.isBot = isBot;
     }
 
     /**
@@ -92,20 +90,10 @@ public class  Player {
     }
 
     public boolean isBot(){
-        return bot;
-    }
-    public int checkBestMove(Card topCard,boolean isSideLight){
-        ArrayList<Card> availablePlay = new ArrayList<>();
-        for(int i=0;i<hand.getCards().size();i++){
-            if(hand.getCards().get(i).checkValid(topCard,isSideLight)){
-                return i;
-            }
-        }
-        return -1;
+        return isBot;
     }
 
     public Card getBestPlay(Card topCard, boolean isSideLight){
-        int bestPlayIndex=0;
         for(int i=0;i<hand.getCards().size();i++){
             if(hand.getCards().get(i).checkValid(topCard,isSideLight)){
                 return playCard(i,topCard,isSideLight);

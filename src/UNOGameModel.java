@@ -42,12 +42,12 @@ public class UNOGameModel {
 
         //create human players with the given names in playerNames
         for(String name: view.getNameList()){
-            Player player = new Player(name);
+            Player player = new Player(name, false);
             players.add(player);
         }
         //create the specified number of AI players
         for(int i=1; i<=view.getNumAIPlayers(); i++){
-            Player player = new Player("AI Player "+i);
+            Player player = new Player("AI Player "+i, true);
             players.add(player);
         }
     }
@@ -196,6 +196,11 @@ public class UNOGameModel {
      * @return the card that is being played
      */
     public Card actionPlayCard(int index){
+        if(canPlayCard == -1){
+            JOptionPane.showMessageDialog(null, "This is ai's turn",
+                    "Error!", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
         if(canPlayCard == 0){
             JOptionPane.showMessageDialog(null, "You have already played a card in this turn",
                     "Error!", JOptionPane.ERROR_MESSAGE);
@@ -208,11 +213,6 @@ public class UNOGameModel {
         }
         if(!player.getHand().getCards().get(index).checkValid(topCard,currentSideLight)){
             JOptionPane.showMessageDialog(null, "Attempting to play an illegal card",
-                    "Error!", JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-        if(canPlayCard == -1){
-            JOptionPane.showMessageDialog(null, "This is ai's turn",
                     "Error!", JOptionPane.ERROR_MESSAGE);
             return null;
         }
