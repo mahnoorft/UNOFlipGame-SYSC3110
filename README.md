@@ -37,7 +37,7 @@ These features and use cases make UNO Flip Game an enjoyable and versatile gamin
 - For this Milestone, we have implemented a user-friendly and engaging GUI using javax.swing framework.
 - The UNOFlipGame project is based on a Model-View-Controller Pattern that allows user input to be handled efficiently.
 - The MVC components communicate together using the Observer pattern (implemented with UNOGameHandler Interface and UNOGameEvent) which allows the view to subscribe to the model and update itsself once changs to the Model are made.
-- The controller handles user input and calls the methods in the Model (UNOGame Class).
+- The controller handles user input and calls the methods in the Model (UNOGameModel Class).
 
 ### Future Deliverables
 

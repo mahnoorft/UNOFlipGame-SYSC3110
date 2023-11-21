@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class UNOGameFrame extends JFrame implements UNOGameHandler {
-    UNOGame game;
+    UNOGameModel game;
     UNOGameController controller;
     JPanel mainPanel, playerCardsPanel, topCardPanel, buttonPanel,  winRoundPanel;
     JButton drawCardButton, endTurnButton, newRoundButton, callUNOButton;
@@ -20,7 +20,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     private static final String IMAGES_FOLDER_PATH = "images/"; // Path to the images folder
 
-    public UNOGameFrame( UNOGame game) {
+    public UNOGameFrame( UNOGameModel game) {
         super("UNO Flip Game!");
         this.game = game;
         this.cardButtonList = new ArrayList<>();

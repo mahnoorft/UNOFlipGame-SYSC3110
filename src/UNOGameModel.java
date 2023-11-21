@@ -4,7 +4,7 @@ import java.util.*;
 /** This class represents the model for UNO game and is responsible for
  * executes the UNO Game functions and updating the game logic*/
 
-public class UNOGame{
+public class UNOGameModel {
     private ArrayList<Player> players;
     private Deck deck;
     private ArrayList<Card> pile;
@@ -18,7 +18,7 @@ public class UNOGame{
 
 
     /** Constructor for class UNOGame*/
-    public UNOGame(){
+    public UNOGameModel(){
         this.players = new ArrayList<Player>();
         this.deck = new Deck();
         this.pile = new ArrayList<Card>();
@@ -40,9 +40,14 @@ public class UNOGame{
     private void createPlayers(){
         CreatePlayersView view = new CreatePlayersView();
 
-        //create a players with the given names in playerNames
+        //create human players with the given names in playerNames
         for(String name: view.getNameList()){
             Player player = new Player(name);
+            players.add(player);
+        }
+        //create the specified number of AI players
+        for(int i=1; i<=view.getNumAIPlayers(); i++){
+            Player player = new Player("AI Player "+i);
             players.add(player);
         }
     }

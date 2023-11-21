@@ -1,6 +1,5 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 /** This class represents the controller for UNO game and is responsible for
  * processing the GUI input through ActionListeners and performing
@@ -8,7 +7,7 @@ import java.util.List;
  * */
 
 public class UNOGameController implements ActionListener {
-    UNOGame model;
+    UNOGameModel model;
     UNOGameFrame view;
 
     /**
@@ -17,7 +16,7 @@ public class UNOGameController implements ActionListener {
      * @param model The UNOGame model representing the game logic.
      * @param view  The UNOGameFrame view representing the  view or user interface.
      */
-    public UNOGameController(UNOGame model, UNOGameFrame view) {
+    public UNOGameController(UNOGameModel model, UNOGameFrame view) {
         this.model = model;
         this.view = view;
     }
@@ -52,7 +51,7 @@ public class UNOGameController implements ActionListener {
         } else if (command.equals("newGame")) {
             // Start a new game
             view.dispose();
-            UNOGame game = new UNOGame();
+            UNOGameModel game = new UNOGameModel();
             UNOGameFrame unoGameFrame = new UNOGameFrame(game);
         } else{
             // If the command is a number, parse it and call model's actionPlayCard method

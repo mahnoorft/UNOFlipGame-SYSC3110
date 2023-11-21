@@ -10,25 +10,49 @@ public class CreatePlayersView {
 
     //list of player names inputted by user
     private ArrayList<String> nameList;
+    private int numHumanPlayers, numAIPlayers;
 
-    /** Constructor for class CreatePlayersView*/
+    /** Constructor for class CreatePlayersView. Displays Game set-up dialogs
+     * and prompts user to select the number of human and AI players.*/
     public CreatePlayersView() {
-        //display player selection dialogue and get number of players
-        Object[] possibilities = {2, 3, 4};
-        int numPlayers = (int) JOptionPane.showInputDialog(
+        this.nameList = new ArrayList<>();
+        boolean includeAI = false;
+        //display welcome message and get AI player preference
+        int choice = JOptionPane.showConfirmDialog(null,
+                "Welcome to UNO Flip Game!\n" + "Include AI players?", "UNO FLip!", JOptionPane.YES_NO_OPTION);
+        if(choice==JOptionPane.YES_OPTION) {
+            includeAI=true;
+            //display player selection dialogue and get number of AI players
+            Object[] aiChoices = {1, 2, 3, 4, 5}; // least number of AI players is 1
+            numAIPlayers = (int) JOptionPane.showInputDialog(
+                    null,
+                    "Welcome to UNO!\n"
+                            + "Select the number of AI players:",
+                    "AI Players",
+                    JOptionPane.PLAIN_MESSAGE, null,
+                    aiChoices,
+                    1);
+        }
+        Object[]  noAIchoices = {2, 3, 4, 5}; // least number of human players is 2
+        Object[]  yesAIchoices = {1, 2, 3, 4, 5}; // least number of human players is 1
+        //display player selection dialogue and get number of human players
+        numHumanPlayers = (int) JOptionPane.showInputDialog(
                 null,
-                "Welcome to UNO!\n"
-                        + "Choose the number of players:",
-                "Select Players",
+                "Select the number of human players:",
+                "Human Players",
                 JOptionPane.PLAIN_MESSAGE, null,
-                possibilities,
+                includeAI ? yesAIchoices:noAIchoices,
                 2);
 
-        //create panel with JTextFields to set player names based on numPlayers
+        //display the set player names dialog
+        setPlayerNamesDialog();
+    }
+    private void setPlayerNamesDialog(){
+        //create panel with JTextFields to set player names based on numHumanPlayers
         JPanel namePanel = new JPanel();
-        namePanel.setLayout(new GridLayout(numPlayers, 0));
+        namePanel.setLayout(new GridLayout(numHumanPlayers, 0));
         ArrayList<JTextField> fieldList = new ArrayList<>();
-        for (int i = 1; i <= numPlayers; i++) {
+        for (int i = 1; i <= numHumanPlayers; i++) {
             namePanel.add(new JLabel("Player " + i + " name:"));
             JTextField f = new JTextField(10);
             namePanel.add(f);
@@ -43,7 +67,6 @@ public class CreatePlayersView {
 
             //check that all names are valid and store names in ArrayList
             validInput = true;
-            this.nameList = new ArrayList<>();
             if (result == JOptionPane.OK_OPTION) {
                 for (JTextField f : fieldList) {
                     String input = f.getText();
@@ -60,8 +83,15 @@ public class CreatePlayersView {
             }
         }
     }
-    //returns list of names that user has inputted
+    /**returns list of the names of human players
+     * @return list of names that user has inputted*/
     public ArrayList<String> getNameList(){
         return this.nameList;
+    }
+
+    /**returns the number of AI players
+     * @return number of AI players*/
+    public int getNumAIPlayers() {
+        return numAIPlayers;
     }
 }

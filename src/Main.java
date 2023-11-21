@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        UNOGame game = new UNOGame();
+        UNOGameModel game = new UNOGameModel();
         UNOGameFrame unoGameFrame = new UNOGameFrame(game);
     }
 }
