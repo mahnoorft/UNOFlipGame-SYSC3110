@@ -211,11 +211,17 @@ public class UNOGameModel {
                     "Error!", JOptionPane.ERROR_MESSAGE);
             return null;
         }
+        if(canPlayCard == -1){
+            JOptionPane.showMessageDialog(null, "This is ai's turn",
+                    "Error!", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
         Card c = player.playCard(index,topCard,currentSideLight );
 
         //update top card
         if (c!= null){
             topCard = c;
+            pile.add(c);
         }
         canPlayCard = 0;
 
@@ -257,6 +263,9 @@ public class UNOGameModel {
         for (UNOGameHandler view: view){
             view.handleNextTurn(new UNOGameEvent(this));
         }
+        if(players.get(currentTurn).isBot()){
+            botPlayCard();
+        }
 
     }
 
@@ -276,20 +285,45 @@ public class UNOGameModel {
     public void chooseNewColor(Card.Color color){
         topCard.setColorLight(color);
     }
-    public void aiPlayCard(){
-        canPlayCard = 0;
-        if(getCurrentPlayer().getBestPlay(topCard,currentSideLight)){
 
-        }
-    }
 
     public void botPlayCard(){
         canPlayCard = -1;
         Player bot = players.get(currentTurn);
-        if(bot.getBestPlay(topCard,isCurrentSideLight())){
+        Card c = bot.getBestPlay(topCard,isCurrentSideLight());
+        if(c != null){
+            System.out.println("Bot Played a card " + c.toString());
+            topCard = c;
+            pile.add(c);
             executeSpecialFunction(topCard);
+            if(c.getColor(currentSideLight) == Card.Color.WILD){
+                chooseNewColor(players.get(currentTurn).getBestColor(currentSideLight));
+            }
+            for (UNOGameHandler view: view){
+                view.handlePlayCardAI(new UNOGameEvent(this, c, false));
+            }
+        }else{
+            System.out.println("Bot Drew a card");
+            c = deck.draw();
+            if(c.checkValid(topCard,currentSideLight)){
+                System.out.println("Bot Played the drawn card " + c.toString());
+                topCard = c;
+                pile.add(c);
+                executeSpecialFunction(topCard);
+                if(c.getColor(currentSideLight) == Card.Color.WILD){
+                    chooseNewColor(players.get(currentTurn).getBestColor(currentSideLight));
+                }
+                for (UNOGameHandler view: view){
+                    view.handlePlayCardAI(new UNOGameEvent(this, c, false));
+                }
+            }else{
+                players.get(currentTurn).getHand().addCard(c);
+                for (UNOGameHandler view: view){
+                    view.handleDrawCardAI(new UNOGameEvent(this, c, false));
+                }
+            }
+
         }
 
     }
-
 }
