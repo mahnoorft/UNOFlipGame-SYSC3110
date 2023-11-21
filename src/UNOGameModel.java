@@ -295,7 +295,7 @@ public class UNOGameModel {
             System.out.println("Bot Played a card " + c.toString());
             topCard = c;
             pile.add(c);
-            executeSpecialFunction(topCard);
+            //executeSpecialFunction(topCard);
             if(c.getColor(currentSideLight) == Card.Color.WILD){
                 chooseNewColor(players.get(currentTurn).getBestColor(currentSideLight));
             }
@@ -309,7 +309,7 @@ public class UNOGameModel {
                 System.out.println("Bot Played the drawn card " + c.toString());
                 topCard = c;
                 pile.add(c);
-                executeSpecialFunction(topCard);
+                //executeSpecialFunction(topCard);
                 if(c.getColor(currentSideLight) == Card.Color.WILD){
                     chooseNewColor(players.get(currentTurn).getBestColor(currentSideLight));
                 }

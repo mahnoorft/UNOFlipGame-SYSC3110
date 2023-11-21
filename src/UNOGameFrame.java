@@ -191,7 +191,6 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             cardButtonList.add(button);
             playerCardsPanel.add(button);
         }
-        System.out.println(cardNames.size());
 
         // Revalidate and repaint the playerCardsPanel to reflect the changes
         mainPanel.revalidate();
@@ -207,6 +206,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
          * -----------------------------------------------------------Eric-------------------------------------------------
          */
         Card topCard = game.topCard;
+        System.out.println();
         // get the path to the image
         JLabel label2;
         if(game.isCurrentSideLight() && topCard.getRank(true)!= Card.Rank.FLIP){
@@ -284,7 +284,6 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      * @param e The UNOGameEvent associated with the game.
      */
     private void drawCardDialog(Card card, Boolean canPlay, UNOGameEvent e) {
-        System.out.println(card.toString2());
         ImageIcon icon = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + card.toString2() + ".png"));
         JLabel cardLabel = new JLabel(icon);
 
@@ -292,13 +291,11 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             int input = JOptionPane.showConfirmDialog(null, cardLabel, "Do you want to play " + card.toString2() + " card?", JOptionPane.YES_NO_OPTION);
 
             if (input == JOptionPane.YES_OPTION) {
-                System.out.println("Player Played the card");
                 game.updateTopCard(card);
                 displayTopCard();
                 handlePlayCard(e);
 
             } else {
-                System.out.println("Player did not play");
                 game.updatePlayerHand(card);
                 displayPlayerHand();
             }
@@ -388,7 +385,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     @Override
     public void handleDrawCardAI(UNOGameEvent e) {
-
+        displayPlayerHand();
         //Cannot draw more cards
         drawCardButton.setEnabled(false);
         endTurnButton.setEnabled(true);
