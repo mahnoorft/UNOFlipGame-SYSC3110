@@ -104,19 +104,24 @@ public class  Player {
         return -1;
     }
 
-    public boolean getBestPlay(Card topCard, boolean isSideLight){
+    public Card getBestPlay(Card topCard, boolean isSideLight){
         int bestPlayIndex=0;
         for(int i=0;i<hand.getCards().size();i++){
             if(hand.getCards().get(i).checkValid(topCard,isSideLight)){
-                playCard(i,topCard,isSideLight);
-                return true;
+                return playCard(i,topCard,isSideLight);
+
             }
         }
-        return false;
+        return null;
     }
 
     public Card.Color getBestColor(boolean isLightSide){
-        return hand.getCards().get(0).getColor(isLightSide);
+        for(Card card:hand.getCards()){
+            if(card.getColor(isLightSide)!= Card.Color.WILD){
+                return hand.getCards().get(0).getColor(isLightSide);
+            }
+        }
+        return Card.Color.RED;
     }
 
 }
