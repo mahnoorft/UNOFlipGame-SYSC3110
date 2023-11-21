@@ -22,12 +22,12 @@ public class UNOGameEvent extends EventObject {
      *
      * @param model   The UNOGame model representing the game logic.
      * @param card    The Card associated with the event.
-     * @param bool    A boolean indicating whether the player can play the card.
+     * @param canPlay    A boolean indicating whether the player can play the card.
      */
-    public UNOGameEvent(UNOGame model, Card card, Boolean bool) {
+    public UNOGameEvent(UNOGame model, Card card, Boolean canPlay) {
         super(model);
         this.card = card;
-        this.canPlay = bool;
+        this.canPlay = canPlay;
     }
 
     /**

@@ -420,6 +420,37 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         drawCardButton.setEnabled(false);
         endTurnButton.setEnabled(true);
     }
+    @Override
+    public void handlePlayCardAI(UNOGameEvent e) {
+        displayPlayerHand();
+        displayTopCard();
+
+        //call UNO button if the current player has only one card left
+        if(game.getCurrentPlayerCardNames().size()==1){
+            callUNOButton.setEnabled(true);
+            callUNOButton.doClick();
+        }
+
+        String specialCard = game.executeSpecialFunction(e.getCard());
+        updateStatusBar(specialCard);
+        //handle WILD, SKIP, REVERSE, +1, +2 cards
+        if (e.getCard().getColor(game.isCurrentSideLight()) == Card.Color.WILD){
+            wildDialog();
+        }
+
+
+        // Check for a round winner and display the round results if the current player has no more cards
+        if(game.getCurrentPlayerCardNames().size()==0){
+            int roundScore = game.calculateWinnerScore();
+            int totalScore = game.getCurrentPlayer().getScore();
+            winRoundScreen(game.getCurrentPlayerName(), totalScore, roundScore);
+        }
+        // Disable the draw card button and enable the end turn button
+        drawCardButton.setEnabled(false);
+        endTurnButton.setEnabled(true);
+    }
+
+
 
     /**
      * Handles the transition to the next turn in the UNO game.

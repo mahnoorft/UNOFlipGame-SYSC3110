@@ -278,4 +278,13 @@ public class UNOGame{
         }
     }
 
+    public void botPlayCard(){
+        canPlayCard = -1;
+        Player bot = players.get(currentTurn);
+        if(bot.getBestPlay(topCard,isCurrentSideLight())){
+            executeSpecialFunction(topCard);
+        }
+
+    }
+
 }

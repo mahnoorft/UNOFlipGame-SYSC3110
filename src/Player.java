@@ -105,6 +105,7 @@ public class  Player {
     }
 
     public boolean getBestPlay(Card topCard, boolean isSideLight){
+        int bestPlayIndex=0;
         for(int i=0;i<hand.getCards().size();i++){
             if(hand.getCards().get(i).checkValid(topCard,isSideLight)){
                 playCard(i,topCard,isSideLight);
@@ -112,6 +113,10 @@ public class  Player {
             }
         }
         return false;
+    }
+
+    public Card.Color getBestColor(boolean isLightSide){
+        return hand.getCards().get(0).getColor(isLightSide);
     }
 
 }
