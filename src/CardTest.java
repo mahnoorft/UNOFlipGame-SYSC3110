@@ -14,7 +14,7 @@ public class CardTest {
     public void testAssignPoint() {
         card1 = new Card(Card.Rank.ONE, Card.Color.RED);
         card2 = new Card(Card.Rank.REVERSE, Card.Color.GREEN);
-        card3 = new Card(Card.Rank.DRAW2, Card.Color.BLUE);
+        card3 = new Card(Card.Rank.DRAW_TWO, Card.Color.BLUE);
 
         assertEquals(1, card1.getPoints());
         assertEquals(20, card2.getPoints());
@@ -27,7 +27,7 @@ public class CardTest {
         card1 = new Card(Card.Rank.ONE, Card.Color.RED);
         card2 = new Card(Card.Rank.ONE, Card.Color.GREEN);
         card3 = new Card(Card.Rank.FIVE, Card.Color.RED);
-        card4 = new Card(Card.Rank.DRAW2, Card.Color.WILD);
+        card4 = new Card(Card.Rank.DRAW_TWO, Card.Color.WILD);
         card5 = new Card(Card.Rank.NINE, Card.Color.BLUE);
 
         assertTrue(card1.checkValid(card2));
@@ -41,7 +41,7 @@ public class CardTest {
         card1 = new Card(Card.Rank.ONE, Card.Color.RED);
         card2 = new Card(Card.Rank.ONE, Card.Color.GREEN);
         card3 = new Card(Card.Rank.REVERSE, Card.Color.YELLOW);
-        card4 = new Card(Card.Rank.DRAW2, Card.Color.WILD);
+        card4 = new Card(Card.Rank.DRAW_TWO, Card.Color.WILD);
         card5 = new Card(Card.Rank.NINE, Card.Color.BLUE);
 
         assertFalse(card1.isSpecial());
@@ -56,13 +56,13 @@ public class CardTest {
         card1 = new Card(Card.Rank.ONE, Card.Color.RED);
         card2 = new Card(Card.Rank.ONE, Card.Color.GREEN);
         card3 = new Card(Card.Rank.REVERSE, Card.Color.YELLOW);
-        card4 = new Card(Card.Rank.DRAW2, Card.Color.WILD);
+        card4 = new Card(Card.Rank.DRAW_TWO, Card.Color.WILD);
         card5 = new Card(Card.Rank.NINE, Card.Color.BLUE);
 
         assertEquals("[RED ONE]",card1.toString());
         assertEquals("[GREEN ONE]",card2.toString());
         assertEquals("[YELLOW REVERSE]",card3.toString());
-        assertEquals("[WILD DRAW2]",card4.toString());
+        assertEquals("[WILD DRAW_TWO]",card4.toString());
         assertEquals("[BLUE NINE]",card5.toString());
     }
 

@@ -3,8 +3,8 @@
  * @author Eric Cui 101237617
  * */
 public class Card {
-    public enum Rank{ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,REVERSE,SKIP,DRAW1,WILD,DRAW2,FLIP}
-    public enum Color{RED,YELLOW,GREEN,BLUE,WILD}
+    public enum Rank{ZERO, ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,REVERSE, FLIP, SKIP,DRAW_ONE,DRAW_TWO, WILD_LIGHT, WILD_DARK, SKIP_EVERYONE, DRAW_FIVE, WILD_DRAW_COLOR}
+    public enum Color{RED,YELLOW,GREEN,BLUE,WILD, ORANGE, TEAL, PURPLE, PINK}
     public Rank rankLight;
     public Color colorLight;
     public int points;
@@ -30,10 +30,10 @@ public class Card {
             case SEVEN -> points = 7;
             case EIGHT -> points = 8;
             case NINE -> points = 9;
-            case DRAW1 -> points = 10;
+            case DRAW_ONE -> points = 10;
             case REVERSE,SKIP,FLIP -> points = 20;
-            case WILD -> points = 40;
-            case DRAW2 -> points = 50;
+            case WILD_LIGHT, WILD_DARK -> points = 40;
+            case DRAW_TWO -> points = 50;
         }
     }
 

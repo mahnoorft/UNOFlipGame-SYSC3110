@@ -14,27 +14,84 @@ public class Deck {
     }
 
     /**initialize the number of cards according to UNO rules and add them to the deck*/
+//    public void createDeck() {
+//        for (int colors = 0; colors < 4; colors++){
+//
+//            //adding one rank 0
+//            deck.add(new Card(Card.Rank.ZERO, Card.Color.values()[colors]));
+//
+//            //adding two Cards of ranks 1-9 and 3 special cards
+//            for(int i =1; i<13; i++){
+//                for (int j =0; j<2; j++){
+//                    deck.add(new Card(Card.Rank.values()[i], Card.Color.values()[colors]));
+//                }
+//            }
+//        }
+//        //adding four Cards of Wild and WildDraw2
+//        for(int i =13; i<15; i++){
+//            for (int j =0; j<4; j++){
+//                deck.add(new Card(Card.Rank.values()[i], Card.Color.WILD));
+//            }
+//        }
+//        this.shuffle();
+//    }
+
     public void createDeck() {
-        for (int colors = 0; colors < 4; colors++){
+        // Add light side cards
+        for (int colorIndex = 0; colorIndex <= 3; colorIndex++) {
+            Card.Color color = Card.Color.values()[colorIndex];
+            if (color != Card.Color.WILD) {
+                // Add one rank 0 card
+                deck.add(new Card(Card.Rank.ZERO, color));
 
-            //adding one rank 0
-            deck.add(new Card(Card.Rank.ZERO, Card.Color.values()[colors]));
+                // Add two cards of ranks 1-9 and special cards
+                for (int i = 1; i <= 13; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        deck.add(new Card(Card.Rank.values()[i], color));
 
-            //adding two Cards of ranks 1-9 and 3 special cards
-            for(int i =1; i<13; i++){
-                for (int j =0; j<2; j++){
-                    deck.add(new Card(Card.Rank.values()[i], Card.Color.values()[colors]));
+                    }
+                }
+
+                for (int i = 14; i <= 15; i++) {
+                    for (int j = 0; j < 4; j++)
+                        deck.add(new Card(Card.Rank.values()[i], Card.Color.WILD));
                 }
             }
         }
-        //adding four Cards of Wild and WildDraw2
-        for(int i =13; i<15; i++){
-            for (int j =0; j<4; j++){
-                deck.add(new Card(Card.Rank.values()[i], Card.Color.WILD));
+
+        // Add dark side cards
+        for (int colorIndex = 5; colorIndex <= 8; colorIndex++) {
+            Card.Color color = Card.Color.values()[colorIndex];
+            if (color != Card.Color.WILD) {
+                // Add one rank 0 card
+                deck.add(new Card(Card.Rank.ZERO, color));
+
+                // Add two cards of ranks 1-9 and special cards REVERSE, FLIP
+                for (int i = 1; i <= 11; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        deck.add(new Card(Card.Rank.values()[i], color));
+                    }
+                }
+                // Adds 4 cards of skip everyone and draw 5 cards
+                for (int i = 17; i <= 18; i++) {
+                    for (int j = 0; j < 2; j++) {
+                    deck.add(new Card(Card.Rank.values()[i], color));
+                    }
+                }
+
             }
         }
+
+        // Add Wild cards
+        for (int i = 0; i < 4; i++) {
+            deck.add(new Card(Card.Rank.WILD_LIGHT, Card.Color.WILD));
+            deck.add(new Card(Card.Rank.WILD_DARK, Card.Color.WILD));
+            deck.add(new Card(Card.Rank.WILD_DRAW_COLOR, Card.Color.WILD));
+        }
+
         this.shuffle();
     }
+
     /** @return ArrayList of all cards in the deck*/
     public List<Card> getDeck(){
         return this.deck;

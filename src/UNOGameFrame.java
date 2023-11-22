@@ -175,6 +175,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
             // get the path to the images
             String imagePath = IMAGES_FOLDER_PATH + cardNames.get(i);
+            System.out.println(imagePath);
             ImageIcon icon = new ImageIcon(imagePath);
             JButton button = new JButton(icon);
             button.addActionListener(controller);

@@ -17,8 +17,8 @@ public class HandTest {
     void setUp() {
         hand = new Hand();
         c1 = new Card(Card.Rank.ONE, Card.Color.YELLOW);
-        c2 = new Card(Card.Rank.DRAW2, Card.Color.WILD);
-        c3 = new Card(Card.Rank.DRAW1, Card.Color.GREEN);
+        c2 = new Card(Card.Rank.DRAW_TWO, Card.Color.WILD);
+        c3 = new Card(Card.Rank.DRAW_ONE, Card.Color.GREEN);
     }
 
     @org.junit.jupiter.api.Test

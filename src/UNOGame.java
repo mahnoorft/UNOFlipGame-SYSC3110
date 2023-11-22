@@ -121,13 +121,13 @@ public class UNOGame{
             case SKIP:
                 this.skipTurn();
                 return "skip";
-            case WILD:
+            case WILD_LIGHT:
                 return "wild";
-            case DRAW1:
+            case DRAW_ONE:
                 this.nextPlayerDrawCard(1);
                 this.skipTurn();
                 return "draw 1";
-            case DRAW2:
+            case DRAW_TWO:
                 this.nextPlayerDrawCard(2);
                 this.skipTurn();
                 return "WILD draw 2";
