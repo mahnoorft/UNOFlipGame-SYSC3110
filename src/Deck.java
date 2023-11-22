@@ -30,6 +30,7 @@ public class Deck {
                 deck.add(new Card(Card.Rank.REVERSE, Card.Color.values()[colors],Card.Rank.REVERSE, Card.Color.values()[colors+4]));
                 deck.add(new Card(Card.Rank.SKIP, Card.Color.values()[colors],Card.Rank.SKIP_All, Card.Color.values()[colors+4]));
                 deck.add(new Card(Card.Rank.DRAW1, Card.Color.values()[colors],Card.Rank.DRAW5, Card.Color.values()[colors+4]));
+                deck.add(new Card(Card.Rank.FLIP, Card.Color.values()[colors],Card.Rank.FLIP, Card.Color.values()[colors+4]));
             }
         }
         //adding four Cards of Wild and WildDraw2
@@ -37,9 +38,6 @@ public class Deck {
             for (int j =0; j<4; j++){
                 deck.add(new Card(Card.Rank.values()[i], Card.Color.WILD,Card.Rank.WILD, Card.Color.WILD));
             }
-        }
-        for(int i=0;i<10;i++){
-            deck.add(new Card(Card.Rank.FLIP, Card.Color.WILD,Card.Rank.FLIP, Card.Color.WILD));
         }
         this.shuffle();
     }

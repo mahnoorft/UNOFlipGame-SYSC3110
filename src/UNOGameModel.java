@@ -296,11 +296,11 @@ public class UNOGameModel {
             topCard = c;
             pile.add(c);
             //executeSpecialFunction(topCard);
-            if(c.getColor(currentSideLight) == Card.Color.WILD){
-                chooseNewColor(players.get(currentTurn).getBestColor(currentSideLight));
-            }
             for (UNOGameHandler view: view){
                 view.handlePlayCardAI(new UNOGameEvent(this, c, false));
+            }
+            if(c.getColor(currentSideLight) == Card.Color.WILD){
+                chooseNewColor(players.get(currentTurn).getBestColor(currentSideLight));
             }
         }else{
             System.out.println("Bot Drew a card");
