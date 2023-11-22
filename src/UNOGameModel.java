@@ -297,7 +297,7 @@ public class UNOGameModel {
             pile.add(c);
             //executeSpecialFunction(topCard);
             for (UNOGameHandler view: view){
-                view.handlePlayCardAI(new UNOGameEvent(this, c, false));
+                view.handlePlayCard(new UNOGameEvent(this, c, false));
             }
             if(c.getColor(currentSideLight) == Card.Color.WILD){
                 chooseNewColor(players.get(currentTurn).getBestColor(currentSideLight));
@@ -314,7 +314,7 @@ public class UNOGameModel {
                     chooseNewColor(players.get(currentTurn).getBestColor(currentSideLight));
                 }
                 for (UNOGameHandler view: view){
-                    view.handlePlayCardAI(new UNOGameEvent(this, c, false));
+                    view.handlePlayCard(new UNOGameEvent(this, c, false));
                 }
             }else{
                 players.get(currentTurn).getHand().addCard(c);
