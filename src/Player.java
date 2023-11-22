@@ -109,7 +109,11 @@ public class  Player {
                 return hand.getCards().get(0).getColor(isLightSide);
             }
         }
-        return Card.Color.RED;
+        if(isLightSide) {
+            return Card.Color.RED;
+        }else{
+            return Card.Color.ORANGE;
+        }
     }
 
 }
