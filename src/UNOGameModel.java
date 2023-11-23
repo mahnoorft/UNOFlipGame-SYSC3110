@@ -47,8 +47,8 @@ public class UNOGameModel {
         }
         //create the specified number of AI players
         for(int i=1; i<=view.getNumAIPlayers(); i++){
-            Player player = new Player("AI Player "+i, true);
-            players.add(player);
+            PlayerAI playerAI = new PlayerAI("AI Player "+i, true);
+            players.add(playerAI);
         }
     }
     /** Distribute playing cards and draw the first card from deck*/
@@ -197,7 +197,7 @@ public class UNOGameModel {
      */
     public Card actionPlayCard(int index){
         if(canPlayCard == -1){
-            JOptionPane.showMessageDialog(null, "This is ai's turn",
+            JOptionPane.showMessageDialog(null, "This is AI's turn",
                     "Error!", JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -289,18 +289,17 @@ public class UNOGameModel {
 
     public void botPlayCard(){
         canPlayCard = -1;
-        Player bot = players.get(currentTurn);
+        PlayerAI bot = (PlayerAI)players.get(currentTurn);
         Card c = bot.getBestPlay(topCard,isCurrentSideLight());
         if(c != null){
             System.out.println("Bot Played a card " + c.toString());
             topCard = c;
             pile.add(c);
-            //executeSpecialFunction(topCard);
             for (UNOGameHandler view: view){
                 view.handlePlayCard(new UNOGameEvent(this, c, false));
             }
             if(c.getColor(currentSideLight) == Card.Color.WILD){
-                chooseNewColor(players.get(currentTurn).getBestColor(currentSideLight));
+                chooseNewColor(bot.getBestColor(currentSideLight));
             }
         }else{
             System.out.println("Bot Drew a card");
@@ -309,17 +308,16 @@ public class UNOGameModel {
                 System.out.println("Bot Played the drawn card " + c.toString());
                 topCard = c;
                 pile.add(c);
-                //executeSpecialFunction(topCard);
-                if(c.getColor(currentSideLight) == Card.Color.WILD){
-                    chooseNewColor(players.get(currentTurn).getBestColor(currentSideLight));
-                }
                 for (UNOGameHandler view: view){
                     view.handlePlayCard(new UNOGameEvent(this, c, false));
                 }
+                if(c.getColor(currentSideLight) == Card.Color.WILD){
+                    chooseNewColor(bot.getBestColor(currentSideLight));
+                }
             }else{
-                players.get(currentTurn).getHand().addCard(c);
+                bot.getHand().addCard(c);
                 for (UNOGameHandler view: view){
-                    view.handleDrawCardAI(new UNOGameEvent(this, c, false));
+                    view.handleDrawCard(new UNOGameEvent(this, c, false));
                 }
             }
 

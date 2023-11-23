@@ -5,8 +5,6 @@
 public interface UNOGameHandler {
     public void handleDrawCard(UNOGameEvent e);
 
-    void handleDrawCardAI(UNOGameEvent e);
-
     public void handlePlayCard(UNOGameEvent e);
     public void handleNextTurn(UNOGameEvent e);
     public void handleCallUNO(UNOGameEvent e);

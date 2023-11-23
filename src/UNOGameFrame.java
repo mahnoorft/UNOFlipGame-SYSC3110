@@ -375,17 +375,11 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         Card card = e.getCard();
         Boolean canPlay = e.canPlay();
         displayPlayerHand();
-        drawCardDialog(card, canPlay, e);
-        statusBar.setText(game.getCurrentPlayerName() + " drew a card");
+        if(!game.getCurrentPlayer().isBot()){
+            drawCardDialog(card, canPlay, e);
+            statusBar.setText(game.getCurrentPlayerName() + " drew a card");
+        }
 
-        //Cannot draw more cards
-        drawCardButton.setEnabled(false);
-        endTurnButton.setEnabled(true);
-    }
-
-    @Override
-    public void handleDrawCardAI(UNOGameEvent e) {
-        displayPlayerHand();
         //Cannot draw more cards
         drawCardButton.setEnabled(false);
         endTurnButton.setEnabled(true);

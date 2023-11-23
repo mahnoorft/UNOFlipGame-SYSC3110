@@ -21,7 +21,7 @@ public class CreatePlayersView {
         int choice = JOptionPane.showConfirmDialog(null,
                 "Welcome to UNO Flip Game!\n" + "Include AI players?", "UNO FLip!", JOptionPane.YES_NO_OPTION);
         if(choice==JOptionPane.YES_OPTION) {
-            includeAI=true;
+            includeAI= true;
             //display player selection dialogue and get number of AI players
             Object[] aiChoices = {1, 2, 3, 4, 5}; // least number of AI players is 1
             numAIPlayers = (int) JOptionPane.showInputDialog(

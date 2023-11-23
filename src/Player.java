@@ -1,4 +1,3 @@
-import java.util.*;
 
 /**
  * THis class represents a player in an UNO Fip Game
@@ -7,7 +6,7 @@ import java.util.*;
 public class  Player {
 
     private String name;
-    private Hand hand;
+    protected Hand hand;
     private int score;
     private boolean isBot;
 
@@ -91,29 +90,6 @@ public class  Player {
 
     public boolean isBot(){
         return isBot;
-    }
-
-    public Card getBestPlay(Card topCard, boolean isSideLight){
-        for(int i=0;i<hand.getCards().size();i++){
-            if(hand.getCards().get(i).checkValid(topCard,isSideLight)){
-                return playCard(i,topCard,isSideLight);
-
-            }
-        }
-        return null;
-    }
-
-    public Card.Color getBestColor(boolean isLightSide){
-        for(Card card:hand.getCards()){
-            if(card.getColor(isLightSide)!= Card.Color.WILD){
-                return hand.getCards().get(0).getColor(isLightSide);
-            }
-        }
-        if(isLightSide) {
-            return Card.Color.RED;
-        }else{
-            return Card.Color.ORANGE;
-        }
     }
 
 }
