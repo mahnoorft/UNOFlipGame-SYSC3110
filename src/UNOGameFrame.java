@@ -179,13 +179,11 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             String imagePath;
             ImageIcon icon;
             JButton button;
-            if(game.isCurrentSideLight() && game.getCurrentPlayer().getHand().getCards().get(i).getRank(true)!= Card.Rank.FLIP) {
-                 imagePath = IMAGES_FOLDER_PATH + cardNames.get(i);
-                 icon = new ImageIcon(getClass().getResource(imagePath));
-                 button = new JButton(icon);
-            }else{
-                button = new JButton(game.getCurrentPlayer().getHand().getCards().get(i).toStringSingle(game.isCurrentSideLight()));
-            }
+
+            imagePath = IMAGES_FOLDER_PATH + cardNames.get(i);
+            icon = new ImageIcon(getClass().getResource(imagePath));
+            button = new JButton(icon);
+
             button.addActionListener(controller);
             button.setActionCommand(""+i);
             cardButtonList.add(button);
@@ -206,19 +204,15 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
          * -----------------------------------------------------------Eric-------------------------------------------------
          */
         Card topCard = game.topCard;
-        System.out.println();
+        System.out.println(topCard);
         // get the path to the image
         JLabel label2;
-        if(game.isCurrentSideLight() && topCard.getRank(true)!= Card.Rank.FLIP){
-            String imagePath = IMAGES_FOLDER_PATH + topCard.getColor(true).name() + "_"+ topCard.getRank(true).name() + ".png";
-            ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath));
-            label2 = new JLabel(icon2);
-        }else{
-            label2 = new JLabel(game.topCard.toStringSingle(game.isCurrentSideLight()));
-        }
+
+        String imagePath = IMAGES_FOLDER_PATH + topCard.getColor(true).name() + "_"+ topCard.getRank(true).name() + ".png";
+        ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath));
+        label2 = new JLabel(icon2);
+
         topCardPanel.add(label2);
-
-
 
         // Revalidate and repaint the playerCardsPanel to reflect the changes
         topCardPanel.revalidate();
