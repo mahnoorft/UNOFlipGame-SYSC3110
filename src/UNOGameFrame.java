@@ -200,24 +200,30 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      */
     private void displayTopCard() {
         topCardPanel.removeAll();
-        /**
-         * -----------------------------------------------------------Eric-------------------------------------------------
-         */
+
         Card topCard = game.topCard;
-        System.out.println(topCard);
-        // get the path to the image
-        JLabel label2;
 
-        String imagePath = IMAGES_FOLDER_PATH + topCard.getColor(true).name() + "_"+ topCard.getRank(true).name() + ".png";
-        ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath));
-        label2 = new JLabel(icon2);
+        // Display the appropriate side of the card based on the player's hand
+        JLabel label;
+        String imagePath;
 
-        topCardPanel.add(label2);
+        if (game.isCurrentSideLight()) {
+            imagePath = IMAGES_FOLDER_PATH + topCard.getColor(true).name() + "_" + topCard.getRank(true).name() + ".png";
+        } else {
+            imagePath = IMAGES_FOLDER_PATH + topCard.getColor(false).name() + "_" + topCard.getRank(false).name() + ".png";
+        }
 
-        // Revalidate and repaint the playerCardsPanel to reflect the changes
+        ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
+        label = new JLabel(icon);
+
+        topCardPanel.add(label);
+
+        // Revalidate and repaint the topCardPanel to reflect the changes
         topCardPanel.revalidate();
         topCardPanel.repaint();
     }
+
+
 
 
     /** Displays the win round screen when a player wins the round
