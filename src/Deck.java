@@ -20,7 +20,7 @@ public class Deck {
             //adding one rank 0
             deck.add(new Card(Card.Rank.ZERO, Card.Color.values()[colors],Card.Rank.ZERO, Card.Color.values()[colors+4]));
 
-            //adding two Cards of ranks 1-9 and 3 special cards
+            //adding two Cards of ranks 1-9
             for(int i =1; i<10; i++){
                 for (int j =0; j<2; j++){
                     deck.add(new Card(Card.Rank.values()[i], Card.Color.values()[colors],Card.Rank.values()[i], Card.Color.values()[colors+4]));
@@ -34,13 +34,16 @@ public class Deck {
             }
         }
         //adding four Cards of Wild and WildDraw2
-        for(int i =13; i<15; i++){
+        for(int i =19; i<=20; i++){
             for (int j =0; j<4; j++){
-                deck.add(new Card(Card.Rank.values()[i], Card.Color.WILD,Card.Rank.WILD, Card.Color.WILD));
+                deck.add(new Card(Card.Rank.WILD_LIGHT, Card.Color.WILD,Card.Rank.WILD_DARK, Card.Color.WILD));
             }
         }
         this.shuffle();
     }
+
+
+
     /** @return ArrayList of all cards in the deck*/
     public List<Card> getDeck(){
         return this.deck;

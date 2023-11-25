@@ -129,8 +129,10 @@ public class UNOGameModel {
             case SKIP_All:
                 turnSkipped = -1;
                 return "Skipped all";
-            case WILD:
-                return "wild";
+            case WILD_LIGHT:
+                return "Wild Light";
+            case WILD_DARK:
+                return "Wild Dark";
             case DRAW1:
                 this.nextPlayerDrawCard(1);
                 this.skipTurn();

@@ -3,8 +3,8 @@
  * @author Eric Cui 101237617
  * */
 public class Card {
-    public enum Rank{ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,REVERSE,SKIP,DRAW1,WILD,DRAW2,SKIP_All,DRAW5,DRAW_COLOR,FLIP}
-    public enum Color{RED,YELLOW,GREEN,BLUE,ORANGE,CYAN,PINK,PURPLE,WILD}
+    public enum Rank{ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, REVERSE, SKIP, DRAW1, DRAW2, SKIP_All, DRAW5, DRAW_COLOR, FLIP, WILD_LIGHT, WILD_DARK}
+    public enum Color{RED, YELLOW, GREEN, BLUE, ORANGE, TEAL, PINK, PURPLE, WILD}
     public Rank rankLight;
     public Color colorLight;
     public Rank rankDark;
@@ -38,7 +38,7 @@ public class Card {
             case NINE -> points = 9;
             case DRAW1 -> points = 10;
             case REVERSE,SKIP,FLIP -> points = 20;
-            case WILD -> points = 40;
+            case WILD_LIGHT -> points = 40;
             case DRAW2 -> points = 50;
             default -> throw new IllegalArgumentException("CUSTOM EXCEPTION: light card have dark rank");
         }
@@ -55,7 +55,7 @@ public class Card {
             case NINE -> points = 9;
             case DRAW5 -> points = 10;
             case REVERSE,SKIP_All,FLIP -> points = 20;
-            case WILD -> points = 40;
+            case WILD_DARK -> points = 40;
             case DRAW_COLOR -> points = 50;
             default -> throw new IllegalArgumentException("CUSTOM EXCEPTION: dark card have light rank");
         }
@@ -161,6 +161,5 @@ public class Card {
         }
         return false;
     }
-
 
 }
