@@ -311,7 +311,66 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      * The dialog contains radio buttons for selecting among the colors (BLUE, GREEN, RED, YELLOW).
      * Updates the game with the chosen color.
      */
-    public void wildDialog(){
+    public void darkWildDialog(){
+        // Create panel
+        JPanel panel = new JPanel();
+
+        //Create Radio Buttons
+        JRadioButton radioButton1 = new JRadioButton("PINK");
+        JRadioButton radioButton2 = new JRadioButton("GREEN");
+        JRadioButton radioButton3 = new JRadioButton("ORANGE");
+        JRadioButton radioButton4 = new JRadioButton("YELLOW");
+
+        //add colours to indicate colour
+        radioButton1.setBackground(Color.CYAN);
+        radioButton2.setBackground(Color.GREEN);
+        radioButton3.setBackground(Color.red);
+        radioButton4.setBackground(Color.yellow);
+
+        //Creating Button Group
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(radioButton1);
+        buttonGroup.add(radioButton2);
+        buttonGroup.add(radioButton3);
+        buttonGroup.add(radioButton4);
+
+        //add buttons to panel
+        panel.add(radioButton1);
+        panel.add(radioButton2);
+        panel.add(radioButton3);
+        panel.add(radioButton4);
+
+        // Show the option pane with the panel containing radio buttons
+        int result = JOptionPane.showConfirmDialog(null, panel, "Select an Option", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        // Check the user's choice
+        if (result == JOptionPane.OK_OPTION) {
+            // Handle the selected option
+            if (radioButton1.isSelected()) {
+                game.chooseNewColor(Card.Color.BLUE);
+                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is BLUE");
+            } else if (radioButton2.isSelected()) {
+                game.chooseNewColor(Card.Color.GREEN);
+                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is GREEN");
+            } else if (radioButton3.isSelected()) {
+                game.chooseNewColor(Card.Color.RED);
+                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is RED");
+            } else {
+                game.chooseNewColor(Card.Color.YELLOW);
+                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is YELLOW");
+            }
+        } else {
+            System.out.println("Dialog canceled");
+        }
+
+    }
+
+    /**
+     * Displays a dialog for the player to choose a color when playing a Wild card.
+     * The dialog contains radio buttons for selecting among the colors (BLUE, GREEN, RED, YELLOW).
+     * Updates the game with the chosen color.
+     */
+    public void lightWildDialog(){
         // Create panel
         JPanel panel = new JPanel();
 
@@ -409,7 +468,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         if(!game.getCurrentPlayer().isBot()) {
             //handle WILD, SKIP, REVERSE, +1, +2 cards if human player
             if (e.getCard().getColor(game.isCurrentSideLight()) == Card.Color.WILD) {
-                wildDialog();
+                lightWildDialog();
             }
         }
 

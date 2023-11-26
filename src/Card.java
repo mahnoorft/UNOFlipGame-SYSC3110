@@ -4,7 +4,7 @@
  * */
 public class Card {
     public enum Rank{ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,REVERSE,SKIP,DRAW1,WILD,DRAW2,SKIP_All,DRAW5,DRAW_COLOR,FLIP}
-    public enum Color{RED,YELLOW,GREEN,BLUE,ORANGE,CYAN,PINK,PURPLE,WILD}
+    public enum Color{RED,YELLOW,GREEN,BLUE,ORANGE,PURPLE,CYAN,PINK,WILD}
     public Rank rankLight;
     public Color colorLight;
     public Rank rankDark;

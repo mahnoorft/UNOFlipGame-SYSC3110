@@ -7,6 +7,7 @@ public class UNOGameEvent extends EventObject {
 
     Card card;
     Boolean canPlay;
+    Boolean isLight;
 
     /**
      * Constructs a prototypical Event.
@@ -43,6 +44,5 @@ public class UNOGameEvent extends EventObject {
      * @return True if the player can play the card, false otherwise.
      */
     public Boolean canPlay(){ return canPlay;}
-
 
 }
