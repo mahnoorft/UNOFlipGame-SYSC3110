@@ -211,6 +211,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         JLabel label2;
 
         String imagePath = topCard.getImagePath(game.isCurrentSideLight());
+        System.out.println(imagePath);
         ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath));
         label2 = new JLabel(icon2);
 
@@ -452,6 +453,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      */
     @Override
     public void handlePlayCard(UNOGameEvent e) {
+        displayPlayerHand();
+        displayTopCard();
+
+        String specialCard = game.executeSpecialFunction(e.getCard());
+        updateStatusBar(specialCard);
+
+
         if(!game.getCurrentPlayer().isBot()) {
             //handle WILD, SKIP, REVERSE, +1, +2 cards if human player
             if (e.getCard().getColor(game.isCurrentSideLight()) == Card.Color.WILD) {
@@ -462,12 +470,11 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
                 }
             }
         }
+        if(specialCard!=null && specialCard.equals("FLIP")){
+            displayPlayerHand();
+            displayTopCard();
 
-        String specialCard = game.executeSpecialFunction(e.getCard());
-        updateStatusBar(specialCard);
-
-        displayPlayerHand();
-        displayTopCard();
+        }
 
         //call UNO button if the current player has only one card left
         if(game.getCurrentPlayer().getHand().isUNO()){

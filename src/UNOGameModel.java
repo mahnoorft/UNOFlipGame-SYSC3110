@@ -341,12 +341,14 @@ public class UNOGameModel {
             System.out.println("Bot Played a card " + c.toString2(currentSideLight));
             topCard = c;
             pile.add(c);
+
             for (UNOGameHandler view: view){
                 view.handlePlayCard(new UNOGameEvent(this, c, false));
             }
             if(c.getColor(currentSideLight) == Card.Color.WILD){
                 chooseNewColor(bot.getBestColor(currentSideLight));
             }
+
         }else{
             System.out.println("Bot Drew a card");
             c = deck.draw();
