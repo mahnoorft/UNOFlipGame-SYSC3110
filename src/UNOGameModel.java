@@ -148,11 +148,11 @@ public class UNOGameModel {
             case DRAW_COLOR:
                 boolean done = false;
                 Card.Color chosen = topCard.getColor(currentSideLight);
-                System.out.println("chosen color:" + chosen);
                 while(!done){
                     this.nextPlayerDrawCard(1);
                     Card.Color drawn = getCurrentPlayer().getHand().getRecentDraw().getColor(currentSideLight);
-                    done = (chosen != drawn);
+                    done = (chosen == drawn);
+                    System.out.println("chosen color:" + chosen);
                     System.out.println("drew" + drawn);
                 }
                 this.skipTurn();

@@ -143,7 +143,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         // Set the frame location to be centered on the screen
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
+        this.setSize(700, 500);
         this.setVisible(true);
 
     }
@@ -442,6 +442,17 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      */
     @Override
     public void handlePlayCard(UNOGameEvent e) {
+        if(!game.getCurrentPlayer().isBot()) {
+            //handle WILD, SKIP, REVERSE, +1, +2 cards if human player
+            if (e.getCard().getColor(game.isCurrentSideLight()) == Card.Color.WILD) {
+                if (game.isCurrentSideLight()){
+                    lightWildDialog();
+                } else{
+                    darkWildDialog();
+                }
+            }
+        }
+
         String specialCard = game.executeSpecialFunction(e.getCard());
         updateStatusBar(specialCard);
 
@@ -457,16 +468,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             }
         }
 
-        if(!game.getCurrentPlayer().isBot()) {
-            //handle WILD, SKIP, REVERSE, +1, +2 cards if human player
-            if (e.getCard().getColor(game.isCurrentSideLight()) == Card.Color.WILD) {
-                if (game.isCurrentSideLight()){
-                    lightWildDialog();
-                } else{
-                    darkWildDialog();
-                }
-            }
-        }
+
         // Check for a round winner and display the round results if the current player has no more cards
         if(game.getCurrentPlayer().getHand().isEmpty()){
             int roundScore = game.calculateWinnerScore();
