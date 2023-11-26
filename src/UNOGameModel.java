@@ -1,8 +1,17 @@
 import javax.swing.*;
 import java.util.*;
 
-/** This class represents the model for UNO game and is responsible for
- * executing the UNO Game functions and updating the game logic*/
+/**
+ *  This class represents the model for a UNO Flip game.
+ *  It manages the game state and logic, including player turns, card actions, and scoring.
+ *  The model interacts with the view and controller to update the game state and notify the view of changes.
+ *  It follows the Model-View-Controller (MVC) architectural pattern.
+ *
+ *  @author Areej Mahmoud 101218260
+ *  @author Mahnoor Fatima 101192353
+ *  @author Eric Cui 101237617
+ *  @author Rama Alkhouli 101198025
+ */
 
 public class UNOGameModel {
     private ArrayList<Player> players;
@@ -32,6 +41,10 @@ public class UNOGameModel {
         turnSkipped = 0;
     }
 
+    /**
+     * Adds a UNOGameHandler view to the list of views.
+     * The view will be notified of changes in the game state.
+     * @param view The UNOGameHandler view to be added.*/
     public void addUnoGameView(UNOGameHandler view){
         this.view.add(view);
     }
@@ -116,6 +129,7 @@ public class UNOGameModel {
         players.get(currentTurn).incrementScore(score);
         return score;
     }
+
     /** Execute the special card function based on the rank
      * @param card the special card played*/
     public String executeSpecialFunction(Card card){
@@ -163,6 +177,8 @@ public class UNOGameModel {
         }
         return null;
     }
+
+
     /** Return the index of the next player
      * @return index of the next player*/
     private int getNextPlayerIndex(){
@@ -172,22 +188,41 @@ public class UNOGameModel {
         return index;
     }
 
+    /**
+     * Checks if the current side is the light side.
+     * @return True if the current side is the light side, false otherwise.*/
     public boolean isCurrentSideLight() {return currentSideLight;}
 
+    /**
+     * Updates the player's hand by adding a card.
+     * @param card The card to be added to the player's hand.*/
     public void updatePlayerHand(Card card){
         players.get(currentTurn).getHand().addCard(card);
     }
 
+    /**
+     * Updates the top card on the pile.
+     * @param card The new top card on the pile.*/
     public void updateTopCard(Card card){
         topCard = card;
     }
 
+    /**
+     * Retrieves the name of the current player.
+     * @return The name of the current player.*/
     public String getCurrentPlayerName(){
         return players.get(currentTurn).getName();
     }
+
+    /**
+     * Retrieves the current player object.
+     * @return The current player object.*/
     public Player getCurrentPlayer(){
         return players.get(currentTurn);
     }
+
+    /**
+     * Updates the turn by setting the canPlayCard value to 2. */
     public void updateTurn(){
         canPlayCard = 2;
     }
@@ -234,6 +269,10 @@ public class UNOGameModel {
         return c;
     }
 
+    /**
+     * Handles the action of a player drawing a card from the deck.
+     * @return True if the card can be played, false otherwise.
+     */
     public boolean actionDrawCard(){
         Card c = deck.draw();
         if(c.checkValid(topCard,currentSideLight)){
@@ -249,6 +288,9 @@ public class UNOGameModel {
 
         return false;
     }
+    /**
+     * Handles the action of a player ending their turn.
+     */
     public void actionEndTurn(){
         if(turnSkipped !=-1){
             currentTurn = getNextPlayerIndex();
@@ -288,7 +330,9 @@ public class UNOGameModel {
         topCard.setColor(color, currentSideLight);
     }
 
-
+    /**
+     * Plays a card or draws a card for a bot player.
+     */
     public void botPlayCard(){
         canPlayCard = -1;
         PlayerAI bot = (PlayerAI)players.get(currentTurn);

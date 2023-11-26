@@ -4,8 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  This class represents the user interface and visualization of the application (view),
- *  adhering to the Model-View-Controller (MVC) architectural pattern.
+ *  The UNOGameFrame class represents the user interface and visualization of the UNO Flip game.
+ *  It adheres to the Model-View-Controller (MVC) architectural pattern. It's responsible for displaying
+ *  the game state to the user and handling user interactions. This class interacts with the UNOGameModel
+ *  and UNOGameController classes to update the game state and trigger
+ * appropriate actions based on user input.
+ *
+ *  @author Areej Mahmoud 101218260
+ *  @author Mahnoor Fatima 101192353
+ *  @author Eric Cui 101237617
+ *  @author Rama Alkhouli 101198025
  */
 
 public class UNOGameFrame extends JFrame implements UNOGameHandler {
@@ -258,6 +266,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         displayTopCard();
     }
 
+   /**
+    Updates the status bar in the UNO game interface with the provided function.*/
     public void updateStatusBar(String function) {
         if (function != null){
             statusBar.setText(game.getCurrentPlayerName() + " played " + function);
