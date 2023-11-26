@@ -41,6 +41,10 @@ public class Hand{
     public ArrayList<Card> getCards() {
         return this.cards;
     }
+    /** @return an ArrayList of cards in the Hand */
+    public Card getRecentDraw() {
+        return this.cards.get(cards.size()-1);
+    }
     /** @return true if only one card is left in the hand.*/
     public boolean isUNO(){
         return cards.size() == 1;

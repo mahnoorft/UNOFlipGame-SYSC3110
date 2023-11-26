@@ -1,5 +1,9 @@
 import java.util.EventObject;
-/** This class represents an event causes the UNOGameFrame View to be updated
+
+/** The UNOGameEvent class represents an event that occurs in a UNO game.
+ *  It is used to encapsulate information about game events and notify listeners
+ *  (such as the view) to update accordingly.
+ *
  * @author Areej Mahmoud 101218260
  * */
 

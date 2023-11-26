@@ -4,8 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  This class represents the user interface and visualization of the application (view),
- *  adhering to the Model-View-Controller (MVC) architectural pattern.
+ *  The UNOGameFrame class represents the user interface and visualization of the UNO Flip game.
+ *  It adheres to the Model-View-Controller (MVC) architectural pattern. It's responsible for displaying
+ *  the game state to the user and handling user interactions. This class interacts with the UNOGameModel
+ *  and UNOGameController classes to update the game state and trigger
+ * appropriate actions based on user input.
+ *
+ *  @author Areej Mahmoud 101218260
+ *  @author Mahnoor Fatima 101192353
+ *  @author Eric Cui 101237617
+ *  @author Rama Alkhouli 101198025
  */
 
 public class UNOGameFrame extends JFrame implements UNOGameHandler {
@@ -143,7 +151,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         // Set the frame location to be centered on the screen
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
+        this.setSize(700, 500);
         this.setVisible(true);
 
     }
@@ -203,6 +211,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         JLabel label2;
 
         String imagePath = topCard.getImagePath(game.isCurrentSideLight());
+        System.out.println(imagePath);
         ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath));
         label2 = new JLabel(icon2);
 
@@ -257,7 +266,10 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         displayPlayerHand();
         displayTopCard();
     }
-
+  
+  /**
+     * Updates status bar
+     */
     public void updateStatusBar(String function, String type) {
         statusBar.setText(game.getCurrentPlayerName() + " "+ function + " " + type);
     }
@@ -455,16 +467,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         displayPlayerHand();
         displayTopCard();
 
-        int currPlayerHandSize = game.getCurrentPlayer().getHand().getCards().size();
+        String specialCard = game.executeSpecialFunction(e.getCard());
+        updateStatusBar(specialCard);
 
-        //call UNO button if the current player has only one card left
-        if(currPlayerHandSize==1){
-            callUNOButton.setEnabled(true);
-            UNOButtonColour();
-            if(game.getCurrentPlayer().isBot()){
-                callUNOButton.doClick();
-            }
-        }
 
         if(!game.getCurrentPlayer().isBot()) {
             //handle WILD, SKIP, REVERSE, +1, +2 cards if human player
@@ -476,8 +481,24 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
                 }
             }
         }
+        if(specialCard!=null && specialCard.equals("FLIP")){
+            displayPlayerHand();
+            displayTopCard();
+
+        }
+
+        //call UNO button if the current player has only one card left
+        if(game.getCurrentPlayer().getHand().isUNO()){
+            callUNOButton.setEnabled(true);
+            UNOButtonColour();
+            if(game.getCurrentPlayer().isBot()){
+                callUNOButton.doClick();
+            }
+        }
+
+
         // Check for a round winner and display the round results if the current player has no more cards
-        if(currPlayerHandSize==0){
+        if(game.getCurrentPlayer().getHand().isEmpty()){
             int roundScore = game.calculateWinnerScore();
             int totalScore = game.getCurrentPlayer().getScore();
             winRoundScreen(game.getCurrentPlayerName(), totalScore, roundScore);

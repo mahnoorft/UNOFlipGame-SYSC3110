@@ -3,6 +3,8 @@
  * @author Eric Cui 101237617
  * */
 public class Card {
+    public boolean getRank;
+
     public enum Rank{ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, REVERSE, SKIP, DRAW1, DRAW2, SKIP_All, DRAW5, DRAW_COLOR, FLIP, WILD_LIGHT, WILD_DARK}
     public enum Color{RED, YELLOW, GREEN, BLUE, ORANGE, PURPLE, TEAL, PINK, WILD}
     public Rank rankLight;
@@ -97,8 +99,10 @@ public class Card {
     /**
      * set the side color to the given color
      */
-    public void setColorLight(Color colorLight) {this.colorLight = colorLight;}
-    public void setColorDark(Color colorDark) {this.colorDark = colorDark;}
+    public void setColor(Color color, boolean isSideLight) {
+        if (isSideLight){this.colorLight = color;}
+        else{ this.colorDark = color;}
+    }
 
 
     /**

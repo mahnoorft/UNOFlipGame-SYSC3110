@@ -1,9 +1,17 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/** This class represents the controller for UNO game and is responsible for
- * processing the GUI input through ActionListeners and performing
- * model and view calls
+/**
+ * The UNOGameController class is the controller in the Model-View-Controller (MVC) architecture for a UNO game.
+ * It handles user input and updates the game state and user interface accordingly. It implements the ActionListener
+ * interface to handle GUI button click events. The actionPerformed method is the main method that handles the events
+ * triggered by the GUI buttons. It serves as the bridge between the GUI view events and the underlying game model,
+ * ensuring that the game state and user interface stay synchronized.
+ *
+ *  @author Areej Mahmoud 101218260
+ *  @author Mahnoor Fatima 101192353
+ *  @author Eric Cui 101237617
+ *  @author Rama Alkhouli 101198025
  * */
 
 public class UNOGameController implements ActionListener {
