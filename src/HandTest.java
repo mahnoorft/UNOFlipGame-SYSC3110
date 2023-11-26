@@ -16,9 +16,9 @@ public class HandTest {
     @BeforeEach
     void setUp() {
         hand = new Hand();
-//        c1 = new Card(Card.Rank.ONE, Card.Color.YELLOW);
-//        c2 = new Card(Card.Rank.DRAW2, Card.Color.WILD);
-//        c3 = new Card(Card.Rank.DRAW1, Card.Color.GREEN);
+        c1 = new Card(Card.Rank.ONE, Card.Color.YELLOW, Card.Rank.ONE, Card.Color.PURPLE);
+        c2 = new Card(Card.Rank.DRAW2, Card.Color.WILD, Card.Rank.DRAW_COLOR, Card.Color.WILD);
+        c3 = new Card(Card.Rank.DRAW1, Card.Color.GREEN, Card.Rank.DRAW5, Card.Color.TEAL);
     }
 
     @org.junit.jupiter.api.Test
@@ -59,11 +59,16 @@ public class HandTest {
     public void testCalculateTotalPoints() {
         //test hand is empty case
         assertEquals(0, hand.calculateTotalPoints(true));
-        //ensure correct calculation of points
+
         hand.addCard(c1);
         hand.addCard(c2);
         hand.addCard(c3);
+
+        //ensure correct calculation of light side points
         assertEquals(61, hand.calculateTotalPoints(true));
+        //ensure correct calculation of dark side points
+        assertEquals(61, hand.calculateTotalPoints(true));
+
     }
 
     @org.junit.jupiter.api.Test

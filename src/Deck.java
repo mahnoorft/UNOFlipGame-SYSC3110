@@ -33,10 +33,11 @@ public class Deck {
                 deck.add(new Card(Card.Rank.FLIP, Card.Color.values()[colors],Card.Rank.FLIP, Card.Color.values()[colors+4]));
             }
         }
-        //adding four Cards of Wild and WildDraw2
+        //adding four Cards of Wild_light, WildDraw2, Wild_dark, and Wild_draw_color
         for(int i =19; i<=20; i++){
             for (int j =0; j<4; j++){
                 deck.add(new Card(Card.Rank.WILD_LIGHT, Card.Color.WILD,Card.Rank.WILD_DARK, Card.Color.WILD));
+                deck.add(new Card(Card.Rank.DRAW2, Card.Color.WILD,Card.Rank.DRAW_COLOR, Card.Color.WILD));
             }
         }
         this.shuffle();
