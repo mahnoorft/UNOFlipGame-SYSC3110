@@ -11,20 +11,21 @@ public class Card {
     public Color colorDark;
     public int points;
     private int pointsDark;
+    private static final String IMAGES_FOLDER_PATH = "images/"; // Path to the images folder
 
     public Card(Rank rankLight,Color colorLight,Rank rankDark, Color colorDark){
         this.rankLight = rankLight;
         this.colorLight = colorLight;
         this.rankDark = rankDark;
         this.colorDark = colorDark;
-        assignPointsLight();
+        assignPoints();
     }
 
     /**
      * Assigns the points associated with this card according to UNO Flip rules
      */
 
-    private void assignPointsLight(){
+    private void assignPoints(){
         switch (rankLight){
             case ZERO -> points = 0;
             case ONE -> points = 1;
@@ -77,18 +78,19 @@ public class Card {
     }
 
     /**
-     * get the light side color
-     * @return color of light side
+     * get the color of this card
+     * @return color of current side
      */
-    //public Color getColorLight() {return colorLight;}
-    //public Rank getRankLight() {return rankLight;}
-    public Color getColor(boolean sideLight){
-        if (sideLight){return colorLight;}
+    public Color getColor(boolean isSideLight){
+        if (isSideLight){return colorLight;}
         else{return colorDark;}
     }
-
-    public Rank getRank(boolean currentSideLight){
-        if (currentSideLight){return rankLight;}
+    /**
+     * get the rank of this card
+     * @return  rank
+     */
+    public Rank getRank(boolean isSideLight){
+        if (isSideLight){return rankLight;}
         else{return rankDark;}
     }
 
@@ -98,32 +100,16 @@ public class Card {
     public void setColorLight(Color colorLight) {this.colorLight = colorLight;}
     public void setColorDark(Color colorDark) {this.colorDark = colorDark;}
 
-    /**
-     * get the rank of this card
-     * @return  light rank
-     */
-
-
 
     /**
      * get the points associated with this card
      * @return points
      */
-    public int getPoints(boolean currentSideLight) {
-        if(currentSideLight){
+    public int getPoints(boolean isSideLight) {
+        if(isSideLight){
             return points;
         }
         return pointsDark;
-    }
-
-    /**
-     * check if card is a special UNO card
-     * @return true if this card is a special UNO card
-     */
-    public boolean isSpecial(boolean currentSideLight){
-        if(currentSideLight){return rankLight.compareTo(Rank.NINE) > 0;}
-        else{return rankDark.compareTo(Rank.NINE) > 0;}
-
     }
 
     /**
@@ -158,6 +144,11 @@ public class Card {
             return true;
         }
         return false;
+    }
+
+    public String getImagePath(boolean isSideLight){
+        return IMAGES_FOLDER_PATH + this.getColor(isSideLight).name() +
+                "_"+ this.getRank(isSideLight).name() + ".png";
     }
 
 }

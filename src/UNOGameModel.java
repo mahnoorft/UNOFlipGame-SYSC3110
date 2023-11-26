@@ -11,7 +11,7 @@ public class UNOGameModel {
     private int currentTurn;
     private int turnDirection;
     public Card topCard;
-    public boolean currentSideLight;
+    private boolean currentSideLight;
     private int canPlayCard;
     private int turnSkipped;
     List<UNOGameHandler> view;
@@ -160,22 +160,7 @@ public class UNOGameModel {
         return index;
     }
 
-    /** Get the current player's cards in the format COLOR_RANK
-     * @return List of strings containing the cards in the format COLOR_RANK */
-    public List<String> getCurrentPlayerCardNames() {
-        List<String> cardNames = new ArrayList<>();
-        Hand currentPlayerHand = players.get(currentTurn).getHand();
-        List<Card> cards = currentPlayerHand.getCards();
-
-        for (Card card : cards) {
-            String cardName = card.getColor(currentSideLight).name() + "_" + card.getRank(currentSideLight).name() +".png";
-            cardNames.add(cardName);
-        }
-        return cardNames;
-    }
-
     public boolean isCurrentSideLight() {return currentSideLight;}
-
 
     public void updatePlayerHand(Card card){
         players.get(currentTurn).getHand().addCard(card);

@@ -36,23 +36,10 @@ public class CardTest {
 //        assertFalse(card1.checkValid(card5));
 //    }
 //
-//    @org.junit.jupiter.api.Test
-//    public void testIsSpecial() {
-//        card1 = new Card(Card.Rank.ONE, Card.Color.RED);
-//        card2 = new Card(Card.Rank.ONE, Card.Color.GREEN);
-//        card3 = new Card(Card.Rank.REVERSE, Card.Color.YELLOW);
-//        card4 = new Card(Card.Rank.DRAW2, Card.Color.WILD);
-//        card5 = new Card(Card.Rank.NINE, Card.Color.BLUE);
 //
-//        assertFalse(card1.isSpecial(true));
-//        assertFalse(card2.isSpecial(true));
-//        assertTrue(card3.isSpecial(true));
-//        assertTrue(card4.isSpecial(true));
-//        assertFalse(card5.isSpecial(true));
-//    }
 //
 //    @org.junit.jupiter.api.Test
-//    public void testToString() {
+//    public void testToString2() {
 //        card1 = new Card(Card.Rank.ONE, Card.Color.RED);
 //        card2 = new Card(Card.Rank.ONE, Card.Color.GREEN);
 //        card3 = new Card(Card.Rank.REVERSE, Card.Color.YELLOW);
