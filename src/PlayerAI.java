@@ -16,10 +16,12 @@ public class PlayerAI extends Player{
 
     public Card.Color getBestColor(boolean isLightSide){
         for(Card card:this.hand.getCards()){
-            if(card.getColor(isLightSide)!= Card.Color.WILD){
-                return this.hand.getCards().get(0).getColor(isLightSide);
+            Card.Color curr = card.getColor(isLightSide);
+            if(curr!= Card.Color.WILD){
+                return curr;
             }
         }
+        //Default color choice is RED/ORANGE
         if(isLightSide) {
             return Card.Color.RED;
         }else{
