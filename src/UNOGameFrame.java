@@ -258,10 +258,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         displayTopCard();
     }
 
-    public void updateStatusBar(String function) {
-        if (function != null){
-            statusBar.setText(game.getCurrentPlayerName() + " played " + function);
-        }
+    public void updateStatusBar(String function, String type) {
+        statusBar.setText(game.getCurrentPlayerName() + " "+ function + " " + type);
     }
 
     /**
@@ -339,16 +337,20 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             // Handle the selected option
             if (radioButton1.isSelected()) {
                 game.chooseNewColor(Card.Color.PINK);
-                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is PINK");
+                updateStatusBar("played", "WILD, new colour is PINK");
+                //statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is PINK");
             } else if (radioButton2.isSelected()) {
                 game.chooseNewColor(Card.Color.TEAL);
-                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is TEAL");
+                updateStatusBar("played", "WILD, new colour is TEAL");
+                //statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is TEAL");
             } else if (radioButton3.isSelected()) {
                 game.chooseNewColor(Card.Color.ORANGE);
-                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is ORANGE");
+                updateStatusBar("played", "WILD, new colour is ORANGE");
+                //statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is ORANGE");
             } else {
                 game.chooseNewColor(Card.Color.PURPLE);
-                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is PURPLE");
+                updateStatusBar("played", "WILD, new colour is PURPLE");
+                //statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is PURPLE");
             }
         } else {
             System.out.println("Dialog canceled");
@@ -398,16 +400,20 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             // Handle the selected option
             if (radioButton1.isSelected()) {
                 game.chooseNewColor(Card.Color.BLUE);
-                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is BLUE");
+                //statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is BLUE");
+                updateStatusBar("played", "WILD, colour: BLUE");
             } else if (radioButton2.isSelected()) {
                 game.chooseNewColor(Card.Color.GREEN);
-                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is GREEN");
+                //statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is GREEN");
+                updateStatusBar("played", "WILD, colour: GREEN");
             } else if (radioButton3.isSelected()) {
                 game.chooseNewColor(Card.Color.RED);
-                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is RED");
+                //statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is RED");
+                updateStatusBar("played", "WILD, colour: RED");
             } else {
                 game.chooseNewColor(Card.Color.YELLOW);
-                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is YELLOW");
+                //statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is YELLOW");
+                updateStatusBar("played", "WILD, colour: YELLOW");
             }
         } else {
             System.out.println("Dialog canceled");
@@ -427,8 +433,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         displayPlayerHand();
         if(!game.getCurrentPlayer().isBot()){
             drawCardDialog(card, canPlay, e);
-            statusBar.setText(game.getCurrentPlayerName() + " drew a card");
         }
+        updateStatusBar("drew", card.getColor(game.isCurrentSideLight()) + " " + card.getRank(game.isCurrentSideLight()));
+
 
         //Cannot draw more cards
         drawCardButton.setEnabled(false);
@@ -443,7 +450,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     @Override
     public void handlePlayCard(UNOGameEvent e) {
         String specialCard = game.executeSpecialFunction(e.getCard());
-        updateStatusBar(specialCard);
+        updateStatusBar("played", (e.getCard().getColor(game.isCurrentSideLight()).toString()) + " " + (e.getCard().getRank(game.isCurrentSideLight()).toString()));
 
         displayPlayerHand();
         displayTopCard();
@@ -510,9 +517,15 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     public void handleCallUNO(UNOGameEvent e) {
         // Display a message indicating that the current player has called UNO
         JOptionPane.showMessageDialog(this, "Player "+game.getCurrentPlayerName()+" called UNO!");
-        statusBar.setText(game.getCurrentPlayerName() + " called UNO");
+        updateStatusBar("called", "UNO");
+        //statusBar.setText(game.getCurrentPlayerName() + " called UNO");
         // Disable the UNO call button and update its color
         callUNOButton.setEnabled(false);
         UNOButtonColour();
+    }
+
+    @Override
+    public void handleColourUpdate(UNOGameEvent e) {
+        updateStatusBar("played", "WILD, colour: " + e.getColor());
     }
 }

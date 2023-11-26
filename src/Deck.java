@@ -31,7 +31,7 @@ public class Deck {
                 deck.add(new Card(Card.Rank.SKIP, Card.Color.values()[colors],Card.Rank.SKIP_All, Card.Color.values()[colors+4]));
                 deck.add(new Card(Card.Rank.DRAW1, Card.Color.values()[colors],Card.Rank.DRAW5, Card.Color.values()[colors+4]));
                 deck.add(new Card(Card.Rank.FLIP, Card.Color.values()[colors],Card.Rank.FLIP, Card.Color.values()[colors+4]));
-            }//
+            }
         }
         //adding four Cards of Wild and WildDraw2
         for(int i =19; i<=20; i++){

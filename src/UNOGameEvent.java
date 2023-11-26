@@ -7,8 +7,7 @@ public class UNOGameEvent extends EventObject {
 
     Card card;
     Boolean canPlay;
-    Boolean isLight;
-
+    Card.Color color;
     /**
      * Constructs a prototypical Event.
      * @param model the object on which the Event initially occurred
@@ -30,6 +29,10 @@ public class UNOGameEvent extends EventObject {
         this.card = card;
         this.canPlay = canPlay;
     }
+    public UNOGameEvent(UNOGameModel model, Card.Color colour) {
+        super(model);
+        this.color = colour;
+    }
 
     /**
      * Gets the Card associated with this UNOGameEvent.
@@ -45,4 +48,10 @@ public class UNOGameEvent extends EventObject {
      */
     public Boolean canPlay(){ return canPlay;}
 
+    /**
+     * A flag to Check the colour of the card
+     *
+     * @return colour of the card
+     */
+    public Card.Color getColor(){ return color;}
 }
