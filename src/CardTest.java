@@ -12,45 +12,60 @@ public class CardTest {
     @org.junit.jupiter.api.Test
     //Test that the points are assigned correctly to cards
     public void testAssignPoint() {
-//        card1 = new Card(Card.Rank.ONE, Card.Color.RED);
-//        card2 = new Card(Card.Rank.REVERSE, Card.Color.GREEN);
-//        card3 = new Card(Card.Rank.DRAW2, Card.Color.BLUE);
-//
-//        assertEquals(1, card1.getPoints());
-//        assertEquals(20, card2.getPoints());
-//        assertEquals(50, card3.getPoints());
+        card1 = new Card(Card.Rank.ONE, Card.Color.RED, Card.Rank.ONE, Card.Color.ORANGE);
+        card2 = new Card(Card.Rank.REVERSE, Card.Color.GREEN,Card.Rank.REVERSE, Card.Color.TEAL);
+        card3 = new Card(Card.Rank.DRAW2, Card.Color.BLUE, Card.Rank.DRAW_COLOR, Card.Color.PINK);
+
+        assertEquals(1, card1.getPoints(true));
+        assertEquals(20, card2.getPoints(true));
+        assertEquals(50, card3.getPoints(true));
+
+        assertEquals(1, card1.getPoints(false));
+        assertEquals(20, card2.getPoints(false));
+        assertEquals(50, card3.getPoints(false));
     }
 
     @org.junit.jupiter.api.Test
     //Test if a card can be played is correctly checking
     public void testCheckValid() {
-//        card1 = new Card(Card.Rank.ONE, Card.Color.RED);
-//        card2 = new Card(Card.Rank.ONE, Card.Color.GREEN);
-//        card3 = new Card(Card.Rank.FIVE, Card.Color.RED);
-//        card4 = new Card(Card.Rank.DRAW2, Card.Color.WILD);
-//        card5 = new Card(Card.Rank.NINE, Card.Color.BLUE);
-//
-//        assertTrue(card1.checkValid(card2));
-//        assertTrue(card1.checkValid(card3));
-//        assertTrue(card1.checkValid(card4));
-//        assertFalse(card1.checkValid(card5));
-//    }
-//
-//
-//
-//    @org.junit.jupiter.api.Test
-//    public void testToString2() {
-//        card1 = new Card(Card.Rank.ONE, Card.Color.RED);
-//        card2 = new Card(Card.Rank.ONE, Card.Color.GREEN);
-//        card3 = new Card(Card.Rank.REVERSE, Card.Color.YELLOW);
-//        card4 = new Card(Card.Rank.DRAW2, Card.Color.WILD);
-//        card5 = new Card(Card.Rank.NINE, Card.Color.BLUE);
-//
-//        assertEquals("[RED ONE]",card1.toString());
-//        assertEquals("[GREEN ONE]",card2.toString());
-//        assertEquals("[YELLOW REVERSE]",card3.toString());
-//        assertEquals("[WILD DRAW2]",card4.toString());
-//        assertEquals("[BLUE NINE]",card5.toString());
+        card1 = new Card(Card.Rank.ONE, Card.Color.RED,Card.Rank.ONE, Card.Color.ORANGE);
+        card2 = new Card(Card.Rank.ONE, Card.Color.GREEN,Card.Rank.ONE, Card.Color.TEAL);
+        card3 = new Card(Card.Rank.FIVE, Card.Color.RED,Card.Rank.FIVE, Card.Color.ORANGE);
+        card4 = new Card(Card.Rank.DRAW2, Card.Color.WILD,Card.Rank.DRAW_COLOR, Card.Color.WILD);
+        card5 = new Card(Card.Rank.NINE, Card.Color.BLUE,Card.Rank.NINE, Card.Color.PINK);
+
+        assertTrue(card1.checkValid(card2,true));
+        assertTrue(card1.checkValid(card3,true));
+        assertTrue(card1.checkValid(card4,true));
+        assertFalse(card1.checkValid(card5,true));
+
+        assertTrue(card1.checkValid(card2,false));
+        assertTrue(card1.checkValid(card3,false));
+        assertTrue(card1.checkValid(card4,false));
+        assertFalse(card1.checkValid(card5,false));
+    }
+
+
+
+    @org.junit.jupiter.api.Test
+    public void testToString2() {
+        card1 = new Card(Card.Rank.ONE, Card.Color.RED,Card.Rank.ONE, Card.Color.ORANGE);
+        card2 = new Card(Card.Rank.ONE, Card.Color.GREEN,Card.Rank.ONE, Card.Color.TEAL);
+        card3 = new Card(Card.Rank.REVERSE, Card.Color.YELLOW,Card.Rank.REVERSE, Card.Color.PURPLE);
+        card4 = new Card(Card.Rank.DRAW2, Card.Color.WILD,Card.Rank.DRAW_COLOR, Card.Color.WILD);
+        card5 = new Card(Card.Rank.NINE, Card.Color.BLUE,Card.Rank.NINE, Card.Color.PINK);
+
+        assertEquals("RED_ONE",card1.toString2(true));
+        assertEquals("GREEN_ONE",card2.toString2(true));
+        assertEquals("YELLOW_REVERSE",card3.toString2(true));
+        assertEquals("WILD_DRAW2",card4.toString2(true));
+        assertEquals("BLUE_NINE",card5.toString2(true));
+
+        assertEquals("ORANGE_ONE",card1.toString2(false));
+        assertEquals("TEAL_ONE",card2.toString2(false));
+        assertEquals("PURPLE_REVERSE",card3.toString2(false));
+        assertEquals("WILD_DRAW_COLOR",card4.toString2(false));
+        assertEquals("PINK_NINE",card5.toString2(false));
     }
 
 
