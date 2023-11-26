@@ -18,7 +18,7 @@ public class Deck {
         for (int colors = 0; colors < 4; colors++){
 
             //adding one rank 0
-            deck.add(new Card(Card.Rank.ZERO, Card.Color.values()[colors],Card.Rank.ZERO, Card.Color.values()[colors+4]));
+           // deck.add(new Card(Card.Rank.ZERO, Card.Color.values()[colors],Card.Rank.ZERO, Card.Color.values()[colors+4]));
 
             //adding two Cards of ranks 1-9
             for(int i =1; i<10; i++){

@@ -3,6 +3,8 @@
  * @author Eric Cui 101237617
  * */
 public class Card {
+    public boolean getRank;
+
     public enum Rank{ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, REVERSE, SKIP, DRAW1, DRAW2, SKIP_All, DRAW5, DRAW_COLOR, FLIP, WILD_LIGHT, WILD_DARK}
     public enum Color{RED, YELLOW, GREEN, BLUE, ORANGE, TEAL, PINK, PURPLE, WILD}
     public Rank rankLight;
