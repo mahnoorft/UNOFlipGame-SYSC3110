@@ -30,10 +30,10 @@ public class Hand{
     }
     /** Calculate the sum of points for all cards currently held.
      * @return sum of total points of the cards held */
-    public int calculateTotalPoints(){
+    public int calculateTotalPoints(boolean currentSideLight){
         int points = 0;
         for(Card c: cards){
-            points += c.getPoints();
+            points += c.getPoints(currentSideLight);
         }
         return points;
     }

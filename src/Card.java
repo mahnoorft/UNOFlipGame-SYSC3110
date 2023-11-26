@@ -11,20 +11,21 @@ public class Card {
     public Color colorDark;
     public int points;
     private int pointsDark;
+    private static final String IMAGES_FOLDER_PATH = "images/"; // Path to the images folder
 
     public Card(Rank rankLight,Color colorLight,Rank rankDark, Color colorDark){
         this.rankLight = rankLight;
         this.colorLight = colorLight;
         this.rankDark = rankDark;
         this.colorDark = colorDark;
-        assignPointsLight();
+        assignPoints();
     }
 
     /**
      * Assigns the points associated with this card according to UNO Flip rules
      */
 
-    private void assignPointsLight(){
+    private void assignPoints(){
         switch (rankLight){
             case ZERO -> points = 0;
             case ONE -> points = 1;
@@ -43,20 +44,20 @@ public class Card {
             default -> throw new IllegalArgumentException("CUSTOM EXCEPTION: light card have dark rank");
         }
         switch (rankDark){
-            case ZERO -> points = 0;
-            case ONE -> points = 1;
-            case TWO -> points = 2;
-            case THREE -> points = 3;
-            case FOUR -> points = 4;
-            case FIVE -> points = 5;
-            case SIX -> points = 6;
-            case SEVEN -> points = 7;
-            case EIGHT -> points = 8;
-            case NINE -> points = 9;
-            case DRAW5 -> points = 10;
-            case REVERSE,SKIP_All,FLIP -> points = 20;
-            case WILD_DARK -> points = 40;
-            case DRAW_COLOR -> points = 50;
+            case ZERO -> pointsDark = 0;
+            case ONE -> pointsDark = 1;
+            case TWO -> pointsDark = 2;
+            case THREE -> pointsDark = 3;
+            case FOUR -> pointsDark = 4;
+            case FIVE -> pointsDark = 5;
+            case SIX -> pointsDark = 6;
+            case SEVEN -> pointsDark = 7;
+            case EIGHT -> pointsDark = 8;
+            case NINE -> pointsDark = 9;
+            case DRAW5 -> pointsDark = 10;
+            case REVERSE,SKIP_All,FLIP -> pointsDark = 20;
+            case WILD_DARK -> pointsDark = 40;
+            case DRAW_COLOR -> pointsDark = 50;
             default -> throw new IllegalArgumentException("CUSTOM EXCEPTION: dark card have light rank");
         }
     }
@@ -77,18 +78,19 @@ public class Card {
     }
 
     /**
-     * get the light side color
-     * @return color of light side
+     * get the color of this card
+     * @return color of current side
      */
-    //public Color getColorLight() {return colorLight;}
-    //public Rank getRankLight() {return rankLight;}
-    public Color getColor(boolean sideLight){
-        if (sideLight){return colorLight;}
+    public Color getColor(boolean isSideLight){
+        if (isSideLight){return colorLight;}
         else{return colorDark;}
     }
-
-    public Rank getRank(boolean currentSideLight){
-        if (currentSideLight){return rankLight;}
+    /**
+     * get the rank of this card
+     * @return  rank
+     */
+    public Rank getRank(boolean isSideLight){
+        if (isSideLight){return rankLight;}
         else{return rankDark;}
     }
 
@@ -98,41 +100,23 @@ public class Card {
     public void setColorLight(Color colorLight) {this.colorLight = colorLight;}
     public void setColorDark(Color colorDark) {this.colorDark = colorDark;}
 
-    /**
-     * get the rank of this card
-     * @return  light rank
-     */
-
-
 
     /**
      * get the points associated with this card
      * @return points
      */
-    public int getPoints() {return points;}
-
-    /**
-     * check if card is a special UNO card
-     * @return true if this card is a special UNO card
-     */
-    public boolean isSpecial(boolean currentSideLight){
-        if(currentSideLight){return rankLight.compareTo(Rank.NINE) > 0;}
-        else{return rankDark.compareTo(Rank.NINE) > 0;}
-
+    public int getPoints(boolean isSideLight) {
+        if(isSideLight){
+            return points;
+        }
+        return pointsDark;
     }
 
     /**
      * return a string representation of this card
      * @return the string
      */
-    public String toString(){
-        return "["+this.colorLight+" "+ this.rankLight+"]";
-    }
-
-    public String toString2(){
-        return this.colorLight+"_"+ this.rankLight;
-    }
-    public String toStringSingle(boolean isSideLight){
+    public String toString2(boolean isSideLight){
         if(isSideLight){
             return this.colorLight+"_"+ this.rankLight;
         }
@@ -160,6 +144,11 @@ public class Card {
             return true;
         }
         return false;
+    }
+
+    public String getImagePath(boolean isSideLight){
+        return IMAGES_FOLDER_PATH + this.getColor(isSideLight).name() +
+                "_"+ this.getRank(isSideLight).name() + ".png";
     }
 
 }

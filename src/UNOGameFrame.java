@@ -18,7 +18,6 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     JMenu gameMenu;
     ArrayList<JButton> cardButtonList;
 
-    private static final String IMAGES_FOLDER_PATH = "images/"; // Path to the images folder
 
     public UNOGameFrame( UNOGameModel game) {
         super("UNO Flip Game!");
@@ -68,7 +67,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         mainPanel.add(statusBar);
 
         //created image icons for current player's displayed cards and then added buttons to them
-        String imagePath = IMAGES_FOLDER_PATH + "card_back.png";
+        String imagePath = "images/card_back.png";
         // Create an ImageIcon using the specified image path
         ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
         JPanel drawPanel = new JPanel();
@@ -168,19 +167,17 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         playerCardsPanel.removeAll();
         playerNameField.setText(game.getCurrentPlayerName() + "'s Turn");
 
-        List<String> cardNames = game.getCurrentPlayerCardNames();
-
-        for (int i = 0; i< cardNames.size(); i++) {
+        //List<String> cardNames = game.getCurrentPlayerCardNames();
+        List<Card> cards = game.getCurrentPlayer().getHand().getCards();
+        for (int i = 0; i< cards.size(); i++) {
             // Assuming cards are named with their respective COLOR_RANK.png
             // get the path to the images
-            /**
-             * ----------------------------------------------------------------Eric--------------------------------------
-             */
+
             String imagePath;
             ImageIcon icon;
             JButton button;
 
-            imagePath = IMAGES_FOLDER_PATH + cardNames.get(i);
+            imagePath = cards.get(i).getImagePath(game.isCurrentSideLight());
             icon = new ImageIcon(getClass().getResource(imagePath));
             button = new JButton(icon);
 
@@ -200,15 +197,12 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      */
     private void displayTopCard() {
         topCardPanel.removeAll();
-        /**
-         * -----------------------------------------------------------Eric-------------------------------------------------
-         */
+
         Card topCard = game.topCard;
-        System.out.println(topCard);
         // get the path to the image
         JLabel label2;
 
-        String imagePath = IMAGES_FOLDER_PATH + topCard.getColor(true).name() + "_"+ topCard.getRank(true).name() + ".png";
+        String imagePath = topCard.getImagePath(game.isCurrentSideLight());
         ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath));
         label2 = new JLabel(icon2);
 
@@ -278,11 +272,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      * @param e The UNOGameEvent associated with the game.
      */
     private void drawCardDialog(Card card, Boolean canPlay, UNOGameEvent e) {
-        ImageIcon icon = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + card.toString2() + ".png"));
+        ImageIcon icon = new ImageIcon(getClass().getResource(card.getImagePath(game.isCurrentSideLight())));
         JLabel cardLabel = new JLabel(icon);
 
         if (canPlay) {
-            int input = JOptionPane.showConfirmDialog(null, cardLabel, "Do you want to play " + card.toString2() + " card?", JOptionPane.YES_NO_OPTION);
+            int input = JOptionPane.showConfirmDialog(null, cardLabel,
+                    "Do you want to play " + card.toString2(game.isCurrentSideLight())
+                            + " card?", JOptionPane.YES_NO_OPTION);
 
             if (input == JOptionPane.YES_OPTION) {
                 game.updateTopCard(card);
@@ -294,7 +290,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
                 displayPlayerHand();
             }
         }else{
-            JOptionPane.showMessageDialog(null, cardLabel, "You drew a " + card.toString2(), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, cardLabel, "You drew a "
+                    + card.toString2(game.isCurrentSideLight()), JOptionPane.INFORMATION_MESSAGE);
             game.updatePlayerHand(card);
             displayPlayerHand();
         }
@@ -386,11 +383,16 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      */
     @Override
     public void handlePlayCard(UNOGameEvent e) {
+        String specialCard = game.executeSpecialFunction(e.getCard());
+        updateStatusBar(specialCard);
+
         displayPlayerHand();
         displayTopCard();
 
+        int currPlayerHandSize = game.getCurrentPlayer().getHand().getCards().size();
+
         //call UNO button if the current player has only one card left
-        if(game.getCurrentPlayerCardNames().size()==1){
+        if(currPlayerHandSize==1){
             callUNOButton.setEnabled(true);
             UNOButtonColour();
             if(game.getCurrentPlayer().isBot()){
@@ -398,17 +400,14 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             }
         }
 
-        String specialCard = game.executeSpecialFunction(e.getCard());
-        updateStatusBar(specialCard);
         if(!game.getCurrentPlayer().isBot()) {
             //handle WILD, SKIP, REVERSE, +1, +2 cards if human player
             if (e.getCard().getColor(game.isCurrentSideLight()) == Card.Color.WILD) {
                 wildDialog();
             }
         }
-
         // Check for a round winner and display the round results if the current player has no more cards
-        if(game.getCurrentPlayerCardNames().size()==0){
+        if(currPlayerHandSize==0){
             int roundScore = game.calculateWinnerScore();
             int totalScore = game.getCurrentPlayer().getScore();
             winRoundScreen(game.getCurrentPlayerName(), totalScore, roundScore);
