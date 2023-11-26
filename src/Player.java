@@ -67,16 +67,12 @@ public class  Player {
         // check if card index is valid
         if (index >= 0 && index < hand.getCards().size()) {
             Card cardToPlay = hand.getCards().get(index);
-            if (cardToPlay.checkValid(topCard,isSideLight)) {
+            if (cardToPlay.checkValid(topCard, isSideLight)) {
                 // Print the card that is being played
-                System.out.println(name + " played " + cardToPlay);
+                System.out.println(name + " played " + cardToPlay.toString2(isSideLight));
                 hand.removeCard(index);
                 return cardToPlay;
-            } else {
-                System.out.println("The selected card cannot be played.");
             }
-        } else {
-            System.out.println("Invalid index. Please choose a valid index to play.");
         }
         return null;
     }

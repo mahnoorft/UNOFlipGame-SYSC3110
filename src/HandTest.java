@@ -58,12 +58,12 @@ public class HandTest {
     @org.junit.jupiter.api.Test
     public void testCalculateTotalPoints() {
         //test hand is empty case
-        assertEquals(0, hand.calculateTotalPoints());
+        assertEquals(0, hand.calculateTotalPoints(true));
         //ensure correct calculation of points
         hand.addCard(c1);
         hand.addCard(c2);
         hand.addCard(c3);
-        assertEquals(61, hand.calculateTotalPoints());
+        assertEquals(61, hand.calculateTotalPoints(true));
     }
 
     @org.junit.jupiter.api.Test
