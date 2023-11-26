@@ -285,7 +285,7 @@ public class UNOGameModel {
      * @param color the chosen color
      * */
     public void chooseNewColor(Card.Color color){
-        topCard.setColorLight(color);
+        topCard.setColor(color, currentSideLight);
     }
 
 

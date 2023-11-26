@@ -97,8 +97,10 @@ public class Card {
     /**
      * set the side color to the given color
      */
-    public void setColorLight(Color colorLight) {this.colorLight = colorLight;}
-    public void setColorDark(Color colorDark) {this.colorDark = colorDark;}
+    public void setColor(Color color, boolean isSideLight) {
+        if (isSideLight){this.colorLight = color;}
+        else{ this.colorDark = color;}
+    }
 
 
     /**

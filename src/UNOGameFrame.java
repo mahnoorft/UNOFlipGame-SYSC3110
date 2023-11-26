@@ -395,9 +395,12 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         String specialCard = game.executeSpecialFunction(e.getCard());
         updateStatusBar(specialCard);
-        //re-display in case of flip
-        displayPlayerHand();
-        displayTopCard();
+
+//        if(specialCard!= null && specialCard.equals("FLIP")){
+//            //re-display in case of flip
+//            displayPlayerHand();
+//            displayTopCard();
+//        }
 
         int currPlayerHandSize = game.getCurrentPlayer().getHand().getCards().size();
 
