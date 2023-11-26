@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.util.*;
 
 /** This class represents the model for UNO game and is responsible for
- * executes the UNO Game functions and updating the game logic*/
+ * executing the UNO Game functions and updating the game logic*/
 
 public class UNOGameModel {
     private ArrayList<Player> players;

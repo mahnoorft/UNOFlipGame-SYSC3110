@@ -2,6 +2,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+/**
+ * This Class is to test PLayerAI class for the UNO Flip game
+ * @author Areej Mahmoud 101218260
+ */
 
 class PlayerAITest {
     PlayerAI ai;
@@ -26,6 +30,10 @@ class PlayerAITest {
 
         //check dark side case
         assertEquals(c3, ai.getBestPlay(topCard, false));
+
+        //check no valid cards case
+        assertNull(ai.getBestPlay(topCard, false));
+        assertNull(ai.getBestPlay(topCard, true));
     }
 
     @Test
