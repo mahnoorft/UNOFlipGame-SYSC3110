@@ -308,15 +308,15 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         //Create Radio Buttons
         JRadioButton radioButton1 = new JRadioButton("PINK");
-        JRadioButton radioButton2 = new JRadioButton("GREEN");
+        JRadioButton radioButton2 = new JRadioButton("TEAL");
         JRadioButton radioButton3 = new JRadioButton("ORANGE");
-        JRadioButton radioButton4 = new JRadioButton("YELLOW");
+        JRadioButton radioButton4 = new JRadioButton("PURPLE");
 
         //add colours to indicate colour
-        radioButton1.setBackground(Color.CYAN);
-        radioButton2.setBackground(Color.GREEN);
-        radioButton3.setBackground(Color.red);
-        radioButton4.setBackground(Color.yellow);
+        radioButton1.setBackground(Color.PINK);
+        radioButton2.setBackground(Color.CYAN);
+        radioButton3.setBackground(Color.ORANGE);
+        radioButton4.setBackground(Color.MAGENTA);
 
         //Creating Button Group
         ButtonGroup buttonGroup = new ButtonGroup();
@@ -338,17 +338,17 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         if (result == JOptionPane.OK_OPTION) {
             // Handle the selected option
             if (radioButton1.isSelected()) {
-                game.chooseNewColor(Card.Color.BLUE);
-                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is BLUE");
+                game.chooseNewColor(Card.Color.PINK);
+                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is PINK");
             } else if (radioButton2.isSelected()) {
-                game.chooseNewColor(Card.Color.GREEN);
-                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is GREEN");
+                game.chooseNewColor(Card.Color.TEAL);
+                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is TEAL");
             } else if (radioButton3.isSelected()) {
-                game.chooseNewColor(Card.Color.RED);
-                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is RED");
+                game.chooseNewColor(Card.Color.ORANGE);
+                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is ORANGE");
             } else {
-                game.chooseNewColor(Card.Color.YELLOW);
-                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is YELLOW");
+                game.chooseNewColor(Card.Color.PURPLE);
+                statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is PURPLE");
             }
         } else {
             System.out.println("Dialog canceled");
@@ -372,7 +372,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         JRadioButton radioButton4 = new JRadioButton("YELLOW");
 
         //add colours to indicate colour
-        radioButton1.setBackground(Color.CYAN);
+        radioButton1.setBackground(Color.BLUE);
         radioButton2.setBackground(Color.GREEN);
         radioButton3.setBackground(Color.red);
         radioButton4.setBackground(Color.yellow);
@@ -462,7 +462,11 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         if(!game.getCurrentPlayer().isBot()) {
             //handle WILD, SKIP, REVERSE, +1, +2 cards if human player
             if (e.getCard().getColor(game.isCurrentSideLight()) == Card.Color.WILD) {
-                lightWildDialog();
+                if (game.isCurrentSideLight()){
+                    lightWildDialog();
+                } else{
+                    darkWildDialog();
+                }
             }
         }
         // Check for a round winner and display the round results if the current player has no more cards
