@@ -383,9 +383,19 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      */
     @Override
     public void handlePlayCard(UNOGameEvent e) {
+        displayPlayerHand();
+        displayTopCard();
+
+        if(!game.getCurrentPlayer().isBot()) {
+            //handle WILD cards if human player
+            if (e.getCard().getColor(game.isCurrentSideLight()) == Card.Color.WILD) {
+                wildDialog();
+            }
+        }
+
         String specialCard = game.executeSpecialFunction(e.getCard());
         updateStatusBar(specialCard);
-
+        //re-display in case of flip
         displayPlayerHand();
         displayTopCard();
 
@@ -400,12 +410,6 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             }
         }
 
-        if(!game.getCurrentPlayer().isBot()) {
-            //handle WILD, SKIP, REVERSE, +1, +2 cards if human player
-            if (e.getCard().getColor(game.isCurrentSideLight()) == Card.Color.WILD) {
-                wildDialog();
-            }
-        }
         // Check for a round winner and display the round results if the current player has no more cards
         if(currPlayerHandSize==0){
             int roundScore = game.calculateWinnerScore();
