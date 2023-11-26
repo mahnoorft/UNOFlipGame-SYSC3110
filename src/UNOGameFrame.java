@@ -448,10 +448,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         displayPlayerHand();
         displayTopCard();
 
-        int currPlayerHandSize = game.getCurrentPlayer().getHand().getCards().size();
-
         //call UNO button if the current player has only one card left
-        if(currPlayerHandSize==1){
+        if(game.getCurrentPlayer().getHand().isUNO()){
             callUNOButton.setEnabled(true);
             UNOButtonColour();
             if(game.getCurrentPlayer().isBot()){
@@ -470,7 +468,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             }
         }
         // Check for a round winner and display the round results if the current player has no more cards
-        if(currPlayerHandSize==0){
+        if(game.getCurrentPlayer().getHand().isEmpty()){
             int roundScore = game.calculateWinnerScore();
             int totalScore = game.getCurrentPlayer().getScore();
             winRoundScreen(game.getCurrentPlayerName(), totalScore, roundScore);
