@@ -110,16 +110,16 @@ public class UNOGameModel {
             // checks whether the otherPlayer is not the same as the player for whom the score is being calculated
             if (i != currentTurn) {
                 Hand h = players.get(i).getHand();
-                score += h.calculateTotalPoints();
+                score += h.calculateTotalPoints(currentSideLight);
             }
         }
         players.get(currentTurn).incrementScore(score);
         return score;
     }
-    /** Execute the spaecial card function based on the rank
+    /** Execute the special card function based on the rank
      * @param card the special card played*/
     public String executeSpecialFunction(Card card){
-        switch (card.rankLight){
+        switch (card.getRank(currentSideLight)){
             case REVERSE:
                 this.reverseTurn();
                 return "reverse";
@@ -129,17 +129,22 @@ public class UNOGameModel {
             case SKIP_All:
                 turnSkipped = -1;
                 return "Skipped all";
-            case WILD:
-                return "wild";
+            case WILD_LIGHT:
+                return "Wild Light";
+            case WILD_DARK:
+                return "Wild Dark";
             case DRAW1:
                 this.nextPlayerDrawCard(1);
                 this.skipTurn();
                 return "draw 1";
+            case DRAW5:
+                this.nextPlayerDrawCard(5);
+                this.skipTurn();
+                return "draw 5";
             case DRAW2:
                 this.nextPlayerDrawCard(2);
                 this.skipTurn();
                 return "WILD draw 2";
-
             case FLIP:
                 currentSideLight = !currentSideLight;
                 return "FLIP";
@@ -155,22 +160,7 @@ public class UNOGameModel {
         return index;
     }
 
-    /** Get the current player's cards in the format COLOR_RANK
-     * @return List of strings containing the cards in the format COLOR_RANK */
-    public List<String> getCurrentPlayerCardNames() {
-        List<String> cardNames = new ArrayList<>();
-        Hand currentPlayerHand = players.get(currentTurn).getHand();
-        List<Card> cards = currentPlayerHand.getCards();
-
-        for (Card card : cards) {
-            String cardName = card.getColor(currentSideLight).name() + "_" + card.getRank(currentSideLight).name() +".png";
-            cardNames.add(cardName);
-        }
-        return cardNames;
-    }
-
     public boolean isCurrentSideLight() {return currentSideLight;}
-
 
     public void updatePlayerHand(Card card){
         players.get(currentTurn).getHand().addCard(card);
@@ -292,7 +282,7 @@ public class UNOGameModel {
         PlayerAI bot = (PlayerAI)players.get(currentTurn);
         Card c = bot.getBestPlay(topCard,isCurrentSideLight());
         if(c != null){
-            System.out.println("Bot Played a card " + c.toString());
+            System.out.println("Bot Played a card " + c.toString2(currentSideLight));
             topCard = c;
             pile.add(c);
             for (UNOGameHandler view: view){
@@ -305,7 +295,7 @@ public class UNOGameModel {
             System.out.println("Bot Drew a card");
             c = deck.draw();
             if(c.checkValid(topCard,currentSideLight)){
-                System.out.println("Bot Played the drawn card " + c.toString());
+                System.out.println("Bot Played the drawn card " + c.toString2(currentSideLight));
                 topCard = c;
                 pile.add(c);
                 for (UNOGameHandler view: view){
