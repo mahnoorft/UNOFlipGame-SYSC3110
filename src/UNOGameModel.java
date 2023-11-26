@@ -25,6 +25,8 @@ public class UNOGameModel {
     private int turnSkipped;
     List<UNOGameHandler> view;
 
+    private UNOGameFrame frame;
+
 
     /** Constructor for class UNOGame*/
     public UNOGameModel(){
@@ -339,6 +341,7 @@ public class UNOGameModel {
         Card c = bot.getBestPlay(topCard,isCurrentSideLight());
         if(c != null){
             System.out.println("Bot Played a card " + c.toString2(currentSideLight));
+            //frame.updateStatusBar("played", c.getColor(isCurrentSideLight()) + " " + c.getRank(isCurrentSideLight()));
             topCard = c;
             pile.add(c);
 
@@ -346,12 +349,18 @@ public class UNOGameModel {
                 view.handlePlayCard(new UNOGameEvent(this, c, false));
             }
             if(c.getColor(currentSideLight) == Card.Color.WILD){
-                chooseNewColor(bot.getBestColor(currentSideLight));
+                Card.Color wildColour = bot.getBestColor(currentSideLight);
+                chooseNewColor(wildColour);
+                for (UNOGameHandler view: view){
+                    view.handleColourUpdate(new UNOGameEvent(this, wildColour));
+                }
             }
 
         }else{
             System.out.println("Bot Drew a card");
             c = deck.draw();
+            //frame.updateStatusBar("drew", c.getColor(isCurrentSideLight()) + " " + c.getRank(isCurrentSideLight()));
+
             if(c.checkValid(topCard,currentSideLight)){
                 System.out.println("Bot Played the drawn card " + c.toString2(currentSideLight));
                 topCard = c;
@@ -360,13 +369,18 @@ public class UNOGameModel {
                     view.handlePlayCard(new UNOGameEvent(this, c, false));
                 }
                 if(c.getColor(currentSideLight) == Card.Color.WILD){
-                    chooseNewColor(bot.getBestColor(currentSideLight));
+                    Card.Color wildColour = bot.getBestColor(currentSideLight);
+                    chooseNewColor(wildColour);
+                    for (UNOGameHandler view: view){
+                        view.handleColourUpdate(new UNOGameEvent(this, wildColour));
+                    }
                 }
             }else{
                 bot.getHand().addCard(c);
                 for (UNOGameHandler view: view){
                     view.handleDrawCard(new UNOGameEvent(this, c, false));
                 }
+                //frame.updateStatusBar("called", "UNO");
             }
 
         }
