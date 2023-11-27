@@ -70,7 +70,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         //set status bar
         statusBar = new JLabel("Welcome to UNO...");
-        statusBar.setBounds(20, 100, 200, 30);
+        statusBar.setBounds(20, 100, 250, 30);
         statusBar.setFont(new Font(Font.DIALOG,Font.BOLD, 11));
         mainPanel.add(statusBar);
 
@@ -123,13 +123,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         winRoundPanel = new JPanel(null);
         // Create and configure the message label
         winRoundMessage = new JLabel("Error",SwingConstants.CENTER);
-        winRoundMessage.setBounds(0,100,800,200);
-        winRoundMessage.setFont(new Font("Serif", Font.PLAIN, 36));
+        winRoundMessage.setBounds(0,65,700,200);
+        winRoundMessage.setFont(new Font("Serif", Font.PLAIN, 30));
         winRoundMessage.setHorizontalAlignment(SwingConstants.CENTER);
         // Create and configure the message points label
         winRoundMessagePoints = new JLabel("Error",SwingConstants.CENTER);
-        winRoundMessagePoints.setBounds(0,200,800,200);
-        winRoundMessagePoints.setFont(new Font("Serif", Font.PLAIN, 36));
+        winRoundMessagePoints.setBounds(0,125,700,200);
+        winRoundMessagePoints.setFont(new Font("Serif", Font.PLAIN, 30));
         winRoundMessagePoints.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Add message labels to the round winner panel
@@ -137,10 +137,10 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         winRoundPanel.add(winRoundMessagePoints);
 
         // set size of round winner panel
-        winRoundPanel.setSize(800, 600);
+        winRoundPanel.setSize(700, 500);
         // Create a "New Round" button
         newRoundButton = new JButton("New Round");
-        newRoundButton.setBounds(300,400,200,80);
+        newRoundButton.setBounds(250,300,200,80);
         newRoundButton.setFont(new Font("Monospaced Bold", Font.PLAIN, 24));
         newRoundButton.addActionListener(controller);
         newRoundButton.setActionCommand("new");
