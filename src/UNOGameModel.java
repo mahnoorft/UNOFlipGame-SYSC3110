@@ -72,6 +72,7 @@ public class UNOGameModel {
     public void initializeGame(){
         deck = new Deck();
         pile = new ArrayList<Card>();
+        currentSideLight = true; // start game on light side
         // initialize all player names and distribute 7 cards to each
         for(int i = 0; i < players.size(); i++) {
             players.get(i).clearHand();
