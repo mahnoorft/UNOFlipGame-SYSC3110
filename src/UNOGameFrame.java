@@ -312,7 +312,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      * The dialog contains radio buttons for selecting among the colors (BLUE, GREEN, RED, YELLOW).
      * Updates the game with the chosen color.
      */
-    public void darkWildDialog(){
+    public Card.Color darkWildDialog(){
         // Create panel
         JPanel panel = new JPanel();
 
@@ -350,24 +350,28 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             if (radioButton1.isSelected()) {
                 game.chooseNewColor(Card.Color.PINK);
                 updateStatusBar("played", "WILD, new colour is PINK");
+                return Card.Color.PINK;
                 //statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is PINK");
             } else if (radioButton2.isSelected()) {
                 game.chooseNewColor(Card.Color.TEAL);
                 updateStatusBar("played", "WILD, new colour is TEAL");
+                return Card.Color.TEAL;
                 //statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is TEAL");
             } else if (radioButton3.isSelected()) {
                 game.chooseNewColor(Card.Color.ORANGE);
                 updateStatusBar("played", "WILD, new colour is ORANGE");
+                return Card.Color.ORANGE;
                 //statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is ORANGE");
             } else {
                 game.chooseNewColor(Card.Color.PURPLE);
                 updateStatusBar("played", "WILD, new colour is PURPLE");
+                return Card.Color.PURPLE;
                 //statusBar.setText(game.getCurrentPlayerName() + " played WILD, new colour is PURPLE");
             }
         } else {
             System.out.println("Dialog canceled");
         }
-
+        return Card.Color.ORANGE;
     }
 
     /**
@@ -476,7 +480,10 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
                 if (game.isCurrentSideLight()){
                     lightWildDialog();
                 } else{
-                    darkWildDialog();
+                    Card.Color color = darkWildDialog();
+                    if(e.getCard().getRank(false)== Card.Rank.DRAW_COLOR){
+                        game.nextPlayerDrawColor(color);
+                    }
                 }
             }
         }

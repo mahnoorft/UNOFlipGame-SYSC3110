@@ -163,27 +163,29 @@ public class UNOGameModel {
                 this.nextPlayerDrawCard(2);
                 this.skipTurn();
                 return "WILD draw 2";
-            case DRAW_COLOR:
-                
-                Card.Color color = darkWildDialog();
-                int i = 0;
-                while(true){
-                    i++;
-                    System.out.println(i);
-                    if(players.get(getNextPlayerIndex()).drawCard(deck).getColor(currentSideLight) == color){
-                        break;
-                    }
-                }
-
-                this.skipTurn();
-                System.out.println("WILD draw color; Player "+players.get(getNextPlayerIndex()).getName()+" draw " + i +" cards");
-                return "WILD draw color; Player "+players.get(getNextPlayerIndex()).getName()+" draw " + i +" cards";
             case FLIP:
                 currentSideLight = !currentSideLight;
                 return "FLIP";
         }
         return null;
     }
+
+    public String nextPlayerDrawColor(Card.Color color){
+        int i = 0;
+        while(true){
+            i++;
+            Card card = players.get(getNextPlayerIndex()).drawCard(deck);
+            System.out.println(card);
+            if(card.getColor(currentSideLight) == color){
+                break;
+            }
+        }
+
+        this.skipTurn();
+        System.out.println("WILD draw color; Player "+players.get(getNextPlayerIndex()).getName()+" draw " + i +" cards");
+        return "WILD draw color; Player "+players.get(getNextPlayerIndex()).getName()+" draw " + i +" cards";
+    }
+
     public Card.Color darkWildDialog(){
         // Create panel
         JPanel panel = new JPanel();
