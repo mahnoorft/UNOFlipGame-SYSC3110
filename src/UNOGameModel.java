@@ -186,57 +186,6 @@ public class UNOGameModel {
         return "WILD draw color; Player "+players.get(getNextPlayerIndex()).getName()+" draw " + i +" cards";
     }
 
-    public Card.Color darkWildDialog(){
-        // Create panel
-        JPanel panel = new JPanel();
-
-        //Create Radio Buttons
-        JRadioButton radioButton1 = new JRadioButton("PINK");
-        JRadioButton radioButton2 = new JRadioButton("TEAL");
-        JRadioButton radioButton3 = new JRadioButton("ORANGE");
-        JRadioButton radioButton4 = new JRadioButton("PURPLE");
-
-        //add colours to indicate colour
-        radioButton1.setBackground(Color.PINK);
-        radioButton2.setBackground(Color.CYAN);
-        radioButton3.setBackground(Color.ORANGE);
-        radioButton4.setBackground(Color.MAGENTA);
-
-        //Creating Button Group
-        ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(radioButton1);
-        buttonGroup.add(radioButton2);
-        buttonGroup.add(radioButton3);
-        buttonGroup.add(radioButton4);
-
-        //add buttons to panel
-        panel.add(radioButton1);
-        panel.add(radioButton2);
-        panel.add(radioButton3);
-        panel.add(radioButton4);
-
-        // Show the option pane with the panel containing radio buttons
-        int result = JOptionPane.showConfirmDialog(null, panel, "Select an Option", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        // Check the user's choice
-        if (result == JOptionPane.OK_OPTION) {
-            // Handle the selected option
-            if (radioButton1.isSelected()) {
-                return Card.Color.PINK;
-            } else if (radioButton2.isSelected()) {
-                return Card.Color.TEAL;
-            } else if (radioButton3.isSelected()) {
-                return Card.Color.ORANGE;
-            } else {
-                return Card.Color.PURPLE;
-            }
-        } else {
-            System.out.println("Dialog canceled");
-        }
-        return Card.Color.ORANGE;
-
-    }
-
     /** Return the index of the next player
      * @return index of the next player*/
     private int getNextPlayerIndex(){
