@@ -24,14 +24,14 @@ class DeckTest {
 
         //empty deck
         deck2 = new Deck();
-        for (int i = 0; i < 108; i++){
+        for (int i = 0; i < 120; i++){
             deck2.draw();
         }
     }
     @Test
     void testCreateDeck() {
         //checks if deck is initialized with the number of cards expected
-        assertEquals(108, deck.size());
+        assertEquals(120, deck.size());
 
         //for loop for all colors excluding WILD, for loop for ranks (1-9, and SKIP, REVERSE, DRAW1)
         for (int colors = 0; colors < 4; colors++){
@@ -84,7 +84,7 @@ class DeckTest {
         //1 - After one card is drawn, deck size should decrement by one
         Card drawnCard = deck.draw();
         assertNotNull(drawnCard);
-        assertEquals(107, deck.size());
+        assertEquals(119, deck.size());
 
         //2 - if deck is empty shouldn't return a card
         assertNull(deck2.draw());
@@ -93,10 +93,10 @@ class DeckTest {
     @Test
     void testSize() {
         //1 - checks if deck at the start is the number of cards expected
-        assertEquals(108, deck.size());
+        assertEquals(120, deck.size());
 
         //2 - after one card is draw deck size should decrement by one
         deck.draw();
-        assertEquals(107, deck.size());
+        assertEquals(119, deck.size());
     }
 }
