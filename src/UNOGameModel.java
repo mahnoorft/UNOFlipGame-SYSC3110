@@ -164,15 +164,7 @@ public class UNOGameModel {
                 this.skipTurn();
                 return "WILD draw 2";
             case DRAW_COLOR:
-                boolean done = false;
-                Card.Color chosen = topCard.getColor(currentSideLight);
-                while(!done){
-                    this.nextPlayerDrawCard(1);
-                    Card.Color drawn = getCurrentPlayer().getHand().getRecentDraw().getColor(currentSideLight);
-                    done = (chosen == drawn);
-                    System.out.println("chosen color:" + chosen);
-                    System.out.println("drew" + drawn);
-                }
+                
                 Card.Color color = darkWildDialog();
                 int i = 0;
                 while(true){
