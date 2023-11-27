@@ -461,14 +461,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      */
     @Override
     public void handlePlayCard(UNOGameEvent e) {
-        String specialCard = game.executeSpecialFunction(e.getCard());
-        updateStatusBar("played", (e.getCard().getColor(game.isCurrentSideLight()).toString()) + " " + (e.getCard().getRank(game.isCurrentSideLight()).toString()));
 
         displayPlayerHand();
         displayTopCard();
 
         String specialCard = game.executeSpecialFunction(e.getCard());
-        updateStatusBar(specialCard);
+        updateStatusBar("played", (e.getCard().getColor(game.isCurrentSideLight()).toString()) + " " + (e.getCard().getRank(game.isCurrentSideLight()).toString()));
+
 
 
         if(!game.getCurrentPlayer().isBot()) {
