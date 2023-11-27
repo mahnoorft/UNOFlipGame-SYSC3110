@@ -175,7 +175,7 @@ public class UNOGameModel {
         while(true){
             i++;
             Card card = players.get(getNextPlayerIndex()).drawCard(deck);
-            System.out.println(card);
+            System.out.println(card.toString2(currentSideLight));
             if(card.getColor(currentSideLight) == color){
                 break;
             }
