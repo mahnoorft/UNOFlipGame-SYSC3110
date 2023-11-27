@@ -32,12 +32,7 @@ public class Deck {
                 deck.add(new Card(Card.Rank.DRAW1, Card.Color.values()[colors],Card.Rank.DRAW5, Card.Color.values()[colors+4]));
                 deck.add(new Card(Card.Rank.FLIP, Card.Color.values()[colors],Card.Rank.FLIP, Card.Color.values()[colors+4]));
             }
-            /**
-             * vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-             */
-            for (int j =0; j<10; j++){
-                deck.add(new Card(Card.Rank.FLIP, Card.Color.values()[colors],Card.Rank.FLIP, Card.Color.values()[colors+4]));
-            }
+
         }
         //adding four Cards of Wild_light, WildDraw2, Wild_dark, and Wild_draw_color
         for(int i =19; i<=20; i++){
@@ -45,12 +40,7 @@ public class Deck {
                 deck.add(new Card(Card.Rank.WILD_LIGHT, Card.Color.WILD,Card.Rank.WILD_DARK, Card.Color.WILD));
                 deck.add(new Card(Card.Rank.DRAW2, Card.Color.WILD,Card.Rank.DRAW_COLOR, Card.Color.WILD));
             }
-            /**
-             * vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-             */
-            for (int j =0; j<10; j++){
-                deck.add(new Card(Card.Rank.DRAW2, Card.Color.WILD,Card.Rank.DRAW_COLOR, Card.Color.WILD));
-            }
+
         }
 
         this.shuffle();
