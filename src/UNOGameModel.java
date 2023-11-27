@@ -72,6 +72,7 @@ public class UNOGameModel {
     public void initializeGame(){
         deck = new Deck();
         pile = new ArrayList<Card>();
+        currentSideLight = true; // start game on light side
         // initialize all player names and distribute 7 cards to each
         for(int i = 0; i < players.size(); i++) {
             players.get(i).clearHand();
@@ -163,84 +164,27 @@ public class UNOGameModel {
                 this.nextPlayerDrawCard(2);
                 this.skipTurn();
                 return "WILD draw 2";
-            case DRAW_COLOR:
-                boolean done = false;
-                Card.Color chosen = topCard.getColor(currentSideLight);
-                while(!done){
-                    this.nextPlayerDrawCard(1);
-                    Card.Color drawn = getCurrentPlayer().getHand().getRecentDraw().getColor(currentSideLight);
-                    done = (chosen == drawn);
-                    System.out.println("chosen color:" + chosen);
-                    System.out.println("drew" + drawn);
-                }
-                Card.Color color = darkWildDialog();
-                int i = 0;
-                while(true){
-                    i++;
-                    System.out.println(i);
-                    if(players.get(getNextPlayerIndex()).drawCard(deck).getColor(currentSideLight) == color){
-                        break;
-                    }
-                }
-
-                this.skipTurn();
-                System.out.println("WILD draw color; Player "+players.get(getNextPlayerIndex()).getName()+" draw " + i +" cards");
-                return "WILD draw color; Player "+players.get(getNextPlayerIndex()).getName()+" draw " + i +" cards";
             case FLIP:
                 currentSideLight = !currentSideLight;
                 return "FLIP";
         }
         return null;
     }
-    public Card.Color darkWildDialog(){
-        // Create panel
-        JPanel panel = new JPanel();
 
-        //Create Radio Buttons
-        JRadioButton radioButton1 = new JRadioButton("PINK");
-        JRadioButton radioButton2 = new JRadioButton("TEAL");
-        JRadioButton radioButton3 = new JRadioButton("ORANGE");
-        JRadioButton radioButton4 = new JRadioButton("PURPLE");
-
-        //add colours to indicate colour
-        radioButton1.setBackground(Color.PINK);
-        radioButton2.setBackground(Color.CYAN);
-        radioButton3.setBackground(Color.ORANGE);
-        radioButton4.setBackground(Color.MAGENTA);
-
-        //Creating Button Group
-        ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(radioButton1);
-        buttonGroup.add(radioButton2);
-        buttonGroup.add(radioButton3);
-        buttonGroup.add(radioButton4);
-
-        //add buttons to panel
-        panel.add(radioButton1);
-        panel.add(radioButton2);
-        panel.add(radioButton3);
-        panel.add(radioButton4);
-
-        // Show the option pane with the panel containing radio buttons
-        int result = JOptionPane.showConfirmDialog(null, panel, "Select an Option", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        // Check the user's choice
-        if (result == JOptionPane.OK_OPTION) {
-            // Handle the selected option
-            if (radioButton1.isSelected()) {
-                return Card.Color.PINK;
-            } else if (radioButton2.isSelected()) {
-                return Card.Color.TEAL;
-            } else if (radioButton3.isSelected()) {
-                return Card.Color.ORANGE;
-            } else {
-                return Card.Color.PURPLE;
+    public String nextPlayerDrawColor(Card.Color color){
+        int i = 0;
+        while(true){
+            i++;
+            Card card = players.get(getNextPlayerIndex()).drawCard(deck);
+            System.out.println(card.toString2(currentSideLight));
+            if(card.getColor(currentSideLight) == color){
+                break;
             }
-        } else {
-            System.out.println("Dialog canceled");
         }
-        return Card.Color.ORANGE;
 
+        this.skipTurn();
+        System.out.println("WILD draw color; Player "+players.get(getNextPlayerIndex()).getName()+" draw " + i +" cards");
+        return "WILD draw color; Player "+players.get(getNextPlayerIndex()).getName()+" draw " + i +" cards";
     }
 
     /** Return the index of the next player
@@ -413,6 +357,9 @@ public class UNOGameModel {
             if(c.getColor(currentSideLight) == Card.Color.WILD){
                 Card.Color wildColour = bot.getBestColor(currentSideLight);
                 chooseNewColor(wildColour);
+                if(c.getRank(currentSideLight) == Card.Rank.DRAW_COLOR){
+                    nextPlayerDrawColor(wildColour);
+                }
                 for (UNOGameHandler view: view){
                     view.handleColourUpdate(new UNOGameEvent(this, wildColour));
                 }
@@ -433,6 +380,9 @@ public class UNOGameModel {
                 if(c.getColor(currentSideLight) == Card.Color.WILD){
                     Card.Color wildColour = bot.getBestColor(currentSideLight);
                     chooseNewColor(wildColour);
+                    if(c.getRank(currentSideLight) == Card.Rank.DRAW_COLOR){
+                        nextPlayerDrawColor(wildColour);
+                    }
                     for (UNOGameHandler view: view){
                         view.handleColourUpdate(new UNOGameEvent(this, wildColour));
                     }
