@@ -533,7 +533,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         // Reset UNO call button's state and color
         callUNOButton.setEnabled(false);
         UNOButtonColour();
-        statusBar.setText("");
+        //statusBar.setText("");
 
     }
     /**
