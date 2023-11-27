@@ -20,8 +20,10 @@ Once, the Main.java is run the user will be prompted to enter the number of play
 ## Features
 
 ### 1. UNO Flip Rules
-- Embrace the exciting world of UNO Flip, where cards have two faces with distinct effects (for Milestone 2 only Light is present).
+- Embrace the exciting world of UNO Flip, where cards have two faces with distinct effects.
 - Use Flip cards to change the game dynamics, keeping players on their toes.
+- Use the special WILD_DRAW_COLOR and DRAW_5 to make your opponent draw cards!
+- Use the special SKIP_EVERYONE to give yourself an extra turn. 
 
 ### 2. Interactive Multiplayer
 - Interactive GUI with buttons. Challenge friends or compete with players.
@@ -39,11 +41,12 @@ These features and use cases make UNO Flip Game an enjoyable and versatile gamin
 - The MVC components communicate together using the Observer pattern (implemented with UNOGameHandler Interface and UNOGameEvent) which allows the view to subscribe to the model and update itsself once changs to the Model are made.
 - The controller handles user input and calls the methods in the Model (UNOGameModel Class).
 
-### Future Deliverables
+### Milestone 3 Changes
+- Uno Flip Integration: We incorporated Uno Flip cards into the game, implementing the unique special cards (FLIP, WILD_DRAW_COLOR, DRAW5, SKIP_EVERYONE) and scoring mechanisms.
+- AI Player Capability: The game will now accommodate from 1-5 AI Players, with a playing strategy of choosing the valid card with the highest points to play.
+- Implemented a Status Bar to display the current playing status and print each player's moves.
 
-Milestone 3:
-- Uno Flip Integration: We will incorporate Uno Flip cards into the game, implementing their specific rules and scoring mechanisms.
-- AI Player Capability: The game will now accommodate an arbitrary number of "AI" players
+### Future Deliverables
 
 Milestone 4:
 - Redo capabilities: Players will now have the ability to redo/ undo their moves within the game.
@@ -51,7 +54,7 @@ Milestone 4:
 - Save/Load Features: We will implement a save and load system
 
 ## Author
-- Mahnoor Fatima 101192353
+- Mahnoor Fatima 101192353 & Areej Mahmoud 101218260
 
 ## Contributors
 Group 5:
