@@ -23,7 +23,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     JButton drawCardButton, endTurnButton, newRoundButton, callUNOButton;
     JLabel winRoundMessage,winRoundMessagePoints, playerNameField, statusBar;
     JMenuBar menuBar;
-    JMenu gameMenu;
+    JMenu gameMenu, editMenu;
+
+    JMenuItem undoItem, redoItem;
     ArrayList<JButton> cardButtonList;
 
 
@@ -42,6 +44,23 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         JMenuItem newGame = new JMenuItem("New Game");
         newGame.setActionCommand("newGame");
         gameMenu.add(newGame);
+
+        //initialize edit menu and Uno & redo menu items
+        editMenu = new JMenu("Edit");
+        menuBar.add(editMenu);
+
+        undoItem = new JMenuItem("Undo");
+        redoItem = new JMenuItem("Redo");
+
+        undoItem.addActionListener(controller);
+        undoItem.setActionCommand("Undo");
+
+        redoItem.addActionListener(controller);
+        redoItem.setActionCommand("Redo");
+
+        editMenu.add(undoItem);
+        editMenu.add(redoItem);
+
 
         //set up the content pane
         mainPanel = new JPanel(new BorderLayout());
@@ -67,6 +86,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         game.initializeGame();
         displayPlayerHand();
         displayTopCard();
+        System.out.println("Save in intialize before");
+        game.saveGameState();
+        System.out.println("Save in intialize after");
 
         //set status bar
         statusBar = new JLabel("Welcome to UNO...");
@@ -554,5 +576,18 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     @Override
     public void handleColourUpdate(UNOGameEvent e) {
         updateStatusBar("played", "WILD, colour: " + e.getColor());
+    }
+
+    @Override
+    public void handleUndo(UNOGameEvent e) {
+        System.out.println("reached handleUndo");
+        // Implement the undo functionality
+        // Call the appropriate method in the UNOGameModel
+        // update player's hand, top card
+        updateStatusBar("Undo move", "is called!");
+        displayPlayerHand();
+        displayTopCard();
+        JOptionPane.showMessageDialog(this, "Move is Undone!");
+
     }
 }
