@@ -480,6 +480,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         if (!game.getCurrentPlayer().isBot()) {
             drawCardDialog(card, canPlay, e);
         }
+
         updateStatusBar("drew", card.getColor(game.isCurrentSideLight()) + " " + card.getRank(game.isCurrentSideLight()));
 
 
@@ -610,9 +611,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         updateStatusBar("Undo move", "is called!");
         //game.updatePlayerHand(gameState.getTopCard());
 //        game.updateTopCard(gameState.topCard);
+
+        drawCardButton.setEnabled(true);
+
         displayTopCard();
         game.updatePlayerHand(game.prevTopCard);
         displayPlayerHand();
+        undoItem.setEnabled(false);
         JOptionPane.showMessageDialog(this, "Move is Undone!");
 
     }

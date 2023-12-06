@@ -85,4 +85,7 @@ public class Deck {
         }
         return sb.toString();
     }
+    public void addCard(Card card) {
+        deck.add(card);
+    }
 }

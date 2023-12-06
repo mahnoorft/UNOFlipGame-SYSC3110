@@ -33,6 +33,8 @@ public class UNOGameModel {
 
     Card prevTopCard;
 
+    Card lastDrawnCard;
+
 
     /** Constructor for class UNOGame*/
     public UNOGameModel(){
@@ -313,6 +315,8 @@ public class UNOGameModel {
             canPlayCard = 1;
             for (UNOGameHandler view: view){
                 view.handleDrawCard(new UNOGameEvent(this, c, true));
+                // Store the drawn card in a variable for potential undo
+                lastDrawnCard = c;
             }
             return true;
         }
@@ -353,6 +357,10 @@ public class UNOGameModel {
             UNOGameState gameState = gameStateStack.pop();
             restoreGameState(gameState);
             System.out.println("restored game state!!!");
+        }
+        if (lastDrawnCard != null) {
+            // Put the last drawn card back into the deck
+            deck.getDeck().add(lastDrawnCard);
         }
 
         for (UNOGameHandler view : view) {
