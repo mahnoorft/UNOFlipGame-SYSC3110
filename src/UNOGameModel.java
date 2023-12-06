@@ -27,7 +27,7 @@ public class UNOGameModel {
     int turnSkipped;
     List<UNOGameHandler> view;
 
-    private Stack<UNOGameState> gameStateStack;
+    Stack<UNOGameState> gameStateStack;
 
     private UNOGameFrame frame;
 
@@ -291,10 +291,8 @@ public class UNOGameModel {
             topCard = c;
             pile.add(c);
         }
-        System.out.println("Save in actionPlayCard before");
-        saveGameState();
-        System.out.println("Save in actionPlayCard after");
         canPlayCard = 0;
+
 
         for (UNOGameHandler view: view){
             view.handlePlayCard(new UNOGameEvent(this, c, false));
@@ -344,7 +342,6 @@ public class UNOGameModel {
         if(players.get(currentTurn).isBot()){
             botPlayCard();
         }
-
     }
 
     // New method to undo the last move
@@ -352,7 +349,7 @@ public class UNOGameModel {
         if (!gameStateStack.isEmpty()) {
             UNOGameState gameState = gameStateStack.pop();
             restoreGameState(gameState);
-            System.out.println("restored!!!");
+            System.out.println("restored game state!!!");
         }
 
         for (UNOGameHandler view : view) {

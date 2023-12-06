@@ -28,6 +28,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     JMenuItem undoItem, redoItem;
     ArrayList<JButton> cardButtonList;
 
+    UNOGameState gameState;
+
 
     public UNOGameFrame( UNOGameModel game) {
         super("UNO Flip Game!");
@@ -35,6 +37,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         this.cardButtonList = new ArrayList<>();
         controller = new UNOGameController(game, this);
         game.addUnoGameView(this);
+        gameState = new UNOGameState(game);
 
         //initialize menu and menu item
         menuBar = new JMenuBar();
@@ -86,9 +89,14 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         game.initializeGame();
         displayPlayerHand();
         displayTopCard();
+
         System.out.println("Save in intialize before");
         game.saveGameState();
         System.out.println("Save in intialize after");
+
+        undoItem.setEnabled(false);
+        System.out.println("undo is grayed out now");
+
 
         //set status bar
         statusBar = new JLabel("Welcome to UNO...");
@@ -469,7 +477,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         Card card = e.getCard();
         Boolean canPlay = e.canPlay();
         displayPlayerHand();
-        if(!game.getCurrentPlayer().isBot()){
+        if (!game.getCurrentPlayer().isBot()) {
             drawCardDialog(card, canPlay, e);
         }
         updateStatusBar("drew", card.getColor(game.isCurrentSideLight()) + " " + card.getRank(game.isCurrentSideLight()));
@@ -478,6 +486,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         //Cannot draw more cards
         drawCardButton.setEnabled(false);
         endTurnButton.setEnabled(true);
+
     }
 
     /**
@@ -490,10 +499,17 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         displayPlayerHand();
         displayTopCard();
+        undoItem.setEnabled(true);
 
         String specialCard = game.executeSpecialFunction(e.getCard());
         updateStatusBar("played", (e.getCard().getColor(game.isCurrentSideLight()).toString()) + " " + (e.getCard().getRank(game.isCurrentSideLight()).toString()));
 
+        if(game.getCurrentPlayer().isBot()) {
+            undoItem.setEnabled(false);
+
+        }else{
+            undoItem.setEnabled(true);
+        }
 
 
         if(!game.getCurrentPlayer().isBot()) {
@@ -534,6 +550,11 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         // Disable the draw card button and enable the end turn button
         drawCardButton.setEnabled(false);
         endTurnButton.setEnabled(true);
+
+//        if(!game.gameStateStack.isEmpty()) {
+//            game.gameStateStack.pop();
+//        }
+//        System.out.println("Exit out of while for emptying stack  in handle play card");
     }
 
     /**
@@ -552,6 +573,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         // Enable the draw card button and disable the end turn button
         drawCardButton.setEnabled(true);
         endTurnButton.setEnabled(false);
+        game.saveGameState();
+        System.out.println("game snapshot saved after turn");
+
         // Reset UNO call button's state and color
         callUNOButton.setEnabled(false);
         UNOButtonColour();
@@ -582,11 +606,12 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     public void handleUndo(UNOGameEvent e) {
         System.out.println("reached handleUndo");
         // Implement the undo functionality
-        // Call the appropriate method in the UNOGameModel
         // update player's hand, top card
         updateStatusBar("Undo move", "is called!");
-        displayPlayerHand();
+        //game.updatePlayerHand(gameState.getTopCard());
+//        game.updateTopCard(gameState.topCard);
         displayTopCard();
+        displayPlayerHand();
         JOptionPane.showMessageDialog(this, "Move is Undone!");
 
     }

@@ -6,7 +6,8 @@ public class UNOGameState {
     private ArrayList<Card> pile;
     private int currentTurn;
     private int turnDirection;
-    private Card topCard;
+    Card topCard;
+
     private boolean currentSideLight;
     private int canPlayCard;
     private int turnSkipped;
@@ -47,6 +48,7 @@ public class UNOGameState {
     public Card getTopCard() {
         return topCard;
     }
+
 
     public boolean isCurrentSideLight() {
         return currentSideLight;
