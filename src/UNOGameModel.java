@@ -1,4 +1,7 @@
 import javax.swing.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -234,6 +237,7 @@ public class UNOGameModel {
         canPlayCard = 2;
     }
 
+
     /**
      * Plays card at index
      * @param index the index of the card that is being played in the current player's hand
@@ -397,4 +401,52 @@ public class UNOGameModel {
         }
 
     }
+
+    /** Return a JSON object containing the attributes in this class
+     * @return JsonObject of the class attributes*/
+    public JsonObject saveAttributesToJson(){
+        //create players jsonArray
+        JsonArrayBuilder jsonPlayersArrayBuilder = Json.createArrayBuilder();
+
+        for (int i = 0; i < this.players.size() ; i++){
+            JsonObject jsonObject = this.players.get(i).saveAttributesToJson();
+            jsonPlayersArrayBuilder.add(i,jsonObject);
+        }
+        //create pile jsonArray
+        JsonArrayBuilder jsonPileArrayBuilder = Json.createArrayBuilder();
+
+        for (int i = 0; i < this.pile.size() ; i++){
+            JsonObject jsonObject = this.pile.get(i).saveAttributesToJson();
+            jsonPileArrayBuilder.add(i,jsonObject);
+        }
+
+        // Build the JSON arrays
+        JsonArray jsonPlayersArrayList = jsonPlayersArrayBuilder.build();
+        JsonArray jsonPileArrayList = jsonPileArrayBuilder.build();
+
+        //save all attributes to a json object
+        JsonObject jsonObject = Json.createObjectBuilder()
+                .add("players", jsonPlayersArrayList)
+                .add("deck", deck.saveAttributesToJson())
+                .add("pile", jsonPileArrayList)
+                .add("currentTurn", currentTurn)
+                .add("turnDirection", turnDirection)
+                .add("topCard", topCard.saveAttributesToJson())
+                .add("currentSideLight", currentSideLight)
+                .add("canPlayCard", canPlayCard)
+                .add("turnSkipped", turnSkipped)
+                .build();
+
+        return jsonObject;
+    }
+
+    /**Saves JSON object to a new JSON file called fileName
+     * @param fileName name of the file to save JSON*/
+    public void saveJsonObjectsToFile(String fileName) throws IOException {
+        try(PrintWriter writer = new PrintWriter(new FileWriter(fileName))){
+            JsonObject jsonObject = saveAttributesToJson();
+            writer.println(jsonObject);
+        }
+    }
+
 }
