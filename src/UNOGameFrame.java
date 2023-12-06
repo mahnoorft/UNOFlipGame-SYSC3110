@@ -611,6 +611,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         //game.updatePlayerHand(gameState.getTopCard());
 //        game.updateTopCard(gameState.topCard);
         displayTopCard();
+        game.updatePlayerHand(game.prevTopCard);
         displayPlayerHand();
         JOptionPane.showMessageDialog(this, "Move is Undone!");
 

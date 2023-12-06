@@ -31,6 +31,8 @@ public class UNOGameModel {
 
     private UNOGameFrame frame;
 
+    Card prevTopCard;
+
 
     /** Constructor for class UNOGame*/
     public UNOGameModel(){
@@ -347,6 +349,7 @@ public class UNOGameModel {
     // New method to undo the last move
     public void actionUndo() {
         if (!gameStateStack.isEmpty()) {
+            prevTopCard = topCard;
             UNOGameState gameState = gameStateStack.pop();
             restoreGameState(gameState);
             System.out.println("restored game state!!!");
