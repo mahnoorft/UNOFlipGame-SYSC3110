@@ -1,4 +1,8 @@
-import java.util.*;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import java.util.ArrayList;
 
 /** This class represents the cards in an UNO player's hands.
  * @author Areej Mahmoud 101218260
@@ -41,10 +45,6 @@ public class Hand{
     public ArrayList<Card> getCards() {
         return this.cards;
     }
-    /** @return an ArrayList of cards in the Hand */
-    public Card getRecentDraw() {
-        return this.cards.get(cards.size()-1);
-    }
     /** @return true if only one card is left in the hand.*/
     public boolean isUNO(){
         return cards.size() == 1;
@@ -61,6 +61,25 @@ public class Hand{
             s.append(" "+ cards.get(i).toString() + " \n");
         }
         return s.toString();
+    }
+
+    /** Return a JSON object containing the attributes in this class
+     * @return JsonObject of the class attributes*/
+    public JsonObject saveAttributesToJson(){
+        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+
+        for (int i = 0; i < this.cards.size() ; i++){
+            JsonObject jsonObject = this.cards.get(i).saveAttributesToJson();
+            jsonArrayBuilder.add(i,jsonObject);
+        }
+        // Build the JSON array
+        JsonArray jsonArrayList = jsonArrayBuilder.build();
+
+        JsonObject jsonObject = Json.createObjectBuilder()
+                .add("cards", jsonArrayList)
+                .build();
+
+        return jsonObject;
     }
 
 }

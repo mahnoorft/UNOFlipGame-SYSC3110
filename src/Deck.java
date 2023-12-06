@@ -1,3 +1,7 @@
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import java.util.*;
 
 /**
@@ -16,9 +20,6 @@ public class Deck {
     /**initialize the number of cards according to UNO rules and add them to the deck*/
     public void createDeck() {
         for (int colors = 0; colors < 4; colors++){
-
-            //adding one rank 0
-           // deck.add(new Card(Card.Rank.ZERO, Card.Color.values()[colors],Card.Rank.ZERO, Card.Color.values()[colors+4]));
 
             //adding two Cards of ranks 1-9
             for(int i =1; i<10; i++){
@@ -84,5 +85,23 @@ public class Deck {
             sb.append(card.toString()).append(", ");
         }
         return sb.toString();
+    }
+    /** Return a JSON object containing the attributes in this class
+     * @return JsonObject of the class attributes*/
+    public JsonObject saveAttributesToJson(){
+        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+
+        for (int i = 0; i < this.deck.size() ; i++){
+            JsonObject jsonObject = this.deck.get(i).saveAttributesToJson();
+            jsonArrayBuilder.add(i,jsonObject);
+        }
+        // Build the JSON array
+        JsonArray jsonArrayList = jsonArrayBuilder.build();
+
+        JsonObject jsonObject = Json.createObjectBuilder()
+                .add("deck", jsonArrayList)
+                .build();
+
+        return jsonObject;
     }
 }

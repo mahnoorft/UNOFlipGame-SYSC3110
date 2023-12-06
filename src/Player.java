@@ -1,3 +1,5 @@
+import javax.json.Json;
+import javax.json.JsonObject;
 
 /**
  * THis class represents a player in an UNO Fip Game
@@ -86,6 +88,18 @@ public class  Player {
 
     public boolean isBot(){
         return isBot;
+    }
+
+    /** Return a JSON object containing the attributes in this class
+     * @return JsonObject of the class attributes*/
+    public JsonObject saveAttributesToJson() {
+        JsonObject jsonObject = Json.createObjectBuilder()
+                .add("name", name)
+                .add("hand", hand.saveAttributesToJson())
+                .add("score", score)
+                .add("isBot", isBot)
+                .build();
+        return jsonObject;
     }
 
 }

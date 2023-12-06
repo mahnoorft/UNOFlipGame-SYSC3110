@@ -1,3 +1,5 @@
+import javax.json.Json;
+import javax.json.JsonObject;
 /**
  * This Class represents a playing card in the UNO Flip game deck
  * @author Eric Cui 101237617
@@ -153,6 +155,18 @@ public class Card {
     public String getImagePath(boolean isSideLight){
         return IMAGES_FOLDER_PATH + this.getColor(isSideLight).name() +
                 "_"+ this.getRank(isSideLight).name() + ".png";
+    }
+
+    /** Return a JSON object containing the attributes in this class
+     * @return JsonObject of the class attributes*/
+    public JsonObject saveAttributesToJson() {
+        JsonObject jsonObject = Json.createObjectBuilder()
+                .add("rankLight", rankLight.ordinal())
+                .add("colorLight", colorLight.ordinal())
+                .add("rankDark", rankDark.ordinal())
+                .add("colorDark", colorDark.ordinal())
+                .build();
+        return jsonObject;
     }
 
 }

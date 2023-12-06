@@ -27,8 +27,6 @@ public class UNOGameModel {
     private int turnSkipped;
     List<UNOGameHandler> view;
 
-    private UNOGameFrame frame;
-
 
     /** Constructor for class UNOGame*/
     public UNOGameModel(){
