@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * The UNOGameController class is the controller in the Model-View-Controller (MVC) architecture for a UNO game.
@@ -61,6 +62,13 @@ public class UNOGameController implements ActionListener {
             view.dispose();
             UNOGameModel game = new UNOGameModel();
             UNOGameFrame unoGameFrame = new UNOGameFrame(game);
+        } else if (command.equals("save")) {
+            // save the current state of the game in a JSON file
+            try {
+                model.saveJsonObjectsToFile("saveUNO.json");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         } else{
             // If the command is a number, parse it and call model's actionPlayCard method
             int index = Integer.parseInt(command);

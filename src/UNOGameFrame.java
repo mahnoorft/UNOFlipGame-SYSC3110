@@ -41,7 +41,10 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         menuBar.add(gameMenu);
         JMenuItem newGame = new JMenuItem("New Game");
         newGame.setActionCommand("newGame");
+        JMenuItem saveGame = new JMenuItem("Save Game");
+        saveGame.setActionCommand("save");
         gameMenu.add(newGame);
+        gameMenu.add(saveGame);
 
         //set up the content pane
         mainPanel = new JPanel(new BorderLayout());
@@ -118,6 +121,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         callUNOButton.addActionListener(controller);
         callUNOButton.setActionCommand("call");
         newGame.addActionListener(controller);
+        saveGame.addActionListener(controller);
 
         //set up round winner panel plus displayed message
         winRoundPanel = new JPanel(null);
