@@ -2,6 +2,9 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /** This class represents the cards in an UNO player's hands.
@@ -80,6 +83,13 @@ public class Hand{
                 .build();
 
         return jsonObject;
+    }
+
+    public void saveJsonObjectsToFile(String fileName) throws IOException {
+        try(PrintWriter writer = new PrintWriter(new FileWriter(fileName))){
+            JsonObject jsonObject = saveAttributesToJson();
+            writer.println(jsonObject);
+        }
     }
 
 }

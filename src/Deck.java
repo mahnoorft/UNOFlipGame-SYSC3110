@@ -2,6 +2,9 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -103,5 +106,11 @@ public class Deck {
                 .build();
 
         return jsonObject;
+    }
+    public void saveJsonObjectsToFile(String fileName) throws IOException {
+        try(PrintWriter writer = new PrintWriter(new FileWriter(fileName))){
+            JsonObject jsonObject = saveAttributesToJson();
+            writer.println(jsonObject);
+        }
     }
 }

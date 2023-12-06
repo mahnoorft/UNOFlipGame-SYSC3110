@@ -1,5 +1,9 @@
 import javax.json.Json;
 import javax.json.JsonObject;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /**
  * This Class represents a playing card in the UNO Flip game deck
  * @author Eric Cui 101237617
@@ -161,12 +165,17 @@ public class Card {
      * @return JsonObject of the class attributes*/
     public JsonObject saveAttributesToJson() {
         JsonObject jsonObject = Json.createObjectBuilder()
-                .add("rankLight", rankLight.ordinal())
-                .add("colorLight", colorLight.ordinal())
-                .add("rankDark", rankDark.ordinal())
-                .add("colorDark", colorDark.ordinal())
+                .add("rankLight", rankLight.toString())
+                .add("colorLight", colorLight.toString())
+                .add("rankDark", rankDark.toString())
+                .add("colorDark", colorDark.toString())
                 .build();
         return jsonObject;
     }
-
+    public void saveJsonObjectsToFile(String fileName) throws IOException {
+        try(PrintWriter writer = new PrintWriter(new FileWriter(fileName))){
+            JsonObject jsonObject = saveAttributesToJson();
+            writer.println(jsonObject);
+        }
+    }
 }

@@ -2,6 +2,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,5 +99,9 @@ class DeckTest {
         //2 - after one card is draw deck size should decrement by one
         deck.draw();
         assertEquals(119, deck.size());
+    }
+    @org.junit.jupiter.api.Test
+    public void testSaveAttributesToJSON() throws IOException {
+        deck.saveJsonObjectsToFile("testJson.json");
     }
 }

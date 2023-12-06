@@ -1,5 +1,8 @@
 import javax.json.Json;
 import javax.json.JsonObject;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * THis class represents a player in an UNO Fip Game
@@ -101,5 +104,10 @@ public class  Player {
                 .build();
         return jsonObject;
     }
-
+    public void saveJsonObjectsToFile(String fileName) throws IOException {
+        try(PrintWriter writer = new PrintWriter(new FileWriter(fileName))){
+            JsonObject jsonObject = saveAttributesToJson();
+            writer.println(jsonObject);
+        }
+    }
 }

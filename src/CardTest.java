@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
+
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 /**This Class is to test Card class for the UNO Flip game
  * @author Eric Cui 101237617*/
@@ -68,5 +71,9 @@ public class CardTest {
         assertEquals("PINK_NINE",card5.toString2(false));
     }
 
-
+    @org.junit.jupiter.api.Test
+    public void testSaveAttributesToJSON() throws IOException {
+        card1 = new Card(Card.Rank.ONE, Card.Color.RED, Card.Rank.ONE, Card.Color.ORANGE);
+        card1.saveJsonObjectsToFile("testJson.json");
+    }
 }

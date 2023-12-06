@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
+
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -92,5 +95,12 @@ class PlayerTest {
         // Assert that the player's hand is empty after clearing
         assertEquals(0, finalHandSize);
 
+    }
+    @org.junit.jupiter.api.Test
+    public void testSaveAttributesToJSON() throws IOException {
+        Card card = new Card(Card.Rank.THREE, Card.Color.YELLOW, Card.Rank.THREE, Card.Color.PURPLE);
+        player.getHand().addCard(card);
+
+        player.saveJsonObjectsToFile("testJson.json");
     }
 }

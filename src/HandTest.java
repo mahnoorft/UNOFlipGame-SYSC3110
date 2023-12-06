@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
+
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -94,5 +97,13 @@ public class HandTest {
         hand.addCard(c1);
         assertEquals(1,hand.getCards().size());
         assertFalse(hand.isEmpty());
+    }
+    @org.junit.jupiter.api.Test
+    public void testSaveAttributesToJSON() throws IOException {
+        hand.addCard(c1);
+        hand.addCard(c2);
+        hand.addCard(c3);
+
+        hand.saveJsonObjectsToFile("testJson.json");
     }
 }
