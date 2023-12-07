@@ -30,6 +30,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     UNOGameState gameState;
 
+    Boolean isCardPlayed;
+    Boolean isCardDrawn;
 
     public UNOGameFrame( UNOGameModel game) {
         super("UNO Flip Game!");
@@ -38,6 +40,8 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         controller = new UNOGameController(game, this);
         game.addUnoGameView(this);
         gameState = new UNOGameState(game);
+        isCardPlayed = false;
+        isCardDrawn = false;
 
         //initialize menu and menu item
         menuBar = new JMenuBar();
@@ -96,6 +100,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         System.out.println("Save in intialize before");
         game.saveGameState();
         System.out.println("Save in intialize after");
+
 
         undoItem.setEnabled(false);
         System.out.println("undo is grayed out now");
@@ -478,9 +483,11 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      */
     @Override
     public void handleDrawCard(UNOGameEvent e) {
+        undoItem.setEnabled(true);
         Card card = e.getCard();
         Boolean canPlay = e.canPlay();
         displayPlayerHand();
+        isCardDrawn = true;
         if (!game.getCurrentPlayer().isBot()) {
             drawCardDialog(card, canPlay, e);
         }
@@ -509,6 +516,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         String specialCard = game.executeSpecialFunction(e.getCard());
         updateStatusBar("played", (e.getCard().getColor(game.isCurrentSideLight()).toString()) + " " + (e.getCard().getRank(game.isCurrentSideLight()).toString()));
 
+        isCardPlayed = true;
         if(game.getCurrentPlayer().isBot()) {
             undoItem.setEnabled(false);
 
@@ -556,10 +564,6 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         drawCardButton.setEnabled(false);
         endTurnButton.setEnabled(true);
 
-//        if(!game.gameStateStack.isEmpty()) {
-//            game.gameStateStack.pop();
-//        }
-//        System.out.println("Exit out of while for emptying stack  in handle play card");
     }
 
     /**
@@ -610,19 +614,105 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     @Override
     public void handleUndo(UNOGameEvent e) {
         System.out.println("reached handleUndo");
-        // Implement the undo functionality
-        // update player's hand, top card
         updateStatusBar("Undo move", "is called!");
-        //game.updatePlayerHand(gameState.getTopCard());
-//        game.updateTopCard(gameState.topCard);
-
         drawCardButton.setEnabled(true);
 
-        displayTopCard();
-        game.updatePlayerHand(game.prevTopCard);
-        displayPlayerHand();
+        //case1: card is drawn but not played
+            // leave top card as is
+            // add last card in hand back to deck
+            // remove last card from hand
+        // case 2: card is drawn and played
+            //change top card to prev
+            // add top card back to deck
+        // case 3: plays card from hand
+            // put current topCard back to currentPlayer's hand
+            // change top card to prev
+
+        if(game.lastCard == game.prevTopCard){
+            System.out.println("case1");
+            displayTopCard();
+            game.removeCardFromHand(game.getCurrentPlayer().getHand().getCards().size()-1);
+            System.out.println("Display is updated after card is drawn+ played");
+        }else if(game.lastCard != game.prevTopCard && !(isCardPlayed)){
+            System.out.println("case2");
+            game.removeCardFromHand(game.getCurrentPlayer().getHand().getCards().size()-1);
+            displayPlayerHand();
+        }else{
+            System.out.println("case3");
+            displayTopCard();
+            game.updatePlayerHand(game.prevTopCard);
+            System.out.println("Display is updated after card is drawn2");
+            displayPlayerHand();
+        }
+
         undoItem.setEnabled(false);
         JOptionPane.showMessageDialog(this, "Move is Undone!");
 
+    }
+
+    /**
+     * // case 1: card is drawn and played
+             //change top card to prev
+             // add top card back to deck
+     */
+    @Override
+    public void handleUndoCaseOne(UNOGameEvent e) {
+        System.out.println("Reached handleUndo case1");
+        updateStatusBar("Called", "Undo!");
+        drawCardButton.setEnabled(true);
+
+        displayTopCard();
+       // game.removeCardFromHand(game.getCurrentPlayer().getHand().getCards().size()-1);
+        // System.out.println("Display is updated after card is drawn+ played");
+
+        undoItem.setEnabled(false);
+        JOptionPane.showMessageDialog(this, "Move is Undone!");
+
+    }
+
+    /**
+     *  // case 2: card is drawn and not played (card is placed in current player's hand
+     *          // leave top card as is
+     *          // add last card in hand back to deck
+     *           // remove last card from hand
+     */
+    @Override
+    public void handleUndoCaseTwo(UNOGameEvent e) {
+
+        System.out.println("reached handleUndo case2");
+        updateStatusBar("called", "Undo!");
+        drawCardButton.setEnabled(true);
+
+        displayTopCard();
+        //game.removeCardFromHand(game.getCurrentPlayer().getHand().getCards().size()-1);
+        displayPlayerHand();
+
+        undoItem.setEnabled(false);
+        JOptionPane.showMessageDialog(this, "Move is Undone!");
+
+    }
+
+    @Override
+    public void handleUndoCaseThree(UNOGameEvent e) {
+        // case 3: plays card from hand
+        // put current topCard back to currentPlayer's hand
+        // change top card to prev
+        System.out.println("reached handleUndo case1");
+        updateStatusBar("Undo move", "is called!");
+        drawCardButton.setEnabled(true);
+
+        System.out.println("case3");
+        displayTopCard();
+        game.updatePlayerHand(game.prevTopCard);
+        System.out.println("Display is updated after card is drawn2");
+        displayPlayerHand();
+
+        undoItem.setEnabled(false);
+        JOptionPane.showMessageDialog(this, "Move is Undone!");
+
+    }
+    @Override
+    public void handleEnableUndo(UNOGameEvent e){
+        undoItem.setEnabled(true);
     }
 }

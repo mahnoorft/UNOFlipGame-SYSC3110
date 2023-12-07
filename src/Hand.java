@@ -45,6 +45,10 @@ public class Hand{
         return points;
     }
     /** @return an ArrayList of cards in the Hand */
+    public Card getRecentDraw() {
+        return this.cards.get(cards.size()-1);
+    }
+    /** @return an ArrayList of cards in the Hand */
     public ArrayList<Card> getCards() {
         return this.cards;
     }
@@ -52,6 +56,7 @@ public class Hand{
     public boolean isUNO(){
         return cards.size() == 1;
     }
+
     /** @return true if there are no cards in the hand.*/
     public boolean isEmpty(){
         return cards.isEmpty();
@@ -65,6 +70,7 @@ public class Hand{
         }
         return s.toString();
     }
+
 
     /** Return a JSON object containing the attributes in this class
      * @return JsonObject of the class attributes*/
@@ -86,10 +92,19 @@ public class Hand{
     }
 
     public void saveJsonObjectsToFile(String fileName) throws IOException {
-        try(PrintWriter writer = new PrintWriter(new FileWriter(fileName))){
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
             JsonObject jsonObject = saveAttributesToJson();
             writer.println(jsonObject);
         }
     }
+
+    public Card getLastCard() {
+        if (!cards.isEmpty()) {
+            return cards.get(cards.size() - 1);
+        }
+        return null;
+
+    }
+
 
 }

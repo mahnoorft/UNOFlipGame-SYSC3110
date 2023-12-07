@@ -13,6 +13,8 @@ import java.util.*;
  */
 public class Deck {
     private List<Card> deck;
+    
+
 
     /**Constructor for Class Deck*/
     public Deck() {
@@ -90,6 +92,7 @@ public class Deck {
         return sb.toString();
     }
 
+
     /** Return a JSON object containing the attributes in this class
      * @return JsonObject of the class attributes*/
     public JsonObject saveAttributesToJson(){
@@ -113,5 +116,11 @@ public class Deck {
             JsonObject jsonObject = saveAttributesToJson();
             writer.println(jsonObject);
         }
+    }
+
+
+        public void putBackCard(Card card1) {
+        deck.add(card1);
+
     }
 }
