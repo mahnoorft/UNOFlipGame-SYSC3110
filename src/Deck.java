@@ -85,7 +85,7 @@ public class Deck {
         }
         return sb.toString();
     }
-    public void addCard(Card card) {
+    public void putBackCard(Card card) {
         deck.add(card);
     }
 }
