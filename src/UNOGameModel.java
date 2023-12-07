@@ -392,13 +392,12 @@ public class UNOGameModel {
                 prevTopCard = topCard;
                 System.out.println("this is prevTop card which equals drawnCard" + prevTopCard);
                 deck.putBackCard(prevTopCard);
-                getCurrentPlayer().getHand().removeCard(getCurrentPlayer().getHand().getCards().size()-1);
+                //getCurrentPlayer().getHand().removeCard(getCurrentPlayer().getHand().getCards().size()-1);
                 UNOGameState gameState = gameStateStack.pop();
                 System.out.println("Popped: " + gameState);
                 restoreGameState(gameState);
                 System.out.println("case1, drawn and played");
 
-                saveGameState();
 
                 for (UNOGameHandler view : view) {
                     view.handleUndoCaseOne(new UNOGameEvent(this));
@@ -414,7 +413,6 @@ public class UNOGameModel {
                 restoreGameState(gameState);
                 System.out.println("case 2 drawn but not played");
 
-                saveGameState();
 
                 for (UNOGameHandler view : view) {
                     view.handleUndoCaseTwo(new UNOGameEvent(this));
@@ -428,7 +426,7 @@ public class UNOGameModel {
                 restoreGameState(gameState);
                 System.out.println("restored game state!!! Normal case");
 
-                saveGameState();
+
 
                 for (UNOGameHandler view : view) {
                     view.handleUndoCaseThree(new UNOGameEvent(this));
@@ -436,7 +434,7 @@ public class UNOGameModel {
                 }
             }
 
-
+            saveGameState();
 //            for (UNOGameHandler view : view) {
 //                // Update the UI to reflect the restored game state
 //                // Provide visual feedback for successful undo

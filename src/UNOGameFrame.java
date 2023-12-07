@@ -646,38 +646,41 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     }
 
+    /**
+     * // case 1: card is drawn and played
+             //change top card to prev
+             // add top card back to deck
+     */
     @Override
     public void handleUndoCaseOne(UNOGameEvent e) {
-        System.out.println("reached handleUndo case1");
-        updateStatusBar("Undo move", "is called!");
+        System.out.println("Reached handleUndo case1");
+        updateStatusBar("Called", "Undo!");
         drawCardButton.setEnabled(true);
 
-        //case1: card is drawn but not played
-        // leave top card as is
-        // add last card in hand back to deck
-        // remove last card from hand
-
-        System.out.println("case1");
         displayTopCard();
-        game.removeCardFromHand(game.getCurrentPlayer().getHand().getCards().size()-1);
-        System.out.println("Display is updated after card is drawn+ played");
+       // game.removeCardFromHand(game.getCurrentPlayer().getHand().getCards().size()-1);
+        // System.out.println("Display is updated after card is drawn+ played");
 
         undoItem.setEnabled(false);
         JOptionPane.showMessageDialog(this, "Move is Undone!");
 
     }
 
+    /**
+     *  // case 2: card is drawn and not played (card is placed in current player's hand
+     *          // leave top card as is
+     *          // add last card in hand back to deck
+     *           // remove last card from hand
+     */
     @Override
     public void handleUndoCaseTwo(UNOGameEvent e) {
-        // case 2: card is drawn and played
-        //change top card to prev
-        // add top card back to deck
-        System.out.println("reached handleUndo case1");
-        updateStatusBar("Undo move", "is called!");
+
+        System.out.println("reached handleUndo case2");
+        updateStatusBar("called", "Undo!");
         drawCardButton.setEnabled(true);
 
-        System.out.println("case2");
-        game.removeCardFromHand(game.getCurrentPlayer().getHand().getCards().size()-1);
+        displayTopCard();
+        //game.removeCardFromHand(game.getCurrentPlayer().getHand().getCards().size()-1);
         displayPlayerHand();
 
         undoItem.setEnabled(false);
