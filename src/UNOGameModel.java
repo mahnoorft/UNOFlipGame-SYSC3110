@@ -20,17 +20,24 @@ import javax.json.*;
  */
 
 public class UNOGameModel {
-    private ArrayList<Player> players;
-    private Deck deck;
-    private ArrayList<Card> pile;
-    private int currentTurn;
-    private int turnDirection;
+    ArrayList<Player> players;
+    Deck deck;
+    ArrayList<Card> pile;
+    int currentTurn;
+    int turnDirection;
     public Card topCard;
     private boolean currentSideLight;
-    private int canPlayCard;
-    private int turnSkipped;
+    int canPlayCard;
+    int turnSkipped;
     List<UNOGameHandler> view;
 
+    Stack<UNOGameState> gameStateStack;
+
+    private UNOGameFrame frame;
+
+    Card prevTopCard;
+
+    Card lastDrawnCard;
 
     /** Constructor for class UNOGame*/
     public UNOGameModel(){
@@ -42,6 +49,7 @@ public class UNOGameModel {
         this.topCard = null;
         this.currentSideLight = true;
         this.view = new ArrayList<UNOGameHandler>();
+        this.gameStateStack = new Stack<>();
         createPlayers();
         canPlayCard = 2;
         turnSkipped = 0;
@@ -238,6 +246,26 @@ public class UNOGameModel {
     }
 
 
+
+    // New method to restore the game state
+    private void restoreGameState(UNOGameState gameState) {
+        players = gameState.getPlayers();
+        deck = gameState.getDeck();
+        pile = gameState.getPile();
+        currentTurn = gameState.getCurrentTurn();
+        turnDirection = gameState.getTurnDirection();
+        topCard = gameState.getTopCard();
+        currentSideLight = gameState.isCurrentSideLight();
+        canPlayCard = gameState.getCanPlayCard();
+        turnSkipped = gameState.getTurnSkipped();
+    }
+
+    // New method to save the current game state to the stack
+    void saveGameState() {
+        UNOGameState gameState = new UNOGameState(this);
+        gameStateStack.push(gameState);
+    }
+
     /**
      * Plays card at index
      * @param index the index of the card that is being played in the current player's hand
@@ -273,6 +301,7 @@ public class UNOGameModel {
         }
         canPlayCard = 0;
 
+
         for (UNOGameHandler view: view){
             view.handlePlayCard(new UNOGameEvent(this, c, false));
         }
@@ -290,6 +319,8 @@ public class UNOGameModel {
             canPlayCard = 1;
             for (UNOGameHandler view: view){
                 view.handleDrawCard(new UNOGameEvent(this, c, true));
+                // Store the drawn card in a variable for potential undo
+                lastDrawnCard = c;
             }
             return true;
         }
@@ -321,7 +352,27 @@ public class UNOGameModel {
         if(players.get(currentTurn).isBot()){
             botPlayCard();
         }
+    }
 
+    // New method to undo the last move
+    public void actionUndo() {
+        if (!gameStateStack.isEmpty()) {
+            prevTopCard = topCard;
+            UNOGameState gameState = gameStateStack.pop();
+            restoreGameState(gameState);
+            System.out.println("restored game state!!!");
+        }
+        if (lastDrawnCard != null) {
+            // Put the last drawn card back into the deck
+            deck.getDeck().add(lastDrawnCard);
+        }
+
+        for (UNOGameHandler view : view) {
+            // Update the UI to reflect the restored game state
+            // Provide visual feedback for successful undo
+            view.handleUndo(new UNOGameEvent(this));
+            System.out.println("called handler in view");
+        }
     }
 
     /** Apply the penalty for the player who did not call UNO*/

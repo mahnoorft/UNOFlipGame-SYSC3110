@@ -10,4 +10,5 @@ public interface UNOGameHandler {
     public void handleCallUNO(UNOGameEvent e);
     public void handleColourUpdate(UNOGameEvent e);
 
+    public void handleUndo(UNOGameEvent e);
 }

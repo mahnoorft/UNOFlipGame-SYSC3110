@@ -43,11 +43,13 @@ public class UNOGameController implements ActionListener {
         //action commands for when the button is pressed
         //if buttons are clicked, call model class with action buttons
         String command = e.getActionCommand();
-        if (command.equals("draw")){
+        if (command.equals("draw")) {
             model.actionDrawCard();
-        }
-        else if(command.equals("end")){
+        } else if (command.equals("end")) {
             model.actionEndTurn();
+        } else if (command.equals("Undo")){
+            model.actionUndo();
+            System.out.println("controller called actionUndo");
         }
         else if(command.equals("call")){
             // Call the view's handleCallUNO method with a new UNOGameEvent

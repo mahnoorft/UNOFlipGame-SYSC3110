@@ -89,6 +89,7 @@ public class Deck {
         }
         return sb.toString();
     }
+
     /** Return a JSON object containing the attributes in this class
      * @return JsonObject of the class attributes*/
     public JsonObject saveAttributesToJson(){
@@ -108,7 +109,7 @@ public class Deck {
         return jsonObject;
     }
     public void saveJsonObjectsToFile(String fileName) throws IOException {
-        try(PrintWriter writer = new PrintWriter(new FileWriter(fileName))){
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
             JsonObject jsonObject = saveAttributesToJson();
             writer.println(jsonObject);
         }
