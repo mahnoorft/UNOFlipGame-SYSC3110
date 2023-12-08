@@ -94,12 +94,22 @@ public class  Player {
     }
 
     public Player cloneClass(){
-        Player player = new Player(name,isBot);
-        player.incrementScore(score);
-        for(Card card : this.getHand().getCards()){
-            player.getHand().addCard(card);
+
+        if(isBot){
+            PlayerAI player = new PlayerAI(name,isBot);
+            player.incrementScore(score);
+            for(Card card : this.getHand().getCards()){
+                player.getHand().addCard(card);
+            }
+            return player;
+        }else{
+            Player player = new Player(name,isBot);
+            player.incrementScore(score);
+            for(Card card : this.getHand().getCards()){
+                player.getHand().addCard(card);
+            }
+            return player;
         }
-        return player;
 
     }
 
