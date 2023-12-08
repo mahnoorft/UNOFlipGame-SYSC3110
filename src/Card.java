@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import java.io.FileWriter;
@@ -13,9 +15,13 @@ public class Card {
 
     public enum Rank{ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, REVERSE, SKIP, DRAW1, DRAW2, SKIP_All, DRAW5, DRAW_COLOR, FLIP, WILD_LIGHT, WILD_DARK}
     public enum Color{RED, YELLOW, GREEN, BLUE, ORANGE, PURPLE, TEAL, PINK, WILD}
+    @JsonProperty("rankLight")
     public Rank rankLight;
+    @JsonProperty("colorLight")
     public Color colorLight;
+    @JsonProperty("rankDark")
     public Rank rankDark;
+    @JsonProperty("colorDark")
     public Color colorDark;
     public int points;
     private int pointsDark;
@@ -28,6 +34,7 @@ public class Card {
         this.colorDark = colorDark;
         assignPoints();
     }
+    public Card(){};
 
     /**
      * Assigns the points associated with this card according to UNO Flip rules

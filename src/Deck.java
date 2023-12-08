@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -12,6 +14,7 @@ import java.util.*;
  * @author Mahnoor Fatima 101192353
  */
 public class Deck {
+    @JsonProperty("deck")
     private List<Card> deck;
 
     /**Constructor for Class Deck*/

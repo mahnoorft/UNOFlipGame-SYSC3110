@@ -1,3 +1,7 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import java.io.FileWriter;
@@ -9,18 +13,27 @@ import java.io.PrintWriter;
  * @author Rama Alkhouli 101198025
  */
 public class  Player {
-
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("hand")
     protected Hand hand;
+    @JsonProperty("score")
     private int score;
+    @JsonProperty("isBot")
     private boolean isBot;
+    @JsonProperty("type")
+    private String type;
 
     public Player(String name, boolean isBot) {
         this.name = name;
         this.hand = new Hand();
         this.score = 0;
         this.isBot = isBot;
+        this.type = "player";
+
     }
+
+    public Player(){}
 
     /**
      * draw card from deck and add to hand
@@ -101,6 +114,7 @@ public class  Player {
                 .add("hand", hand.saveAttributesToJson())
                 .add("score", score)
                 .add("isBot", isBot)
+                .add("type", type)
                 .build();
         return jsonObject;
     }
