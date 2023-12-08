@@ -44,8 +44,6 @@ public class UNOGameModel {
     Card lastDrawnCard;
 
 
-    Card lastCard;
-
 
 
 
@@ -231,9 +229,6 @@ public class UNOGameModel {
         players.get(currentTurn).getHand().addCard(card);
     }
 
-    public void removeCardFromHand(int index){
-        players.get(currentTurn).getHand().removeCard(index);
-    }
 
     /**
      * Updates the top card on the pile.
@@ -394,24 +389,9 @@ public class UNOGameModel {
         }
     }
 
-    public boolean isCardPlayedAfterDrawing() {
-//    Player currentPlayer = getCurrentPlayer();
-//    Hand playerHand = currentPlayer.getHand();
-//    //Card drawnCard = playerHand.getRecentDraw();
-//    lastCard = getCurrentPlayer().getHand().getLastCard();
-        return lastDrawnCard == topCard;
-    }
-
-    public boolean isDrawnCardNotPlayed(){
-        Player currentPlayer = getCurrentPlayer();
-        Hand playerHand = currentPlayer.getHand();
-        Card drawnCard = playerHand.getRecentDraw();
-
-        if(playerHand.getCards().contains(drawnCard)) {
-                return true;
-        }
-        return false;
-    }
+    /**
+     * This method handles the logic when a Redo is called
+     */
 
     public void actionRedo(){
         saveGameState();
@@ -430,7 +410,9 @@ public class UNOGameModel {
     }
 
 
-    // New method to undo the last move
+    /**
+     * This method handles the logic when an undo is called
+     */
     public void actionUndo() {
         saveRedoGameState();
         UNOGameState unoGameState = gameStateStack.pop();
@@ -445,69 +427,7 @@ public class UNOGameModel {
         for (UNOGameHandler view : view) {
             view.handleUndo(new UNOGameEvent(this));
         }
-        /**
-        lastCard = getCurrentPlayer().getHand().getLastCard();
-        if (!gameStateStack.isEmpty()) {
-            // if undo action is called and card is drawn from deck and is played
-            if (canPlayCard == 1 && isCardPlayedAfterDrawing()) {
-                System.out.println("this is current top card" + topCard);
-                prevTopCard = topCard;
-                System.out.println("this is prevTop card which equals drawnCard" + prevTopCard);
-                deck.putBackCard(prevTopCard);
-                //getCurrentPlayer().getHand().removeCard(getCurrentPlayer().getHand().getCards().size()-1);
-                UNOGameState gameState = gameStateStack.pop();
-                System.out.println("Popped: " + gameState);
-                restoreGameState(gameState);
-                System.out.println("case1, drawn and played");
-
-
-                for (UNOGameHandler view : view) {
-                    view.handleUndoCaseOne(new UNOGameEvent(this));
-                    System.out.println("called handler in view Case 1");
-                }
-            }else if (canPlayCard == 2  && !(isCardPlayedAfterDrawing())){ // if card is drawn but not played
-                System.out.println("This is last card in hand"+ lastCard);
-                deck.putBackCard(lastCard);
-                System.out.println("card is put back to deck!");
-                getCurrentPlayer().getHand().removeCard(getCurrentPlayer().getHand().getCards().size()-1);
-                UNOGameState gameState = gameStateStack.pop();
-                System.out.println("Popped: " + gameState);
-                restoreGameState(gameState);
-                System.out.println("case 2 drawn but not played");
-
-
-                for (UNOGameHandler view : view) {
-                    view.handleUndoCaseTwo(new UNOGameEvent(this));
-                    System.out.println("called handler in view Case 2");
-                }
-            }else {
-                System.out.println("Normal Case!");
-                prevTopCard = topCard;
-                UNOGameState gameState = gameStateStack.pop();
-                System.out.println("Popped: " + gameState);
-                restoreGameState(gameState);
-                System.out.println("restored game state!!! Normal case");
-
-
-
-                for (UNOGameHandler view : view) {
-                    view.handleUndoCaseThree(new UNOGameEvent(this));
-                    System.out.println("called handler in view Case 3");
-                }
-            }
-
-            saveGameState();
-//            for (UNOGameHandler view : view) {
-//                // Update the UI to reflect the restored game state
-//                // Provide visual feedback for successful undo
-//                view.handleUndo(new UNOGameEvent(this));
-//                System.out.println("called handler in view");
-//            }
-        }
-         */
     }
-
-
 
     /** Apply the penalty for the player who did not call UNO*/
     public void applyCallPenalty(){

@@ -98,13 +98,5 @@ public class Hand{
         }
     }
 
-    public Card getLastCard() {
-        if (!cards.isEmpty()) {
-            return cards.get(cards.size() - 1);
-        }
-        return null;
-
-    }
-
 
 }

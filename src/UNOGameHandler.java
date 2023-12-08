@@ -15,11 +15,4 @@ public interface UNOGameHandler {
 
     public void handleRedo(UNOGameEvent e);
 
-    void handleUndoCaseOne(UNOGameEvent e);
-
-    void handleUndoCaseTwo(UNOGameEvent e);
-
-    void handleUndoCaseThree(UNOGameEvent e);
-
-    void handleEnableUndo(UNOGameEvent e);
 }

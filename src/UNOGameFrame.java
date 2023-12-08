@@ -19,9 +19,9 @@ import java.util.List;
 public class UNOGameFrame extends JFrame implements UNOGameHandler {
     UNOGameModel game;
     UNOGameController controller;
-    JPanel mainPanel, playerCardsPanel, topCardPanel, buttonPanel,  winRoundPanel;
+    JPanel mainPanel, playerCardsPanel, topCardPanel, buttonPanel, winRoundPanel;
     JButton drawCardButton, endTurnButton, newRoundButton, callUNOButton;
-    JLabel winRoundMessage,winRoundMessagePoints, playerNameField, statusBar;
+    JLabel winRoundMessage, winRoundMessagePoints, playerNameField, statusBar;
     JMenuBar menuBar;
     JMenu gameMenu, editMenu;
 
@@ -33,7 +33,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     Boolean isCardPlayed;
     Boolean isCardDrawn;
 
-    public UNOGameFrame( UNOGameModel game) {
+    public UNOGameFrame(UNOGameModel game) {
         super("UNO Flip Game!");
         this.game = game;
         this.cardButtonList = new ArrayList<>();
@@ -108,7 +108,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         //set status bar
         statusBar = new JLabel("Welcome to UNO...");
         statusBar.setBounds(20, 100, 250, 30);
-        statusBar.setFont(new Font(Font.DIALOG,Font.BOLD, 11));
+        statusBar.setFont(new Font(Font.DIALOG, Font.BOLD, 11));
         mainPanel.add(statusBar);
 
         //created image icons for current player's displayed cards and then added buttons to them
@@ -135,7 +135,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         callUNOButton = new JButton("Call UNO");
         callUNOButton.setEnabled(false);
         UNOButtonColour();
-        callUNOButton.setBounds(20,270,100,40);
+        callUNOButton.setBounds(20, 270, 100, 40);
         mainPanel.add(callUNOButton);
 
         //adding end turn button and buttons for displayed cards to buttons panel
@@ -160,13 +160,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         //set up round winner panel plus displayed message
         winRoundPanel = new JPanel(null);
         // Create and configure the message label
-        winRoundMessage = new JLabel("Error",SwingConstants.CENTER);
-        winRoundMessage.setBounds(0,65,700,200);
+        winRoundMessage = new JLabel("Error", SwingConstants.CENTER);
+        winRoundMessage.setBounds(0, 65, 700, 200);
         winRoundMessage.setFont(new Font("Serif", Font.PLAIN, 30));
         winRoundMessage.setHorizontalAlignment(SwingConstants.CENTER);
         // Create and configure the message points label
-        winRoundMessagePoints = new JLabel("Error",SwingConstants.CENTER);
-        winRoundMessagePoints.setBounds(0,125,700,200);
+        winRoundMessagePoints = new JLabel("Error", SwingConstants.CENTER);
+        winRoundMessagePoints.setBounds(0, 125, 700, 200);
         winRoundMessagePoints.setFont(new Font("Serif", Font.PLAIN, 30));
         winRoundMessagePoints.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -178,7 +178,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         winRoundPanel.setSize(700, 500);
         // Create a "New Round" button
         newRoundButton = new JButton("New Round");
-        newRoundButton.setBounds(250,300,200,80);
+        newRoundButton.setBounds(250, 300, 200, 80);
         newRoundButton.setFont(new Font("Monospaced Bold", Font.PLAIN, 24));
         newRoundButton.addActionListener(controller);
         newRoundButton.setActionCommand("new");
@@ -197,11 +197,10 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     /**
      * Changes color of UNO button to red when pressed
      */
-    private void UNOButtonColour(){
-        if (callUNOButton.isEnabled()){
+    private void UNOButtonColour() {
+        if (callUNOButton.isEnabled()) {
             callUNOButton.setBackground(Color.RED);
-        }
-        else {
+        } else {
             callUNOButton.setBackground(null);
         }
     }
@@ -215,7 +214,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         //List<String> cardNames = game.getCurrentPlayerCardNames();
         List<Card> cards = game.getCurrentPlayer().getHand().getCards();
-        for (int i = 0; i< cards.size(); i++) {
+        for (int i = 0; i < cards.size(); i++) {
             // Assuming cards are named with their respective COLOR_RANK.png
             // get the path to the images
 
@@ -228,7 +227,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             button = new JButton(icon);
 
             button.addActionListener(controller);
-            button.setActionCommand(""+i);
+            button.setActionCommand("" + i);
             cardButtonList.add(button);
             playerCardsPanel.add(button);
         }
@@ -261,63 +260,67 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     }
 
 
-    /** Displays the win round screen when a player wins the round
-     * @param winner The name of the winner player.
+    /**
+     * Displays the win round screen when a player wins the round
+     *
+     * @param winner      The name of the winner player.
      * @param totalPoints The total points the winner have.
-     * @param points The amount of points the winner gained this round.
-     * */
-    public void winRoundScreen(String winner,int totalPoints,int points){
+     * @param points      The amount of points the winner gained this round.
+     */
+    public void winRoundScreen(String winner, int totalPoints, int points) {
         // Check if the winning player has accumulated enough points to win the game
-        if (totalPoints >= 500){
+        if (totalPoints >= 500) {
             // If so, display the game winner screen and exit the method
             winGameScreen(winner, totalPoints);
             return;
         }
         mainPanel.setVisible(false);
         winRoundPanel.setVisible(true);
-        winRoundMessage.setText( winner + " wins the round" );
-        winRoundMessagePoints.setText( "Points: " + totalPoints + " (+" + points+" points this round)");
+        winRoundMessage.setText(winner + " wins the round");
+        winRoundMessagePoints.setText("Points: " + totalPoints + " (+" + points + " points this round)");
         newRoundButton.setText("New Round");
         this.add(winRoundPanel);
 
     }
 
-    /** Displays the win game screen when a player wins the game
-     * @param winner The name of the winner.
+    /**
+     * Displays the win game screen when a player wins the game
+     *
+     * @param winner      The name of the winner.
      * @param totalPoints The total points the winner have.
-     * */
-    public void winGameScreen(String winner,int totalPoints){
+     */
+    public void winGameScreen(String winner, int totalPoints) {
         mainPanel.setVisible(false);
         winRoundPanel.setVisible(true);
-        winRoundMessage.setText( winner + " wins the game!" );
-        winRoundMessagePoints.setText( "Points: " + totalPoints);
+        winRoundMessage.setText(winner + " wins the game!");
+        winRoundMessagePoints.setText("Points: " + totalPoints);
         this.add(winRoundPanel);
     }
 
     /**
      * Starts a new round after a game round is done
      */
-    public void restartRoundScreen(){
+    public void restartRoundScreen() {
         mainPanel.setVisible(true);
         winRoundPanel.setVisible(false);
         game.updateTurn();
         displayPlayerHand();
         displayTopCard();
     }
-  
-  /**
+
+    /**
      * Updates status bar
      */
     public void updateStatusBar(String function, String type) {
-        statusBar.setText(game.getCurrentPlayerName() + " "+ function + " " + type);
+        statusBar.setText(game.getCurrentPlayerName() + " " + function + " " + type);
     }
 
     /**
      * Displays a dialog for drawing a card, allowing the player to decide whether to play the card or not.
      *
-     * @param card The card to be drawn.
+     * @param card    The card to be drawn.
      * @param canPlay A boolean indicating whether the player can play the drawn card.
-     * @param e The UNOGameEvent associated with the game.
+     * @param e       The UNOGameEvent associated with the game.
      */
     private void drawCardDialog(Card card, Boolean canPlay, UNOGameEvent e) {
         ImageIcon icon = new ImageIcon(getClass().getResource(card.getImagePath(game.isCurrentSideLight())));
@@ -337,7 +340,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
                 game.updatePlayerHand(card);
                 displayPlayerHand();
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, cardLabel, "You drew a "
                     + card.toString2(game.isCurrentSideLight()), JOptionPane.INFORMATION_MESSAGE);
             game.updatePlayerHand(card);
@@ -350,7 +353,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      * The dialog contains radio buttons for selecting among the colors (BLUE, GREEN, RED, YELLOW).
      * Updates the game with the chosen color.
      */
-    public Card.Color darkWildDialog(){
+    public Card.Color darkWildDialog() {
         // Create panel
         JPanel panel = new JPanel();
 
@@ -417,7 +420,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
      * The dialog contains radio buttons for selecting among the colors (BLUE, GREEN, RED, YELLOW).
      * Updates the game with the chosen color.
      */
-    public void lightWildDialog(){
+    public void lightWildDialog() {
         // Create panel
         JPanel panel = new JPanel();
 
@@ -518,45 +521,39 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         updateStatusBar("played", (e.getCard().getColor(game.isCurrentSideLight()).toString()) + " " + (e.getCard().getRank(game.isCurrentSideLight()).toString()));
 
         isCardPlayed = true;
-//        if(game.getCurrentPlayer().isBot()) {
-//            undoItem.setEnabled(false);
-//
-//        }else{
-//            undoItem.setEnabled(true);
-//        }
 
 
-        if(!game.getCurrentPlayer().isBot()) {
+        if (!game.getCurrentPlayer().isBot()) {
             //handle WILD, SKIP, REVERSE, +1, +2 cards if human player
             if (e.getCard().getColor(game.isCurrentSideLight()) == Card.Color.WILD) {
-                if (game.isCurrentSideLight()){
+                if (game.isCurrentSideLight()) {
                     lightWildDialog();
-                } else{
+                } else {
                     Card.Color color = darkWildDialog();
-                    if(e.getCard().getRank(false)== Card.Rank.DRAW_COLOR){
+                    if (e.getCard().getRank(false) == Card.Rank.DRAW_COLOR) {
                         game.nextPlayerDrawColor(color);
                     }
                 }
             }
         }
-        if(specialCard!=null && specialCard.equals("FLIP")){
+        if (specialCard != null && specialCard.equals("FLIP")) {
             displayPlayerHand();
             displayTopCard();
 
         }
 
         //call UNO button if the current player has only one card left
-        if(game.getCurrentPlayer().getHand().isUNO()){
+        if (game.getCurrentPlayer().getHand().isUNO()) {
             callUNOButton.setEnabled(true);
             UNOButtonColour();
-            if(game.getCurrentPlayer().isBot()){
+            if (game.getCurrentPlayer().isBot()) {
                 callUNOButton.doClick();
             }
         }
 
 
         // Check for a round winner and display the round results if the current player has no more cards
-        if(game.getCurrentPlayer().getHand().isEmpty()){
+        if (game.getCurrentPlayer().getHand().isEmpty()) {
             int roundScore = game.calculateWinnerScore();
             int totalScore = game.getCurrentPlayer().getScore();
             winRoundScreen(game.getCurrentPlayerName(), totalScore, roundScore);
@@ -569,12 +566,13 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     /**
      * Handles the transition to the next turn in the UNO game.
+     *
      * @param e The UNOGameEvent associated with the next turn.
      */
     @Override
     public void handleNextTurn(UNOGameEvent e) {
         // Apply penalty if UNO call button was not used and display a message
-        if(callUNOButton.isEnabled()){
+        if (callUNOButton.isEnabled()) {
             game.applyCallPenalty();
             JOptionPane.showMessageDialog(this, "You didn't call UNO! Penalty: drew 2 cards");
         }
@@ -591,14 +589,16 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         //statusBar.setText("");
 
     }
+
     /**
      * Handles the UNO call action in the UNO game.
+     *
      * @param e The UNOGameEvent associated with the UNO call action.
      */
     @Override
     public void handleCallUNO(UNOGameEvent e) {
         // Display a message indicating that the current player has called UNO
-        JOptionPane.showMessageDialog(this, "Player "+game.getCurrentPlayerName()+" called UNO!");
+        JOptionPane.showMessageDialog(this, "Player " + game.getCurrentPlayerName() + " called UNO!");
         updateStatusBar("called", "UNO");
         //statusBar.setText(game.getCurrentPlayerName() + " called UNO");
         // Disable the UNO call button and update its color
@@ -619,40 +619,12 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         drawCardButton.setEnabled(true);
         endTurnButton.setEnabled(false);
 
-        //case1: card is drawn but not played
-            // leave top card as is
-            // add last card in hand back to deck
-            // remove last card from hand
-        // case 2: card is drawn and played
-            //change top card to prev
-            // add top card back to deck
-        // case 3: plays card from hand
-            // put current topCard back to currentPlayer's hand
-            // change top card to prev
-        /**
-        if(game.lastCard == game.prevTopCard){
-            System.out.println("case1");
-            displayTopCard();
-            game.removeCardFromHand(game.getCurrentPlayer().getHand().getCards().size()-1);
-            System.out.println("Display is updated after card is drawn+ played");
-        }else if(game.lastCard != game.prevTopCard && !(isCardPlayed)){
-            System.out.println("case2");
-            game.removeCardFromHand(game.getCurrentPlayer().getHand().getCards().size()-1);
-            displayPlayerHand();
-        }else{
-            System.out.println("case3");
-            displayTopCard();
-            game.updatePlayerHand(game.prevTopCard);
-            System.out.println("Display is updated after card is drawn2");
-            displayPlayerHand();
-        }
-         */
         displayTopCard();
         displayPlayerHand();
-        if(game.getUndo().size() == 0){
+        if (game.getUndo().size() == 0) {
             System.out.println("undo is empty");
             undoItem.setEnabled(false);
-        }else{
+        } else {
             System.out.println("Undo is nolonger empty");
             undoItem.setEnabled(true);
         }
@@ -667,10 +639,10 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         System.out.println("reached handleUndo");
         updateStatusBar("Undo move", "is called!");
 
-        if(game.canPlayCard == 2){
+        if (game.canPlayCard == 2) {
             drawCardButton.setEnabled(true);
             endTurnButton.setEnabled(false);
-        }else{
+        } else {
             drawCardButton.setEnabled(false);
             endTurnButton.setEnabled(true);
         }
@@ -678,9 +650,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
         displayTopCard();
         displayPlayerHand();
-        if(game.getRedo().size() == 0){
+        if (game.getRedo().size() == 0) {
             redoItem.setEnabled(false);
-        }else{
+        } else {
             redoItem.setEnabled(true);
         }
         undoItem.setEnabled(true);
@@ -688,69 +660,4 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
 
     }
 
-    /**
-     * // case 1: card is drawn and played
-             //change top card to prev
-             // add top card back to deck
-     */
-    @Override
-    public void handleUndoCaseOne(UNOGameEvent e) {
-        System.out.println("Reached handleUndo case1");
-        updateStatusBar("Called", "Undo!");
-        drawCardButton.setEnabled(true);
-
-        displayTopCard();
-       // game.removeCardFromHand(game.getCurrentPlayer().getHand().getCards().size()-1);
-        // System.out.println("Display is updated after card is drawn+ played");
-
-        undoItem.setEnabled(false);
-        JOptionPane.showMessageDialog(this, "Move is Undone!");
-
-    }
-
-    /**
-     *  // case 2: card is drawn and not played (card is placed in current player's hand
-     *          // leave top card as is
-     *          // add last card in hand back to deck
-     *           // remove last card from hand
-     */
-    @Override
-    public void handleUndoCaseTwo(UNOGameEvent e) {
-
-        System.out.println("reached handleUndo case2");
-        updateStatusBar("called", "Undo!");
-        drawCardButton.setEnabled(true);
-
-        displayTopCard();
-        //game.removeCardFromHand(game.getCurrentPlayer().getHand().getCards().size()-1);
-        displayPlayerHand();
-
-        undoItem.setEnabled(false);
-        JOptionPane.showMessageDialog(this, "Move is Undone!");
-
-    }
-
-    @Override
-    public void handleUndoCaseThree(UNOGameEvent e) {
-        // case 3: plays card from hand
-        // put current topCard back to currentPlayer's hand
-        // change top card to prev
-        System.out.println("reached handleUndo case1");
-        updateStatusBar("Undo move", "is called!");
-        drawCardButton.setEnabled(true);
-
-        System.out.println("case3");
-        displayTopCard();
-        game.updatePlayerHand(game.prevTopCard);
-        System.out.println("Display is updated after card is drawn2");
-        displayPlayerHand();
-
-        undoItem.setEnabled(false);
-        JOptionPane.showMessageDialog(this, "Move is Undone!");
-
-    }
-    @Override
-    public void handleEnableUndo(UNOGameEvent e){
-        undoItem.setEnabled(true);
-    }
 }

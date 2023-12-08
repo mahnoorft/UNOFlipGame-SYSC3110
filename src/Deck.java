@@ -122,11 +122,6 @@ public class Deck {
         }
     }
 
-
-        public void putBackCard(Card card1) {
-        deck.add(card1);
-
-    }
     public Deck cloneClass(){
         return new Deck((ArrayList<Card>) this.deck.clone());
     }
