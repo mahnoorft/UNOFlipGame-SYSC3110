@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -42,11 +43,13 @@ public class UNOGameController implements ActionListener {
         //action commands for when the button is pressed
         //if buttons are clicked, call model class with action buttons
         String command = e.getActionCommand();
-        if (command.equals("draw")){
+        if (command.equals("draw")) {
             model.actionDrawCard();
-        }
-        else if(command.equals("end")){
+        } else if (command.equals("end")) {
             model.actionEndTurn();
+        } else if (command.equals("Undo")){
+            model.actionUndo();
+            System.out.println("controller called actionUndo");
         }
         else if(command.equals("call")){
             // Call the view's handleCallUNO method with a new UNOGameEvent
@@ -64,8 +67,12 @@ public class UNOGameController implements ActionListener {
             UNOGameFrame unoGameFrame = new UNOGameFrame(game);
         } else if (command.equals("save")) {
             // save the current state of the game in a JSON file
+            //TO DO (optional): implement asking user for "filename" at save and load to
+            // be able to save multiple games!
             try {
                 model.saveJsonObjectsToFile("saveUNO.json");
+                JOptionPane.showConfirmDialog(null, "Game saved!",
+                        "Create Players", JOptionPane.OK_OPTION);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

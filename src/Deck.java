@@ -16,6 +16,8 @@ import java.util.*;
 public class Deck {
     @JsonProperty("deck")
     private List<Card> deck;
+    
+
 
     /**Constructor for Class Deck*/
     public Deck() {
@@ -92,6 +94,8 @@ public class Deck {
         }
         return sb.toString();
     }
+
+
     /** Return a JSON object containing the attributes in this class
      * @return JsonObject of the class attributes*/
     public JsonObject saveAttributesToJson(){
@@ -111,9 +115,15 @@ public class Deck {
         return jsonObject;
     }
     public void saveJsonObjectsToFile(String fileName) throws IOException {
-        try(PrintWriter writer = new PrintWriter(new FileWriter(fileName))){
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
             JsonObject jsonObject = saveAttributesToJson();
             writer.println(jsonObject);
         }
+    }
+
+
+        public void putBackCard(Card card1) {
+        deck.add(card1);
+
     }
 }

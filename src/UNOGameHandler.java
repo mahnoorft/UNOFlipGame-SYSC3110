@@ -10,4 +10,14 @@ public interface UNOGameHandler {
     public void handleCallUNO(UNOGameEvent e);
     public void handleColourUpdate(UNOGameEvent e);
 
+    public void handleUndo(UNOGameEvent e);
+
+
+    void handleUndoCaseOne(UNOGameEvent e);
+
+    void handleUndoCaseTwo(UNOGameEvent e);
+
+    void handleUndoCaseThree(UNOGameEvent e);
+
+    void handleEnableUndo(UNOGameEvent e);
 }
