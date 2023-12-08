@@ -74,6 +74,9 @@ public class CardTest {
     @org.junit.jupiter.api.Test
     public void testSaveAttributesToJSON() throws IOException {
         card1 = new Card(Card.Rank.ONE, Card.Color.RED, Card.Rank.ONE, Card.Color.ORANGE);
-        card1.saveJsonObjectsToFile("testJson.json");
+        String actual = card1.saveAttributesToJson().toString();
+        System.out.println(actual);
+        String expected = "{\"rankLight\":\"ONE\",\"colorLight\":\"RED\",\"rankDark\":\"ONE\",\"colorDark\":\"ORANGE\"}";
+        assertEquals(expected, actual);
     }
 }

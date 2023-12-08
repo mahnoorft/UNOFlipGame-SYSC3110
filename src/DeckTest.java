@@ -2,6 +2,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.json.JsonObject;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -102,6 +103,7 @@ class DeckTest {
     }
     @org.junit.jupiter.api.Test
     public void testSaveAttributesToJSON() throws IOException {
-        deck.saveJsonObjectsToFile("testJson.json");
+        //assert returned object is a JsonObject
+        assertInstanceOf(JsonObject.class,deck.saveAttributesToJson());
     }
 }

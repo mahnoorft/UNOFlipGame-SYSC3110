@@ -100,7 +100,10 @@ class PlayerTest {
     public void testSaveAttributesToJSON() throws IOException {
         Card card = new Card(Card.Rank.THREE, Card.Color.YELLOW, Card.Rank.THREE, Card.Color.PURPLE);
         player.getHand().addCard(card);
-
-        player.saveJsonObjectsToFile("testJson.json");
+        String actual = player.saveAttributesToJson().toString();
+        String expected = "{\"name\":\"Sam\",\"hand\":" +
+                "{\"cards\":[{\"rankLight\":\"THREE\",\"colorLight\":\"YELLOW\",\"rankDark\":\"THREE\",\"colorDark\":\"PURPLE\"}]}," +
+                "\"score\":0,\"isBot\":false}";
+        assertEquals(expected, actual);
     }
 }
