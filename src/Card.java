@@ -156,6 +156,10 @@ public class Card {
     }
 
     public String getImagePath(boolean isSideLight){
+        if(this.getRank(isSideLight) == Rank.DRAW2 ||this.getRank(isSideLight) == Rank.DRAW_COLOR ||this.getRank(isSideLight) == Rank.WILD_LIGHT ||this.getRank(isSideLight) == Rank.WILD_DARK){
+            return IMAGES_FOLDER_PATH + "WILD" +
+                    "_"+ this.getRank(isSideLight).name() + ".png";
+        }
         return IMAGES_FOLDER_PATH + this.getColor(isSideLight).name() +
                 "_"+ this.getRank(isSideLight).name() + ".png";
     }

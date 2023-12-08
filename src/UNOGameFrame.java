@@ -97,12 +97,11 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         displayPlayerHand();
         displayTopCard();
 
-        System.out.println("Save in intialize before");
-        game.saveGameState();
         System.out.println("Save in intialize after");
 
 
         undoItem.setEnabled(false);
+        redoItem.setEnabled(false);
         System.out.println("undo is grayed out now");
 
 
@@ -484,6 +483,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     @Override
     public void handleDrawCard(UNOGameEvent e) {
         undoItem.setEnabled(true);
+        redoItem.setEnabled(false);
         Card card = e.getCard();
         Boolean canPlay = e.canPlay();
         displayPlayerHand();
@@ -512,17 +512,18 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         displayPlayerHand();
         displayTopCard();
         undoItem.setEnabled(true);
+        redoItem.setEnabled(false);
 
         String specialCard = game.executeSpecialFunction(e.getCard());
         updateStatusBar("played", (e.getCard().getColor(game.isCurrentSideLight()).toString()) + " " + (e.getCard().getRank(game.isCurrentSideLight()).toString()));
 
         isCardPlayed = true;
-        if(game.getCurrentPlayer().isBot()) {
-            undoItem.setEnabled(false);
-
-        }else{
-            undoItem.setEnabled(true);
-        }
+//        if(game.getCurrentPlayer().isBot()) {
+//            undoItem.setEnabled(false);
+//
+//        }else{
+//            undoItem.setEnabled(true);
+//        }
 
 
         if(!game.getCurrentPlayer().isBot()) {
@@ -649,8 +650,10 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         displayTopCard();
         displayPlayerHand();
         if(game.getUndo().size() == 0){
+            System.out.println("undo is empty");
             undoItem.setEnabled(false);
         }else{
+            System.out.println("Undo is nolonger empty");
             undoItem.setEnabled(true);
         }
         redoItem.setEnabled(true);

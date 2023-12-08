@@ -327,6 +327,7 @@ public class UNOGameModel {
             return null;
         }
         saveGameState();
+        redoGameStateStack.clear();
         Card c = player.playCard(index,topCard,currentSideLight );
 
         //update top card
@@ -351,6 +352,7 @@ public class UNOGameModel {
      */
     public boolean actionDrawCard(){
         saveGameState();
+        redoGameStateStack.clear();
         Card c = deck.draw();
         if(c.checkValid(topCard,currentSideLight)){
             canPlayCard = 1;
@@ -412,6 +414,7 @@ public class UNOGameModel {
     }
 
     public void actionRedo(){
+        saveGameState();
         UNOGameState unoGameState = redoGameStateStack.pop();
         this.pile = unoGameState.getPile();
         this.topCard = unoGameState.getTopCard();
