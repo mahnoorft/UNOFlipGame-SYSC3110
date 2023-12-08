@@ -93,6 +93,11 @@ public class  Player {
         return isBot;
     }
 
+    public Player cloneClass(){
+        return this;
+
+    }
+
     /** Return a JSON object containing the attributes in this class
      * @return JsonObject of the class attributes*/
     public JsonObject saveAttributesToJson() {

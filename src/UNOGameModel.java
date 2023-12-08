@@ -35,7 +35,7 @@ public class UNOGameModel {
     int turnSkipped;
     List<UNOGameHandler> view;
 
-    Stack<UNOGameState> gameStateStack;
+    private Stack<UNOGameState> gameStateStack;
 
     private UNOGameFrame frame;
 
@@ -308,6 +308,7 @@ public class UNOGameModel {
                     "Error!", JOptionPane.ERROR_MESSAGE);
             return null;
         }
+        saveGameState();
         Card c = player.playCard(index,topCard,currentSideLight );
 
         //update top card
@@ -330,6 +331,7 @@ public class UNOGameModel {
      * @return True if the card can be played, false otherwise.
      */
     public boolean actionDrawCard(){
+        saveGameState();
         Card c = deck.draw();
         if(c.checkValid(topCard,currentSideLight)){
             canPlayCard = 1;
@@ -393,6 +395,37 @@ public class UNOGameModel {
 
     // New method to undo the last move
     public void actionUndo() {
+
+        UNOGameState unoGameState = gameStateStack.pop();
+        System.out.println("<<<");
+        System.out.println("TopCard");
+        System.out.println(unoGameState.getTopCard().toString2(true));
+        System.out.println("Current player");
+        System.out.println(unoGameState.getPlayers().get(unoGameState.getCurrentTurn()).getName());
+        System.out.println("hand size");
+        System.out.println(unoGameState.getPlayers().get(unoGameState.getCurrentTurn()).getHand().getCards().size());
+        System.out.println(">>>");
+        System.out.println(unoGameState.topCard.toString2(true));
+        this.pile = unoGameState.getPile();
+        this.topCard = unoGameState.getTopCard();
+        this.players = unoGameState.getPlayers();
+        this.deck = unoGameState.getDeck();
+        this.currentTurn = unoGameState.getCurrentTurn();
+        this.currentSideLight = unoGameState.isCurrentSideLight();
+        this.canPlayCard = 2;
+        this.turnSkipped = 0;
+        System.out.println("<<<<");
+        System.out.println("TopCard");
+        System.out.println(this.topCard.toString2(true));
+        System.out.println("Current player");
+        System.out.println(this.players.get(currentTurn).getName());
+        System.out.println("hand size");
+        System.out.println(this.players.get(currentTurn).getHand().getCards().size());
+        System.out.println(">>>>");
+        for (UNOGameHandler view : view) {
+            view.handleUndo(new UNOGameEvent(this));
+        }
+        /**
         lastCard = getCurrentPlayer().getHand().getLastCard();
         if (!gameStateStack.isEmpty()) {
             // if undo action is called and card is drawn from deck and is played
@@ -451,6 +484,7 @@ public class UNOGameModel {
 //                System.out.println("called handler in view");
 //            }
         }
+         */
     }
 
 

@@ -582,7 +582,6 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         // Enable the draw card button and disable the end turn button
         drawCardButton.setEnabled(true);
         endTurnButton.setEnabled(false);
-        game.saveGameState();
         System.out.println("game snapshot saved after turn");
 
         // Reset UNO call button's state and color
@@ -627,7 +626,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         // case 3: plays card from hand
             // put current topCard back to currentPlayer's hand
             // change top card to prev
-
+        /**
         if(game.lastCard == game.prevTopCard){
             System.out.println("case1");
             displayTopCard();
@@ -644,7 +643,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
             System.out.println("Display is updated after card is drawn2");
             displayPlayerHand();
         }
-
+         */
+        displayTopCard();
+        displayPlayerHand();
         undoItem.setEnabled(false);
         JOptionPane.showMessageDialog(this, "Move is Undone!");
 
