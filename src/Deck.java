@@ -115,12 +115,6 @@ public class Deck {
 
         return jsonObject;
     }
-    public void saveJsonObjectsToFile(String fileName) throws IOException {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
-            JsonObject jsonObject = saveAttributesToJson();
-            writer.println(jsonObject);
-        }
-    }
 
     public Deck cloneClass(){
         return new Deck((ArrayList<Card>) this.deck.clone());
