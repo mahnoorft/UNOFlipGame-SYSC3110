@@ -63,7 +63,6 @@ public class UNOGameModel {
         this.currentSideLight = true;
         this.view = new ArrayList<UNOGameHandler>();
         this.gameStateStack = new Stack<>();
-        createPlayers();
         canPlayCard = 2;
         turnSkipped = 0;
     }
@@ -642,18 +641,16 @@ public class UNOGameModel {
             if (playerJsonArray != null) {
                 for (int i = 0; i < playerJsonArray.size(); i++) {
                     JsonObject playerJson = playerJsonArray.getJsonObject(i);
-                    String type = null;
-                    if (playerJson.containsKey("type") && !playerJson.isNull("type")) {
-                        type = playerJson.getString("type");
+                    System.out.println(playerJson.get("isBot"));
+                    if (playerJson.get("isBot").toString().equals("true")) {
+                        PlayerAI aiPlayer = objectMapper.readValue(playerJson.toString(), PlayerAI.class);
+                        this.players.add(aiPlayer);
+                        System.out.println("AI Player" + i + ": " + aiPlayer);
+                    }else{
+                        Player player = objectMapper.readValue(playerJson.toString(), Player.class);
+                        this.players.add(player);
+                        System.out.println("Player " + i + ": " + player);
                     }
-                    Player player = null;
-                    if("player".equals(type)){
-                        player = objectMapper.readValue(playerJson.toString(), Player.class);
-                    }else if("playerAI".equals(type)) {
-                        player = objectMapper.readValue(playerJson.toString(), PlayerAI.class);
-                    }
-                    this.players.add(player);
-                    System.out.println("Player " + i + ": " + player);
                 }
             }
 
@@ -689,7 +686,6 @@ public class UNOGameModel {
             JsonValue turnDirection = jsonObject.get("turnDirection");
             if (turnDirection instanceof JsonNumber) {
                 int turnDirectionVal = ((JsonNumber) turnDirection).intValue();
-                this.turnDirection = turnDirectionVal;
                 this.turnDirection = turnDirectionVal;
                 System.out.println("Turn Direction: " + turnDirectionVal);
             }

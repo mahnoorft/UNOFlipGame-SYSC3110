@@ -13,14 +13,12 @@ import java.util.HashMap;
 
 public class PlayerAI extends Player{
 
-    @JsonProperty("type")
-    private String type;
-
     public PlayerAI(String name, boolean isBot) {
 
         super(name, isBot);
-        this.type = "playerAI";
     }
+
+    public PlayerAI(){}
 
     /** Return and plays the valid Card with the highest points to play.
      * @param topCard  the current top card

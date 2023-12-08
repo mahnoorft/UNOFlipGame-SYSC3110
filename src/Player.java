@@ -21,15 +21,12 @@ public class  Player {
     private int score;
     @JsonProperty("isBot")
     private boolean isBot;
-    @JsonProperty("type")
-    private String type;
 
     public Player(String name, boolean isBot) {
         this.name = name;
         this.hand = new Hand();
         this.score = 0;
         this.isBot = isBot;
-        this.type = "player";
 
     }
 
@@ -114,7 +111,6 @@ public class  Player {
                 .add("hand", hand.saveAttributesToJson())
                 .add("score", score)
                 .add("isBot", isBot)
-                .add("type", type)
                 .build();
         return jsonObject;
     }

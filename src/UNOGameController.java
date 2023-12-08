@@ -67,22 +67,20 @@ public class UNOGameController implements ActionListener {
             UNOGameFrame unoGameFrame = new UNOGameFrame(game);
         } else if (command.equals("save")) {
             // save the current state of the game in a JSON file
-            //TO DO (optional): implement asking user for "filename" at save and load to
-            // be able to save multiple games!
             try {
                 model.saveJsonObjectsToFile("saveUNO.json");
-                JOptionPane.showConfirmDialog(null, "Game saved!",
+                JOptionPane.showMessageDialog(null, "Game saved!",
                         "Create Players", JOptionPane.OK_OPTION);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         } else if (command.equals("load")) {
-            // save the current state of the game in a JSON file
+            // load the last game saved from JSON file and update GUI
             try {
                 model.restoreJsonObjectsFromFile("saveUNO.json");
                 view.displayPlayerHand();
                 view.displayTopCard();
-                view.updateStatusBar("loaded", "last save copy of game");
+                view.updateStatusBar("loaded", "last saved game");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
