@@ -56,6 +56,14 @@ These features and use cases make UNO Flip Game an enjoyable and versatile gamin
 - Reply Capability: Players now have the ability to replay the game, allowing them to restart and enjoy multiple rounds.
 - Save/Load Features: Players can now save the state of their game and load the most recently saved game to continue playing smoothly! Save and load are implemented using JSON serialization and deserialization.
 
+## Future Extensions
+This game was implemented following loose coupling and high cohesion practices, and uses a Model-View-Controller Pattern with Event models to link game functionality with the GUI.
+The game can be extended easily by following the same patterns already implemented to add new functionality. Some possibilities are:
+- add fun sound effects for GUI component clicks using ActionListener (UNOGameController).
+- implement saving multiple games and choosing a saved game to load by keeping a data structure of saved game models.
+- Improve the GUI design by adding advanced styling to the components.
+- Implement creative playing strategies for AI players, and allow players to choose a strategy to play against!
+
 ## Author
 - Mahnoor Fatima 101192353 & Areej Mahmoud 101218260
 
