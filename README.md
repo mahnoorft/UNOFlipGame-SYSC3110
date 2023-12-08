@@ -11,6 +11,11 @@ git clone https://github.com/mahnoorft/UNOFlipGame-SYSC3110.git
 To run the JUnit tests for the various classes, install the library for:
 JUnit 5.8.1
 
+Import json/jackson jars as external libraries for json serialization functions:
+- jackson-annotations-2.16.0.jar
+- jackson-core-2.16.0.jar
+- jackson-databind-2.16.0.jar
+- javax.json-1.1.4.jar
 
 ## Usage
 To run the UNOFlipGame, open the project repository and navigate to Main.java class. Click run, and enjoy!
@@ -26,7 +31,7 @@ Once, the Main.java is run the user will be prompted to enter the number of play
 - Use the special SKIP_EVERYONE to give yourself an extra turn. 
 
 ### 2. Interactive Multiplayer
-- Interactive GUI with buttons. Challenge friends or compete with players.
+- Interactive GUI with buttons. Challenge friends or compete with AI players.
 
 ### 3. Traditional UNO Rules
 - Enjoy classic UNO gameplay, including wild, draw cards, reverse, and skip actions.
@@ -46,12 +51,10 @@ These features and use cases make UNO Flip Game an enjoyable and versatile gamin
 - AI Player Capability: The game will now accommodate from 1-5 AI Players, with a playing strategy of choosing the valid card with the highest points to play.
 - Implemented a Status Bar to display the current playing status and print each player's moves.
 
-### Future Deliverables
-
-Milestone 4:
-- Redo capabilities: Players will now have the ability to redo/ undo their moves within the game.
-- Reply Capability: Players will now have the ability to replay the game, allowing them to restart and enjoy multiple rounds.
-- Save/Load Features: We will implement a save and load system
+### Milestone 4 Changes
+- Undo/Redo capability: Players now have the ability to redo/ undo their moves within the game.
+- Reply Capability: Players now have the ability to replay the game, allowing them to restart and enjoy multiple rounds.
+- Save/Load Features: Players can now save the state of their game and load the most recently saved game to continue playing smoothly! Save and load are implemented using JSON serialization and deserialization.
 
 ## Author
 - Mahnoor Fatima 101192353 & Areej Mahmoud 101218260
