@@ -50,6 +50,9 @@ public class UNOGameController implements ActionListener {
         } else if (command.equals("Undo")){
             model.actionUndo();
             System.out.println("controller called actionUndo");
+        } else if (command.equals("Redo")){
+            model.actionRedo();
+            System.out.println("controller called actionRedo");
         }
         else if(command.equals("call")){
             // Call the view's handleCallUNO method with a new UNOGameEvent

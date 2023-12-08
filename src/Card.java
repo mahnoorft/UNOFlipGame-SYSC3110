@@ -110,7 +110,6 @@ public class Card {
         else{ this.colorDark = color;}
     }
 
-
     /**
      * get the points associated with this card
      * @return points
@@ -177,5 +176,9 @@ public class Card {
             JsonObject jsonObject = saveAttributesToJson();
             writer.println(jsonObject);
         }
+    }
+
+    public Card cloneClass(){
+        return new Card(rankLight,colorLight,rankDark,colorDark);
     }
 }

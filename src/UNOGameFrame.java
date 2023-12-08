@@ -614,7 +614,9 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     public void handleUndo(UNOGameEvent e) {
         System.out.println("reached handleUndo");
         updateStatusBar("Undo move", "is called!");
+
         drawCardButton.setEnabled(true);
+        endTurnButton.setEnabled(false);
 
         //case1: card is drawn but not played
             // leave top card as is
@@ -646,8 +648,40 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
          */
         displayTopCard();
         displayPlayerHand();
-        undoItem.setEnabled(false);
+        if(game.getUndo().size() == 0){
+            undoItem.setEnabled(false);
+        }else{
+            undoItem.setEnabled(true);
+        }
+        redoItem.setEnabled(true);
+
         JOptionPane.showMessageDialog(this, "Move is Undone!");
+
+    }
+
+    @Override
+    public void handleRedo(UNOGameEvent e) {
+        System.out.println("reached handleUndo");
+        updateStatusBar("Undo move", "is called!");
+
+        if(game.canPlayCard == 2){
+            drawCardButton.setEnabled(true);
+            endTurnButton.setEnabled(false);
+        }else{
+            drawCardButton.setEnabled(false);
+            endTurnButton.setEnabled(true);
+        }
+
+
+        displayTopCard();
+        displayPlayerHand();
+        if(game.getRedo().size() == 0){
+            redoItem.setEnabled(false);
+        }else{
+            redoItem.setEnabled(true);
+        }
+        undoItem.setEnabled(true);
+        JOptionPane.showMessageDialog(this, "Move is redone!");
 
     }
 

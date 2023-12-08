@@ -12,7 +12,7 @@ import java.util.*;
  * @author Mahnoor Fatima 101192353
  */
 public class Deck {
-    private List<Card> deck;
+    private ArrayList<Card> deck;
     
 
 
@@ -20,6 +20,10 @@ public class Deck {
     public Deck() {
         this.deck = new ArrayList<Card>();
         createDeck();
+    }
+    /**Constructor for Class Deck with a set card*/
+    public Deck(ArrayList<Card> cards){
+        this.deck = cards;
     }
 
     /**initialize the number of cards according to UNO rules and add them to the deck*/
@@ -122,5 +126,8 @@ public class Deck {
         public void putBackCard(Card card1) {
         deck.add(card1);
 
+    }
+    public Deck cloneClass(){
+        return new Deck((ArrayList<Card>) this.deck.clone());
     }
 }

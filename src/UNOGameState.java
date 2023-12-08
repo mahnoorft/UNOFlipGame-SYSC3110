@@ -13,8 +13,8 @@ public class UNOGameState {
     private int turnSkipped;
 
     public UNOGameState(UNOGameModel game ) {
-        players = game.players;
-        deck = game.deck;
+
+        deck = game.deck.cloneClass();
         pile = game.pile;
         currentTurn= game.currentTurn;
         turnDirection = game.turnDirection;
@@ -22,6 +22,10 @@ public class UNOGameState {
         currentSideLight = game.isCurrentSideLight();
         canPlayCard = game.canPlayCard;
         turnSkipped = game.turnSkipped;
+        players = new ArrayList<Player>();
+        for(Player player: game.getAllPlayers()){
+            players.add(player.cloneClass());
+        }
     }
 
     // Getter methods for all fields

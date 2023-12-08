@@ -35,7 +35,7 @@ public class UNOGameModel {
     int turnSkipped;
     List<UNOGameHandler> view;
 
-    private Stack<UNOGameState> gameStateStack;
+    private Stack<UNOGameState> gameStateStack,redoGameStateStack;
 
     private UNOGameFrame frame;
 
@@ -61,6 +61,7 @@ public class UNOGameModel {
         this.currentSideLight = true;
         this.view = new ArrayList<UNOGameHandler>();
         this.gameStateStack = new Stack<>();
+        this.redoGameStateStack = new Stack<>();
 
         createPlayers();
         canPlayCard = 2;
@@ -104,10 +105,10 @@ public class UNOGameModel {
         }
         //draw first card from deck to start the game
         //Switch top card if it's wild
-        topCard = deck.draw();
+        topCard = deck.draw().cloneClass();
         while (topCard.getColor(currentSideLight) == Card.Color.WILD){
             pile.add(topCard);
-            topCard = deck.draw();
+            topCard = deck.draw().cloneClass();
         }
         this.pile.add(topCard);
 
@@ -238,7 +239,7 @@ public class UNOGameModel {
      * Updates the top card on the pile.
      * @param card The new top card on the pile.*/
     public void updateTopCard(Card card){
-        topCard = card;
+        topCard = card.cloneClass();
     }
 
     /**
@@ -254,6 +255,19 @@ public class UNOGameModel {
     public Player getCurrentPlayer(){
         return players.get(currentTurn);
     }
+    /**
+     * Retrieves the player arraylist.
+     * @return The player arraylist.*/
+    public ArrayList<Player> getAllPlayers(){return players;}
+    /**
+     * Retrieves the undo state stack.
+     * @return variable gameStateStack.*/
+    public Stack<UNOGameState> getUndo(){return gameStateStack;}
+    /**
+     * Retrieves the redo state stack.
+     * @return variable redoGameStateStack.*/
+    public Stack<UNOGameState> getRedo(){return redoGameStateStack;}
+
 
     /**
      * Updates the turn by setting the canPlayCard value to 2. */
@@ -280,6 +294,10 @@ public class UNOGameModel {
     void saveGameState() {
         UNOGameState gameState = new UNOGameState(this);
         gameStateStack.push(gameState);
+    }
+    public void saveRedoGameState(){
+        UNOGameState gameState = new UNOGameState(this);
+        redoGameStateStack.push(gameState);
     }
 
     /**
@@ -313,7 +331,7 @@ public class UNOGameModel {
 
         //update top card
         if (c!= null){
-            topCard = c;
+            topCard = c.cloneClass();
             pile.add(c);
         }
         canPlayCard = 0;
@@ -325,6 +343,7 @@ public class UNOGameModel {
 
         return c;
     }
+
 
     /**
      * Handles the action of a player drawing a card from the deck.
@@ -392,20 +411,26 @@ public class UNOGameModel {
         return false;
     }
 
+    public void actionRedo(){
+        UNOGameState unoGameState = redoGameStateStack.pop();
+        this.pile = unoGameState.getPile();
+        this.topCard = unoGameState.getTopCard();
+        this.players = unoGameState.getPlayers();
+        this.deck = unoGameState.getDeck();
+        this.currentTurn = unoGameState.getCurrentTurn();
+        this.currentSideLight = unoGameState.isCurrentSideLight();
+        this.canPlayCard = unoGameState.getCanPlayCard();
+        this.turnSkipped = unoGameState.getTurnSkipped();
+        for (UNOGameHandler view : view) {
+            view.handleRedo(new UNOGameEvent(this));
+        }
+    }
+
 
     // New method to undo the last move
     public void actionUndo() {
-
+        saveRedoGameState();
         UNOGameState unoGameState = gameStateStack.pop();
-        System.out.println("<<<");
-        System.out.println("TopCard");
-        System.out.println(unoGameState.getTopCard().toString2(true));
-        System.out.println("Current player");
-        System.out.println(unoGameState.getPlayers().get(unoGameState.getCurrentTurn()).getName());
-        System.out.println("hand size");
-        System.out.println(unoGameState.getPlayers().get(unoGameState.getCurrentTurn()).getHand().getCards().size());
-        System.out.println(">>>");
-        System.out.println(unoGameState.topCard.toString2(true));
         this.pile = unoGameState.getPile();
         this.topCard = unoGameState.getTopCard();
         this.players = unoGameState.getPlayers();
@@ -414,14 +439,6 @@ public class UNOGameModel {
         this.currentSideLight = unoGameState.isCurrentSideLight();
         this.canPlayCard = 2;
         this.turnSkipped = 0;
-        System.out.println("<<<<");
-        System.out.println("TopCard");
-        System.out.println(this.topCard.toString2(true));
-        System.out.println("Current player");
-        System.out.println(this.players.get(currentTurn).getName());
-        System.out.println("hand size");
-        System.out.println(this.players.get(currentTurn).getHand().getCards().size());
-        System.out.println(">>>>");
         for (UNOGameHandler view : view) {
             view.handleUndo(new UNOGameEvent(this));
         }
@@ -516,7 +533,7 @@ public class UNOGameModel {
         if(c != null){
             System.out.println("Bot Played a card " + c.toString2(currentSideLight));
             //frame.updateStatusBar("played", c.getColor(isCurrentSideLight()) + " " + c.getRank(isCurrentSideLight()));
-            topCard = c;
+            topCard = c.cloneClass();
             pile.add(c);
 
             for (UNOGameHandler view: view){
@@ -540,7 +557,7 @@ public class UNOGameModel {
 
             if(c.checkValid(topCard,currentSideLight)){
                 System.out.println("Bot Played the drawn card " + c.toString2(currentSideLight));
-                topCard = c;
+                topCard = c.cloneClass();
                 pile.add(c);
                 for (UNOGameHandler view: view){
                     view.handlePlayCard(new UNOGameEvent(this, c, false));
