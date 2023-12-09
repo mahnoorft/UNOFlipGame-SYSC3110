@@ -62,8 +62,6 @@ public class UNOGameModel {
         this.view = new ArrayList<UNOGameHandler>();
         this.gameStateStack = new Stack<>();
         this.redoGameStateStack = new Stack<>();
-
-        createPlayers();
         canPlayCard = 2;
         turnSkipped = 0;
     }
