@@ -91,12 +91,5 @@ public class Hand{
         return jsonObject;
     }
 
-    public void saveJsonObjectsToFile(String fileName) throws IOException {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
-            JsonObject jsonObject = saveAttributesToJson();
-            writer.println(jsonObject);
-        }
-    }
-
 
 }

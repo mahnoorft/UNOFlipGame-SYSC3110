@@ -104,6 +104,11 @@ public class HandTest {
         hand.addCard(c2);
         hand.addCard(c3);
 
-        hand.saveJsonObjectsToFile("testJson.json");
+        String actual = hand.saveAttributesToJson().toString();
+        System.out.println(actual);
+        String expected = "{\"cards\":[{\"rankLight\":\"ONE\",\"colorLight\":\"YELLOW\",\"rankDark\":\"ONE\",\"colorDark\":\"PURPLE\"}," +
+                "{\"rankLight\":\"DRAW2\",\"colorLight\":\"WILD\",\"rankDark\":\"DRAW_COLOR\",\"colorDark\":\"WILD\"}," +
+                "{\"rankLight\":\"DRAW1\",\"colorLight\":\"GREEN\",\"rankDark\":\"DRAW5\",\"colorDark\":\"TEAL\"}]}";
+        assertEquals(expected, actual);
     }
 }

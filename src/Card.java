@@ -182,12 +182,6 @@ public class Card {
                 .build();
         return jsonObject;
     }
-    public void saveJsonObjectsToFile(String fileName) throws IOException {
-        try(PrintWriter writer = new PrintWriter(new FileWriter(fileName))){
-            JsonObject jsonObject = saveAttributesToJson();
-            writer.println(jsonObject);
-        }
-    }
 
     public Card cloneClass(){
         return new Card(rankLight,colorLight,rankDark,colorDark);
