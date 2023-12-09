@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonBooleanFormatVisitor;
 
 import javax.json.*;
 
@@ -37,7 +36,6 @@ public class UNOGameModel {
 
     private Stack<UNOGameState> gameStateStack,redoGameStateStack;
 
-    private UNOGameFrame frame;
 
     Card prevTopCard;
 
@@ -259,10 +257,6 @@ public class UNOGameModel {
         players.get(currentTurn).getHand().addCard(card);
     }
 
-    public void removeCardFromHand(int index){
-        players.get(currentTurn).getHand().removeCard(index);
-    }
-
     /**
      * Updates the top card on the pile.
      * @param card The new top card on the pile.*/
@@ -324,7 +318,7 @@ public class UNOGameModel {
     }
 
     // New method to save the current game state to the stack
-    void saveGameState() {
+    public void saveGameState() {
         UNOGameState gameState = new UNOGameState(this);
         gameStateStack.push(gameState);
     }
