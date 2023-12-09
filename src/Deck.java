@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -12,11 +14,13 @@ import java.util.*;
  * @author Mahnoor Fatima 101192353
  */
 public class Deck {
+    @JsonProperty("deck")
     private ArrayList<Card> deck;
     
 
 
     /**Constructor for Class Deck*/
+
     public Deck() {
         this.deck = new ArrayList<Card>();
         createDeck();
