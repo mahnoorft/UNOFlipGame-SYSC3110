@@ -75,7 +75,7 @@ public class UNOGameController implements ActionListener {
             try {
                 model.saveJsonObjectsToFile("saveUNO.json");
                 JOptionPane.showMessageDialog(null, "Game saved!",
-                        "Create Players", JOptionPane.OK_OPTION);
+                        "Create Players", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
