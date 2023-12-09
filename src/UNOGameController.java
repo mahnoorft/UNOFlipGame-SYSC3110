@@ -79,6 +79,16 @@ public class UNOGameController implements ActionListener {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
+        } else if (command.equals("load")) {
+            // load the last game saved from JSON file and update GUI
+            try {
+                model.restoreJsonObjectsFromFile("saveUNO.json");
+                view.displayPlayerHand();
+                view.displayTopCard();
+                view.updateStatusBar("loaded", "last saved game");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         } else{
             // If the command is a number, parse it and call model's actionPlayCard method
             int index = Integer.parseInt(command);

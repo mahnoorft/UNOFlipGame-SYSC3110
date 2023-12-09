@@ -52,8 +52,11 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         newGame.setActionCommand("newGame");
         JMenuItem saveGame = new JMenuItem("Save Game");
         saveGame.setActionCommand("save");
+        JMenuItem loadGame = new JMenuItem("Load Game");
+        loadGame.setActionCommand("load");
         gameMenu.add(newGame);
         gameMenu.add(saveGame);
+        gameMenu.add(loadGame);
 
         //initialize edit menu and Uno & redo menu items
         editMenu = new JMenu("Edit");
@@ -93,6 +96,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         centerPanel.add(playerNameField);
         mainPanel.add(centerPanel, BorderLayout.NORTH);
 
+        game.createPlayers();
         game.initializeGame();
         displayPlayerHand();
         displayTopCard();
@@ -156,6 +160,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
         callUNOButton.setActionCommand("call");
         newGame.addActionListener(controller);
         saveGame.addActionListener(controller);
+        loadGame.addActionListener(controller);
 
         //set up round winner panel plus displayed message
         winRoundPanel = new JPanel(null);
@@ -208,7 +213,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     /**
      * Displays current's player's cards in the player cards panel south of the screen
      */
-    private void displayPlayerHand() {
+    public void displayPlayerHand() {
         playerCardsPanel.removeAll();
         playerNameField.setText(game.getCurrentPlayerName() + "'s Turn");
 
@@ -240,7 +245,7 @@ public class UNOGameFrame extends JFrame implements UNOGameHandler {
     /**
      * Displays the top card of the deck center of the screen
      */
-    private void displayTopCard() {
+    public void displayTopCard() {
         topCardPanel.removeAll();
 
         Card topCard = game.topCard;

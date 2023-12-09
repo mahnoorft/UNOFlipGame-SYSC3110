@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -8,11 +10,15 @@ import java.util.HashMap;
  *  held color or the default.
  * @author Eric Cui & Areej Mahmoud
  */
+
 public class PlayerAI extends Player{
 
     public PlayerAI(String name, boolean isBot) {
+
         super(name, isBot);
     }
+
+    public PlayerAI(){}
 
     /** Return and plays the valid Card with the highest points to play.
      * @param topCard  the current top card
